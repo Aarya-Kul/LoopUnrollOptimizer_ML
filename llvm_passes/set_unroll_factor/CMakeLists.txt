@@ -1,0 +1,1 @@
+add_llvm_pass_plugin(feature_exraction_pass feature_exraction_pass.cpp)
