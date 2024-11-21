@@ -18,6 +18,8 @@
 
 /* *******Header Files******* */
 // You can include more Header files here
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 namespace {
     struct FeatureExtractionPass : public PassInfoMixin<FeatureExtractionPass> {
@@ -46,6 +48,6 @@ namespace {
             int numDefs = 0;
         };
 
-        
+
     }
 }
