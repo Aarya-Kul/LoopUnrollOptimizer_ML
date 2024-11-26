@@ -8,4 +8,3 @@ add_definitions(${LLVM_DEFINITIONS_LIST})
 include_directories(${LLVM_INCLUDE_DIRS})
 
 add_subdirectory(feature_extraction)
-add_subdirectory(set_unroll_factor)
