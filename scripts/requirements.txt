@@ -1,2 +1,4 @@
 pycparser
 numpy
+pathlib
+tqdm

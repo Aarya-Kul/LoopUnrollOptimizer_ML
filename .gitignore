@@ -1,1 +1,7 @@
 llvm_passes/build
+.vscode
+output_exe
+timed_src.cpp
+times.json
+preprop.cpp
+results.log
