@@ -47,8 +47,8 @@ namespace {
             int numOperands = 0; // good
             int numImplicitInstrs = 0; // good
             int numUniquePredicates = 0; //good
-            int criticalPathLatency = 0; // good
-            int cycleLengthEstimate = 0; // good
+            float criticalPathLatency = 0; // good
+            float cycleLengthEstimate = 0; // good
             std::string language = "C"; // Static for now ??
             int parallelComputations = 0; // good
             int maxDependenceHeight = 0; // sussy bubble sort has a value tho
