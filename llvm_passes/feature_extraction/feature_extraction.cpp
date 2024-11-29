@@ -6,6 +6,7 @@
 #include "llvm/Analysis/LoopIterator.h"
 #include "llvm/Analysis/LoopPass.h"
 #include "llvm/Analysis/ScalarEvolution.h"
+#include <llvm/Analysis/ScalarEvolutionExpressions.h>
 #include "llvm/Analysis/TargetTransformInfo.h"
 #include "llvm/IR/CFG.h"
 #include "llvm/IR/Instructions.h"
@@ -18,6 +19,7 @@
 #include "llvm/Transforms/Scalar/LoopPassManager.h"
 #include "llvm/Transforms/Utils/BasicBlockUtils.h"
 #include "llvm/Transforms/Utils/LoopUtils.h"
+#include "llvm/Transforms/Scalar/IndVarSimplify.h"
 
 /* *******Header Files******* */
 // You can include more Header files here
@@ -28,6 +30,7 @@
 #include <set>
 #include <climits>
 #include <cmath>
+#include <iostream>
 
 using namespace llvm;
 using json = nlohmann::json;
@@ -48,14 +51,14 @@ namespace {
             int cycleLengthEstimate = 0; // good
             std::string language = "C"; // Static for now ??
             int parallelComputations = 0; // good
-            int maxDependenceHeight = 0; // good
-            int maxMemoryDependencyHeight = 0; // good
-            int maxControlDependencyHeight = 0; // good
-            int avgDependenceHeight = 0; // good
+            int maxDependenceHeight = 0; // sussy bubble sort has a value tho
+            int maxMemoryDependencyHeight = 0; // sussy bubble sort has a value tho
+            int maxControlDependencyHeight = 0; // sussy
+            float avgDependenceHeight = 0; // sussy fixed
             int numIndirectRefs = 0; // good
-            int minMemoryLoopCarriedDep = INT_MAX; // good
+            int minMemoryLoopCarriedDep = INT_MAX; // sussy
             int memoryToMemoryDeps = 0; // good
-            int tripCount = -1; // good
+            int tripCount = 0; // good
             int numUses = 0; // good
             int numDefs = 0; // good
         };
@@ -107,10 +110,25 @@ namespace {
             return L->getLoopDepth();
         }
 
-        int getTripCount(Loop* L, ScalarEvolution &SE) {
-            // if (!L->isLoopSimplifyForm())
-            //     return -1;
+        int getTripCount(Loop* L, ScalarEvolution &SE) {   
             const SCEV *backedge_trip_count = SE.getBackedgeTakenCount(L);
+            switch (backedge_trip_count->getSCEVType()) {
+                case scConstant:
+                    errs() << "Backedge trip count is a constant.\n";
+                    break;
+                case scAddRecExpr:
+                    errs() << "Backedge trip count is an AddRecExpr.\n";
+                    break;
+                case scMulExpr:
+                    errs() << "Backedge trip count is a MulExpr.\n";
+                    break;
+                case scUnknown:
+                    errs() << "Backedge trip count is unknown.\n";
+                    break;
+                default:
+                    errs() << "Unhandled SCEV type: " << backedge_trip_count->getSCEVType() << "\n";
+                    break;
+            }
             if (isa<SCEVConstant>(backedge_trip_count)) {
                 return cast<SCEVConstant>(backedge_trip_count)->getValue()->getZExtValue(); 
             }
@@ -388,14 +406,11 @@ namespace {
             outFile.close();
         }
 
-        PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
-            LoopInfo &LI = FAM.getResult<LoopAnalysis>(F);
-            ScalarEvolution &SE = FAM.getResult<ScalarEvolutionAnalysis>(F);
-            DependenceInfo &DI = FAM.getResult<DependenceAnalysis>(F);
-            TargetTransformInfo &TTI = FAM.getResult<TargetIRAnalysis>(F);
-
-            for (Loop* L : LI) {
+        void processLoop(Loop *L, ScalarEvolution &SE, DependenceInfo &DI, TargetTransformInfo &TTI, std::vector<LoopFeatures> &allLoopFeatures) {
+            // If the loop is an innermost loop, collect features
+            if (L->getSubLoops().empty()) {
                 LoopFeatures features;
+
                 // Loop Level Features
                 features.nestLevel = getLoopNestLevel(L);
                 features.tripCount = getTripCount(L, SE);
@@ -425,12 +440,24 @@ namespace {
                 features.criticalPathLatency = dependencyInfo[6];
                 features.parallelComputations = dependencyInfo[7];
 
-                // features.criticalPathLatency = computeCriticalPathLatency(L, DI, TTI);
-                // features.cycleLengthEstimate = estimateCycleLength(L, TTI);
-                // features.parallelComputations = computeParallelComputations(L, DI);
-
-                // Append features to allLoopFeatures
+                // Add the collected features to the vector
                 allLoopFeatures.push_back(features);
+            }
+
+            // Recursively process subloops
+            for (Loop *SubLoop : L->getSubLoops()) {
+                processLoop(SubLoop, SE, DI, TTI, allLoopFeatures);
+            }
+        }
+
+        PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
+            LoopInfo &LI = FAM.getResult<LoopAnalysis>(F);
+            ScalarEvolution &SE = FAM.getResult<ScalarEvolutionAnalysis>(F);
+            DependenceInfo &DI = FAM.getResult<DependenceAnalysis>(F);
+            TargetTransformInfo &TTI = FAM.getResult<TargetIRAnalysis>(F);
+
+            for (Loop *L : LI) {
+                processLoop(L, SE, DI, TTI, allLoopFeatures);
             }
 
             // Use a shared JSON file and group by file
@@ -458,6 +485,10 @@ extern "C" ::llvm::PassPluginLibraryInfo LLVM_ATTRIBUTE_WEAK llvmGetPassPluginIn
                 return false;
             }
         );
+        // PB.registerAnalysisRegistrationCallback(
+        //         [](FunctionAnalysisManager &FAM) {
+        //             FAM.registerPass([&] { return ScalarEvolutionAnalysis(); });
+        //         });
     }
   };
 }

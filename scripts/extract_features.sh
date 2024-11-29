@@ -36,7 +36,7 @@ for file in $FILES; do
     # Run the feature extraction pass on the LLVM IR file
     echo "Running feature extraction pass on $ll_file"
     opt -disable-output -load-pass-plugin=./llvm_passes/build/feature_extraction/FeatureExtractionPass.so \
-        -passes=feature_extraction "$ll_file"
+        -passes=mem2reg,instcombine,loop-simplify,feature_extraction "$ll_file"
 done
 
 echo "Feature extraction complete. Results saved in $OUTPUT_JSON"
