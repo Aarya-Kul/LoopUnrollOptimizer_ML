@@ -11,10 +11,10 @@ import joblib
 
 
 def load_training_data():
-    with open('loop_features.json', 'r') as f:
+    with open('../loop_features.json', 'r') as f:
         loop_features = json.load(f)
 
-    with open('results.json', 'r') as f:
+    with open('../results.json', 'r') as f:
         unroll_factors = json.load(f)
 
     X = []
