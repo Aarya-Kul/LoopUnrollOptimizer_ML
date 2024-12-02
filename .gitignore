@@ -6,3 +6,5 @@ times.json
 preprop.cpp
 results.log
 loop_features.json
+error_log.txt
+dataset/*.ll

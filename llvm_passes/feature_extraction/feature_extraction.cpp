@@ -5,6 +5,7 @@
 #include "llvm/Analysis/LoopInfo.h"
 #include "llvm/Analysis/LoopIterator.h"
 #include "llvm/Analysis/LoopPass.h"
+#include "llvm/Analysis/PostDominators.h"
 #include "llvm/Analysis/ScalarEvolution.h"
 #include <llvm/Analysis/ScalarEvolutionExpressions.h>
 #include "llvm/Analysis/TargetTransformInfo.h"
@@ -135,23 +136,23 @@ namespace {
             return -1;
         }
 
-        int computeInstructionLatency(Instruction &I1, TargetTransformInfo &TTI) {
+        float computeInstructionLatency(Instruction &I1, TargetTransformInfo &TTI) {
             llvm::InstructionCost instructionLatency = TTI.getInstructionCost(&I1, TargetTransformInfo::TCK_Latency);
             if (instructionLatency.isValid()) {
                 auto latencyValue = instructionLatency.getValue();
                 if (latencyValue.has_value()) {
-                    return static_cast<int>(latencyValue.value()); // Safely extract the value
+                    return static_cast<float>(latencyValue.value()); // Safely extract the value
                 }
             }
             return 0;
         }
 
-        std::vector<int> getInstructionCounts(Loop* L, TargetTransformInfo &TTI) {
+        std::vector<float> getInstructionCounts(Loop* L, TargetTransformInfo &TTI) {
             // Initialize loopInfo to store metrics:
             // [0] = numOps, [1] = numFloatingPointOps, [2] = numBranches, [3] = numMemoryOps,
             // [4] = numOperands, [5] = numImplicitInstrs, [6] = numUniquePredicates,
             // [7] = numIndirectRefs, [8] = numUses, [9] = numDefs, [10] = cycleLengthEstimate
-            std::vector<int> loopInfo(11, 0);
+            std::vector<float> loopInfo(11, 0);
             std::set<CmpInst::Predicate> uniquePredicates;
             
             for (BasicBlock* BB : L->getBlocks()) {
@@ -197,92 +198,110 @@ namespace {
 
         std::vector<float> getDependencyInfo(Loop *L, DependenceInfo &depInfo, TargetTransformInfo &TTI) {
             // Initialize dependencyInfo to store metrics:
-            // [0] = maxDependenceHeight, [1] = maxMemoryDependencyHeight,
-            // [2] = maxControlDependencyHeight, [3] = avgDependenceHeight,
-            // [4] = minMemoryLoopCarriedDep, [5] = memoryToMemoryDeps,
-            // [6] = criticalPathLatency, [7] = parallelComputations
-            std::vector<float> dependencyInfo(8, 0.0);
+            // [0] = maxMemoryDependencyHeight,
+            // [1] = minMemoryLoopCarriedDep, [2] = memoryToMemoryDeps,
+            // [3] = criticalPathLatency, [4] = parallelComputations
+            // [5] = totalDependenceHeight, [6] = numDependencies
+            std::vector<float> dependencyInfo(7, 0.0);
 
-            int maxDependenceHeight = 0;
-            int maxMemoryDependencyHeight = 0;
-            int maxControlDependencyHeight = 0;
-            int totalDependenceHeight = 0;
-            int numDependencies = 0;
+            // The maximum instruction count in any dependency chain.
+            float maxMemoryDependencyHeight = 0;
+            float totalDependenceHeight = 0;
+            float numDependencies = 0;
 
-            int minMemoryLoopCarriedDep = INT_MAX;
-            int memoryToMemoryDeps = 0;
+            float minMemoryLoopCarriedDep = std::numeric_limits<float>::max();
+            float memoryToMemoryDeps = 0;
 
-            int criticalPathLatency = 0;
-            int parallelComputations = 0;
+            float criticalPathLatency = 0;
+            float parallelComputations = 0;
 
             for (BasicBlock *BB1 : L->blocks()) {
                 for (Instruction &I1 : *BB1) {
-                    int instructionLatency = computeInstructionLatency(I1, TTI);
-                    int longestDependencyChain = instructionLatency;
-
+                    float instructionLatency = computeInstructionLatency(I1, TTI);
+                    float longestDependencyChain = instructionLatency;
                     bool isIndependent = true;
+
+                    // Compare I1 with other instructions to check dependencies
                     for (BasicBlock *BB2 : L->blocks()) {
                         for (Instruction &I2 : *BB2) {
-                            auto dependence = depInfo.depends(&I1, &I2, true);
+                             // Skip comparing same instructions
+                            if (&I1 == &I2) continue;
+
+                            auto dependence = depInfo.depends(&I1, &I2, true); // memory dependence
+                            // if (isControlDependency) {
+                            //     llvm::errs() << "CONTROL DEPENDENCY\n";
+                            //     const SCEV *scev_distance = dependence->getDistance(L->getLoopDepth());
+                            //     if (scev_distance && isa<SCEVConstant>(scev_distance)) {
+                            //         const SCEVConstant *constSCEV = dyn_cast<SCEVConstant>(scev_distance);
+                            //         float distance = abs(constSCEV->getAPInt().getSExtValue());
+                            //         maxControlDependencyHeight = std::max(maxControlDependencyHeight, distance);
+                            //         totalDependenceHeight += distance;
+                            //     }
+                            // } 
+
                             if (dependence) {
+                                llvm::errs() << "MEMORY DEPENDENCY\n";
+                                numDependencies++;
                                 isIndependent = false;
-                                const SCEV *scev_distance = dependence->getDistance(L->getLoopDepth());
-                                int height = 0;
-                                if (scev_distance && isa<SCEVConstant>(scev_distance)) {
-                                    const SCEVConstant *constSCEV = dyn_cast<SCEVConstant>(scev_distance);
-                                    height = abs(constSCEV->getAPInt().getSExtValue());
-                                }
-
-                                // Update max dependence height
-                                maxDependenceHeight = std::max(maxDependenceHeight, height);
-                                totalDependenceHeight += height;
-                                ++numDependencies;
-
-                                // Update dependency chain latency
-                                int depLatency = computeInstructionLatency(I2, TTI);
+                                float depLatency = computeInstructionLatency(I2, TTI);
                                 longestDependencyChain = std::max(longestDependencyChain, instructionLatency + depLatency);
 
-                                // Memory dependencies: Ignore Load -> Load
-                                if ((isa<LoadInst>(I1) || isa<StoreInst>(I1)) &&
-                                    (isa<LoadInst>(I2) || isa<StoreInst>(I2))) {
-                                    if (!(isa<LoadInst>(I1) && isa<LoadInst>(I2))) {
-                                        memoryToMemoryDeps++;
-                                        maxMemoryDependencyHeight = std::max(maxMemoryDependencyHeight, height);
-                                        if (!dependence->isLoopIndependent() && (isa<StoreInst>(I1) || isa<StoreInst>(I2))) {
-                                            minMemoryLoopCarriedDep = std::min(minMemoryLoopCarriedDep, height);
+                                bool isMemoryDependency = dependence->isFlow() || dependence->isAnti() || dependence->isOutput();
+
+                                // make sure it is only anti, flow, or output not some other memory dependency
+                                if (isMemoryDependency) {
+                                    // Counting all memory-to-memory dependencies
+                                    memoryToMemoryDeps++;
+
+                                    const SCEV* scev_distance = dependence->getDistance(L->getLoopDepth());
+                                    if (scev_distance && isa<SCEVConstant>(scev_distance)) {
+                                        const SCEVConstant *constSCEV = dyn_cast<SCEVConstant>(scev_distance);
+                                        float distance = abs(constSCEV->getAPInt().getSExtValue());
+                                        maxMemoryDependencyHeight = std::max(maxMemoryDependencyHeight, distance);
+                                        totalDependenceHeight += distance;
+                                    }
+
+                                    // Distances specifically for loop-carried dependencies
+                                    if (!dependence->isLoopIndependent()) {
+                                        const SCEV* scev_distance = dependence->getDistance(L->getLoopDepth());
+                                        if (scev_distance && isa<SCEVConstant>(scev_distance)) {
+                                            const SCEVConstant *constSCEV = dyn_cast<SCEVConstant>(scev_distance);
+                                            float distance = abs(constSCEV->getAPInt().getSExtValue());
+                                            minMemoryLoopCarriedDep = std::min(minMemoryLoopCarriedDep, distance);
                                         }
                                     }
-                                }
-
-                                // Control dependencies
-                                if (isa<BranchInst>(I1) || isa<SwitchInst>(I1)) {
-                                    maxControlDependencyHeight = std::max(maxControlDependencyHeight, height);
                                 }
                             }
                         }
                     }
-                    // Update critical path latency
+
+                    // Critical path latency
                     criticalPathLatency = std::max(criticalPathLatency, longestDependencyChain);
 
-                    // If the instruction is independent, count it as parallel
+                    // If independent, count it as parallel computation
                     if (isIndependent) {
-                        parallelComputations++;
+                        ++parallelComputations;
                     }
                 }
             }
 
-            // Store final dependency metrics
-            dependencyInfo[0] = maxDependenceHeight;
-            dependencyInfo[1] = maxMemoryDependencyHeight;
-            dependencyInfo[2] = maxControlDependencyHeight;
-            dependencyInfo[3] = (numDependencies > 0) ? (float(totalDependenceHeight) / numDependencies) : 0;
-            dependencyInfo[4] = (minMemoryLoopCarriedDep == INT_MAX) ? 0 : minMemoryLoopCarriedDep;
-            dependencyInfo[5] = memoryToMemoryDeps;
-            dependencyInfo[6] = criticalPathLatency;
-            dependencyInfo[7] = parallelComputations;
+
+            // [0] = maxMemoryDependencyHeight,
+            // [1] = minMemoryLoopCarriedDep, [2] = memoryToMemoryDeps,
+            // [3] = criticalPathLatency, [4] = parallelComputations
+            // [5] = totalDependenceHeight, [6] = numDependencies
+
+            dependencyInfo[0] = maxMemoryDependencyHeight;
+            dependencyInfo[1] = (minMemoryLoopCarriedDep == std::numeric_limits<float>::max()) ? 0 : minMemoryLoopCarriedDep;
+            dependencyInfo[2] = memoryToMemoryDeps;
+            dependencyInfo[3] = criticalPathLatency;
+            dependencyInfo[4] = parallelComputations;
+            dependencyInfo[5] = totalDependenceHeight;
+            dependencyInfo[6] = numDependencies;
 
             return dependencyInfo;
         }
+
 
         // // Compute the critical path latency by finding the longest dependency chain
         // int computeCriticalPathLatency(Loop* L, DependenceInfo &DI, TargetTransformInfo &TTI) {
@@ -313,46 +332,7 @@ namespace {
         //     return criticalPathLatency;
         // }
 
-        // // Estimate cycle length using instruction latencies and basic block frequencies
-        // int estimateCycleLength(Loop *L, TargetTransformInfo &TTI) {
-        //     int cycleLength = 0;
 
-        //     for (BasicBlock *BB : L->blocks()) {
-        //         for (Instruction &I : *BB) {
-        //             cycleLength += TTI.getInstructionCost(&I, TargetTransformInfo::TCK_Latency); // Sum latencies
-        //         }
-        //     }
-
-        //     return cycleLength;
-        // }
-
-        // // Compute the number of parallel computations by finding independent instructions
-        // int computeParallelComputations(Loop *L, DependenceInfo &DI) {
-        //     int independentInstructions = 0;
-
-        //     for (BasicBlock *BB : L->blocks()) {
-        //         for (Instruction &I1 : *BB) {
-        //             bool isIndependent = true;
-
-        //             // Check if the instruction has any dependencies
-        //             for (BasicBlock *DepBB : L->blocks()) {
-        //                 for (Instruction &I2 : *DepBB) {
-        //                     if (auto Dep = DI.depends(&I1, &I2, true)) {
-        //                         isIndependent = false;
-        //                         break;
-        //                     }
-        //                 }
-        //                 if (!isIndependent) break;
-        //             }
-
-        //             if (isIndependent) {
-        //                 independentInstructions++;
-        //             }
-        //         }
-        //     }
-
-        //     return independentInstructions;
-        // }
 
         void saveFeaturesToJson(const std::string &filename, const std::string &currentFile, const std::vector<LoopFeatures> &features) {
             nlohmann::json j;
@@ -406,7 +386,56 @@ namespace {
             outFile.close();
         }
 
-        void processLoop(Loop *L, ScalarEvolution &SE, DependenceInfo &DI, TargetTransformInfo &TTI, std::vector<LoopFeatures> &allLoopFeatures) {
+        int calculateInstructionCDH(BasicBlock *BB, const PostDominatorTree &PDT,
+                             DenseMap<BasicBlock *, int> &Cache, int &totalCDH,
+                             int &numChains) {
+            if (Cache.find(BB) != Cache.end())
+                return Cache[BB]; // Use cached result
+
+            int maxDepth = 0;
+
+            for (BasicBlock *Pred : predecessors(BB)) {
+                if (!PDT.dominates(BB, Pred)) { // Check if BB is control-dependent on Pred
+                    // Increment the control dependency chain counter
+                    numChains++;
+
+                    int depth = calculateInstructionCDH(Pred, PDT, Cache, totalCDH, numChains);
+
+                    // Accumulate the current chain's height to totalCDH
+                    totalCDH += depth;
+
+                    maxDepth = std::max(maxDepth, depth);
+                }
+            }
+
+            // Add the number of instructions in the current block
+            int instructionCount = BB->size();
+            int currentCDH = maxDepth + instructionCount;
+            Cache[BB] = currentCDH;
+
+            return currentCDH;
+        }
+
+        std::tuple<int, int, int> calculateMaxTotalInstructionControlDependencyHeightAndChains(
+            Loop *L, const PostDominatorTree &PDT) {
+            DenseMap<BasicBlock *, int> Cache;
+            int maxCDH = 0;
+            int totalCDH = 0;
+            int numChains = 0;
+
+            for (BasicBlock *BB : L->blocks()) {
+                int cdh = calculateInstructionCDH(BB, PDT, Cache, totalCDH, numChains);
+                maxCDH = std::max(maxCDH, cdh);
+
+                // Add the height of this block's chain to totalCDH
+                totalCDH += cdh;
+            }
+
+            return {maxCDH, totalCDH, numChains};
+        }
+
+
+        void processLoop(Loop *L, ScalarEvolution &SE, DependenceInfo &DI, TargetTransformInfo &TTI, PostDominatorTree &PDT, std::vector<LoopFeatures> &allLoopFeatures) {
             // If the loop is an innermost loop, collect features
             if (L->getSubLoops().empty()) {
                 LoopFeatures features;
@@ -430,15 +459,27 @@ namespace {
                 features.cycleLengthEstimate = loopInfo[10];
 
                 // Dependency Features
+                // [0] = maxMemoryDependencyHeight,
+                // [1] = minMemoryLoopCarriedDep, [2] = memoryToMemoryDeps,
+                // [3] = criticalPathLatency, [4] = parallelComputations
+                // [5] = totalDependenceHeight, [6] = numDependencies
                 auto dependencyInfo = getDependencyInfo(L, DI, TTI);
-                features.maxDependenceHeight = dependencyInfo[0];
-                features.maxMemoryDependencyHeight = dependencyInfo[1];
-                features.maxControlDependencyHeight = dependencyInfo[2];
-                features.avgDependenceHeight = dependencyInfo[3];
-                features.minMemoryLoopCarriedDep = dependencyInfo[4];
-                features.memoryToMemoryDeps = dependencyInfo[5];
-                features.criticalPathLatency = dependencyInfo[6];
-                features.parallelComputations = dependencyInfo[7];
+                features.maxMemoryDependencyHeight = dependencyInfo[0];
+                features.minMemoryLoopCarriedDep = dependencyInfo[1];
+                features.memoryToMemoryDeps = dependencyInfo[2];
+                features.criticalPathLatency = dependencyInfo[3];
+                features.parallelComputations = dependencyInfo[4];
+
+                float totalDependenceHeight = dependencyInfo[5];
+                float numDependencies = dependencyInfo[6];
+
+                // Control Dependency
+                auto [maxCDH, totalCDH, numChains] = calculateMaxTotalInstructionControlDependencyHeightAndChains(L, PDT);
+                features.maxControlDependencyHeight = maxCDH;
+                features.maxDependenceHeight = std::max(maxCDH, features.maxMemoryDependencyHeight);
+                features.avgDependenceHeight = (numDependencies > 0) 
+                                                ? float(totalDependenceHeight + totalCDH) / (numDependencies + numChains) 
+                                                : 0;
 
                 // Add the collected features to the vector
                 allLoopFeatures.push_back(features);
@@ -446,7 +487,7 @@ namespace {
 
             // Recursively process subloops
             for (Loop *SubLoop : L->getSubLoops()) {
-                processLoop(SubLoop, SE, DI, TTI, allLoopFeatures);
+                processLoop(SubLoop, SE, DI, TTI, PDT, allLoopFeatures);
             }
         }
 
@@ -455,9 +496,10 @@ namespace {
             ScalarEvolution &SE = FAM.getResult<ScalarEvolutionAnalysis>(F);
             DependenceInfo &DI = FAM.getResult<DependenceAnalysis>(F);
             TargetTransformInfo &TTI = FAM.getResult<TargetIRAnalysis>(F);
+            PostDominatorTree &PDT = FAM.getResult<PostDominatorTreeAnalysis>(F);
 
             for (Loop *L : LI) {
-                processLoop(L, SE, DI, TTI, allLoopFeatures);
+                processLoop(L, SE, DI, TTI, PDT, allLoopFeatures);
             }
 
             // Use a shared JSON file and group by file
