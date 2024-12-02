@@ -7,7 +7,7 @@
 
 #include <chrono>
 
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 
 std::unordered_map<uint64_t, std::vector<uint64_t>> times;
 
