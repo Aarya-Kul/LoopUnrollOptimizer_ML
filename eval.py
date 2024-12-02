@@ -47,9 +47,8 @@ def run_code_with_unroll(file_path, unroll_factor):
     """
     
     print(f"----- Running code with LUF = {'BASELINE' if unroll_factor == 1 else unroll_factor} -----")
+    # Remove include statements from file and store result in preprop.cpp
     remove_includes(file_path)
-
-    print("Includes removed")
 
     # Insert timing code for the current LUF and get modified code
     line2loopnum = insert_timing(file_path, unroll_factor)
