@@ -57,7 +57,14 @@ class CustomPrint(c_generator.CGenerator):
 
 
 def insert_timing_code(filename, loop_unroll_factor):
-    ast = parse_file(filename, use_cpp=True)
+    ast = parse_file(
+        filename,
+        use_cpp=True,
+        cpp_path='cpp',
+        cpp_args=[
+            f'-I/Users/omkarvodela/Documents/eecs583/LoopUnrollOptimizer_ML/dataset',
+        ]
+    )
     visitor = Visitor()
     visitor.visit(ast)
 
@@ -73,6 +80,7 @@ def insert_timing_code(filename, loop_unroll_factor):
     #include <chrono>
     #include <cstdint>
     #include <cstdlib>
+    #include "header.h"
     extern void add_to_loop(uint64_t, uint64_t);
     extern void print_times();
     extern void init_loops(int);"""
@@ -117,15 +125,15 @@ def insert_timing_code(filename, loop_unroll_factor):
 
 
 def remove_includes(filename_path):
-    """
-    Remove all #include lines in the C++ file and store the result in preprop.cpp.
-    """
+    # Read the content of the file
     with open(filename_path, 'r') as file:
         content = file.read()
 
-    modified_content = re.sub(r'^#include.*$', '', content, flags=re.MULTILINE)
+    # Remove lines that include files, except the ones that include header.h
+    modified_content = re.sub(r'^#include\s.*\n(?!.*header\.h)', '', content, flags=re.MULTILINE)
 
-    with open('preprop.cpp', 'w') as new_file:
+    # Write the modified content back to the file
+    with open(filename_path, 'w') as new_file:
         new_file.write(modified_content)
 
 
@@ -142,6 +150,7 @@ def compile_and_link():
     command = [
             "clang++",
             "-std=c++17",
+            "-I/Users/omkarvodela/Documents/eecs583/LoopUnrollOptimizer_ML/dataset",
             "-I/opt/homebrew/include",
             "-I/usr/include/c++/11",
             "-I/usr/include/x86_64-linux-gnu/c++/11",
