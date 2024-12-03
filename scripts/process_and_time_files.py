@@ -82,7 +82,7 @@ def insert_timing_code(filename, loop_unroll_factor):
     #include <cstdlib>
     #include "header.h"
     extern void add_to_loop(uint64_t, uint64_t);
-    extern void print_times();
+    extern void print_times_func();
     extern void init_loops(int);"""
     ast.ext.insert(0, TimingCode(includes_and_directives))
 
@@ -110,12 +110,12 @@ def insert_timing_code(filename, loop_unroll_factor):
             index = node.block_items.index(child)
             node.block_items.insert(index, TimingCode(before_untimed_loop))
 
-    # Insert atexit(print_times) at the beginning of main
+    # Insert atexit(print_times_func) at the beginning of main
     for node in ast.ext:
         if isinstance(node, c_ast.FuncDef):
             if node.decl.name == 'main':
                 node.body.block_items.insert(0, TimingCode(f"init_loops({len(visitor.timing_loops)});"))
-                node.body.block_items.insert(0, TimingCode("atexit(print_times);"))
+                node.body.block_items.insert(0, TimingCode("atexit(print_times_func);"))
                 break
 
     # Convert the AST back to C code
