@@ -86,7 +86,7 @@ def compile_and_run(temp_file_path):
 
 def main():
     source_dir = "dataset_depracated"  # Update with your source directory
-    features_file = "/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML/loop_features.json"  # Update with your features file
+    features_file = "/n/eecs583a/home/amszuch/LoopUnrollOptimizer_ML/loop_features.json"  # Update with your features file
     output_file = "optimal_luf.json"
     loop_unroll_factors = [1, 2, 4, 6, 8]
 
@@ -145,10 +145,10 @@ def main():
                     logging.error(f"Error during processing for LUF={luf}: {e}")
                     continue
                 
-                finally:
+                # finally:
                     # Cleanup the temporary file after testing the LUF
-                    if os.path.exists(temp_file_path):
-                        os.remove(temp_file_path)
+                    # if os.path.exists(temp_file_path):
+                    #     os.remove(temp_file_path)
 
             # Log summary of averages for the loop
             logging.info("\nSummary of averages:")
