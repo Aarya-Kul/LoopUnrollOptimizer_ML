@@ -1,4 +1,3 @@
-#include <stdio.h>
 
 void generateFibonacci(int n) {
     int a = 0, b = 1;

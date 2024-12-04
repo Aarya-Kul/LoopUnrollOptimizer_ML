@@ -1,4 +1,3 @@
-#include <stdio.h>
 
 void matrixMultiplication(int A[2][2], int B[2][2], int C[2][2]) {
     for (int i = 0; i < 2; i++) {
