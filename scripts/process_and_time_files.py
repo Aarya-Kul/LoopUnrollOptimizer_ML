@@ -150,7 +150,7 @@ def compile_and_link():
     command = [
             "clang++",
             "-std=c++17",
-            "-I/Users/omkarvodela/Documents/eecs583/LoopUnrollOptimizer_ML/dataset",
+            "-I/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML/dataset",
             "-I/opt/homebrew/include",
             "-I/usr/include/c++/11",
             "-I/usr/include/x86_64-linux-gnu/c++/11",
@@ -194,8 +194,8 @@ def run_and_aggregate_data(runs):
 def time_code(filename_path):
     remove_includes(filename_path)
 
-    LUFs = [1, 2, 3, 4, 5, 6, 7, 8]  # Loop unroll factors to test
-    runs = 10  # Number of runs for averaging
+    LUFs = [1, 2, 4, 6, 8]  # Loop unroll factors to test
+    runs = 5  # Number of runs for averaging
 
     best_LUF_for_file = {}  # Dictionary to store the best LUF for each file
 

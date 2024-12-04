@@ -25,7 +25,7 @@ void add_to_loop(uint64_t loop_num, uint64_t duration)
 }
 
 // print times
-void print_times()
+void print_times_func()
 {
     json j;
 
