@@ -197,29 +197,32 @@ def time_code(filename_path):
     LUFs = [1, 2, 4, 6, 8]  # Loop unroll factors to test
     runs = 5  # Number of runs for averaging
 
-    best_LUF_for_file = {}  # Dictionary to store the best LUF for each file
+    # Dictionary to store the best LUF for each loop
+    best_LUFs_for_file = {}
 
     for LUF in tqdm(LUFs, desc="File Progress: "):
         # Insert timing code for the current LUF and get modified code
         line2loopnum = insert_timing(filename_path, LUF)
-        loops_unrolled_std_out = compile_and_link()  # Compile the code with the current LUF
+        compile_and_link()  # Compile the code with the current LUF
         run_data = run_and_aggregate_data(runs)  # Gather the run data
 
-        # Calculate the total time for the current LUF (average over all loops in the file)
-        total_time = 0
+        # Iterate through each loop's timing data
         for loop_num, times in run_data.items():
-            if len(times) != 0:
-                avg_time = sum(times) / len(times)  # Calculate average time for this loop
-                total_time += avg_time
-            else:
-                total_time += float('inf')  # If no valid data, treat it as a high time
+            # Calculate the average time for this loop
+            avg_time = sum(times) / len(times) if times else float('inf')
 
-        # Now select the LUF with the minimum total time
-        if filename_path not in best_LUF_for_file or total_time < best_LUF_for_file[filename_path][1]:
-            best_LUF_for_file[filename_path] = (LUF, total_time)
+            # Check if this LUF gives a better time for the loop
+            if loop_num not in best_LUFs_for_file or avg_time < best_LUFs_for_file[loop_num][1]:
+                best_LUFs_for_file[loop_num] = (LUF, avg_time)
 
-    # Return the best LUF for the file (filename_path is the key)
-    return {filename_path: best_LUF_for_file[filename_path][0]}
+    # Extract the best LUF for each loop as a list
+    best_LUFs_list = [
+        best_LUFs_for_file[loop_num][0]
+        for loop_num in sorted(best_LUFs_for_file.keys())
+    ]
+
+    # Return the best LUFs for the file
+    return {filename_path: best_LUFs_list}
 
 
 def generate_dataset():
