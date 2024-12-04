@@ -62,7 +62,7 @@ def insert_timing_code(filename, loop_unroll_factor):
         use_cpp=True,
         cpp_path='cpp',
         cpp_args=[
-            f'-I/Users/omkarvodela/Documents/eecs583/LoopUnrollOptimizer_ML/new_dataset',
+            f'-I/Users/omkarvodela/Documents/eecs583/LoopUnrollOptimizer_ML/dataset',
         ]
     )
     visitor = Visitor()
@@ -150,7 +150,7 @@ def compile_and_link():
     command = [
             "clang++",
             "-std=c++17",
-            "-I/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML/new_dataset",
+            "-I/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML/dataset",
             "-I/opt/homebrew/include",
             "-I/usr/include/c++/11",
             "-I/usr/include/x86_64-linux-gnu/c++/11",
@@ -230,11 +230,11 @@ def generate_dataset():
     all_data = {}
 
     # Loop over all C files in the dataset directory
-    for filename in os.listdir("new_dataset"):
+    for filename in os.listdir("dataset"):
         if not filename.endswith(".c"):
             continue
 
-        filename_path = os.path.join("new_dataset", filename)
+        filename_path = os.path.join("dataset", filename)
 
         try:
             logging.info(f"---------- {filename} : timing data ---------")

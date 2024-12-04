@@ -62,9 +62,22 @@ namespace {
             int tripCount = 0; // good
             int numUses = 0; // good
             int numDefs = 0; // good
+            int loopStartLine = -1;
         };
 
         std::vector<LoopFeatures> allLoopFeatures;
+
+        int getLoopStartLine(Loop *L) {
+            BasicBlock *header = L->getHeader(); // Get the loop header
+            if (header) {
+                for (Instruction &I : *header) {
+                    if (DILocation *debugLoc = I.getDebugLoc()) {
+                        return debugLoc->getLine(); // Return the line number
+                    }
+                }
+            }
+            return -1; // Return -1 if no debug information is found
+        }
         
         // Utility methods to check instruction types
         bool isFloatingPointOperation(const Instruction *I) {
@@ -373,7 +386,8 @@ namespace {
                     {"memoryToMemoryDeps", feature.memoryToMemoryDeps},
                     {"tripCount", feature.tripCount},
                     {"numUses", feature.numUses},
-                    {"numDefs", feature.numDefs}
+                    {"numDefs", feature.numDefs},
+                    {"loopStartLine", feature.loopStartLine}
                 });
             }
 
@@ -481,6 +495,8 @@ namespace {
                                                 ? float(totalDependenceHeight + totalCDH) / (numDependencies + numChains) 
                                                 : 0;
 
+                features.loopStartLine = getLoopStartLine(L);
+                llvm::errs() << features.loopStartLine << '\n';
                 // Add the collected features to the vector
                 allLoopFeatures.push_back(features);
             }
