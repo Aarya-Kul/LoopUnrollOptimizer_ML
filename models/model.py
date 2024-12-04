@@ -4,9 +4,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 import numpy as np
 import torch
+import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 import torch.optim as optim
 import json
+import joblib
 
 class MLPClassifier(nn.Module):
     def __init__(self, input_dim, hidden_layer_sizes, output_dim=5):
@@ -188,10 +190,10 @@ def main():
 def load_model_and_predict(input_data):
     # Load the model and scaler
     model = MLPClassifier(input_dim=input_data.shape[1], hidden_layer_sizes=[256, 128])  # Match the architecture
-    model.load_state_dict(torch.load('pytorch_model.pth', weights_only=True))
+    model.load_state_dict(torch.load('models/pytorch_model.pth', weights_only=True))
     model.eval()
     
-    scaler = joblib.load('scaler.pkl')
+    scaler = joblib.load('models/scaler.pkl')
     
     # Standardize the input data
     input_data_scaled = scaler.transform(input_data)

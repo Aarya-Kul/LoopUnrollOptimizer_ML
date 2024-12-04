@@ -1,5 +1,8 @@
 import subprocess
+import json
+import numpy as np
 from scripts.process_and_time_files import remove_includes, insert_timing, compile_and_link, run_and_aggregate_data
+from models.model import load_model_and_predict
 
 def run_extract_script(file_path, script_path="scripts/extract_features.sh"):
     """
@@ -30,9 +33,25 @@ def run_extract_script(file_path, script_path="scripts/extract_features.sh"):
         print(f"Error: The script {script_path} was not found.")
         return None
 
-def run_model(file_path):
-
-    return 8
+def run_model():
+    X = []
+    with open('loop_features.json', 'r') as f:
+        loop_features = json.load(f)
+    for _, features in loop_features.items():
+        for feature in features:
+                feature_values = [feature[key] for key in feature \
+                             if key != 'language' and \
+                                key != 'minMemoryLoopCarriedDep' and \
+                                key != 'maxMemoryDependencyHeight' and \
+                                key != 'maxDependenceHeight' and \
+                                key != 'avgDependenceHeight' and \
+                                key != 'maxControlDependencyHeight' and \
+                                key != 'numUniquePredicates' and \
+                                key != 'loopStartLine' \
+                              \
+                              ]
+    X.append(feature_values)
+    return load_model_and_predict(np.array(X))
 
 def run_code_with_unroll(file_path, unroll_factor):
     """
@@ -46,7 +65,7 @@ def run_code_with_unroll(file_path, unroll_factor):
         float: The average time to run C program with this LUF.
     """
     
-    print(f"----- Running code with LUF = {'BASELINE' if unroll_factor == 1 else unroll_factor} -----")
+    print(f"----- Running code with LUF = {'BASELINE' if unroll_factor == 1 else 'PROP_IDEAL'} -----")
     # Remove include statements from file and store result in preprop.cpp
     remove_includes(file_path)
 
@@ -68,7 +87,7 @@ def run_code_with_unroll(file_path, unroll_factor):
             total_time += float('inf')  # If no valid data, treat it as a high time
     
     print(f"Total time: {total_time}")
-    print(f"-------------------------------------{'-------' if unroll_factor == 1 else ''}\n")
+    print(f"-------------------------------------{'-------' if unroll_factor == 1 else '---------'}\n")
 
     return total_time
     
@@ -84,9 +103,10 @@ def main():
         print(f"\n----- Extracting features -----\n{output}\n-------------------------------\n")
 
     # Run the model to estimate ideal LUF
-    ideal_LUF = run_model(c_path)
+    ideal_LUF = run_model()[0]
 
-    print(f"Model found ideal LUF of {ideal_LUF}.\n")
+
+    print(f"Model proposed ideal LUF = {ideal_LUF}.\n")
     
     if ideal_LUF == 1:
         print("Model determined loop should not be unrolled...\n Terminate.")
@@ -104,9 +124,14 @@ def main():
         print("ERROR: Timing failed.")
     elif model_time < baseline_time:
         # Model was better than baseline
-        print("Model successfully LUF better than baseline.")
+        print("Model successfully found LUF better than baseline.")
     else:
         print("Model was unsuccessful.")
 
 if __name__ == "__main__":
     main()
+
+
+# matrixMult.c
+# bubbleSort.c
+# factorial.c

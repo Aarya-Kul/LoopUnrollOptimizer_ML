@@ -1,4 +1,3 @@
-#include <stdio.h>
 
 int power(int base, int exp) {
     int result = 1;
