@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main()
+{
+    char S[105];
+    int i,yes=0;
+    scanf("%s",S);
+
+    if(S[0]=='k' && S[1]=='e' && S[2]=='y'){
+        for(i=3;i<96;i++){
+            if(S[i]=='e' && S[i+1]=='n' && S[i+2]=='c' && S[i+3]=='e' && S[i+4]=='\0'){
+                yes=1;
+                break;
+            }
+        }
+    }
+    if(yes==1) printf("YES\n");
+    if(yes==0) printf("NO\n");
+
+    return 0;
+}

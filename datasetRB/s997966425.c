@@ -1,0 +1,1 @@
+i;main(x){for(;~scanf("%1d",&x);putchar(x+'0'))if(!(1^x&7))x^=8;}

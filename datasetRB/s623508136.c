@@ -1,0 +1,28 @@
+#include<stdio.h>
+char c;
+int main(){
+  c=getchar();
+  switch(c){
+    case '1': c='9'; break;
+    case '9': c='1'; break;
+  }
+  putchar(c);
+  c=getchar();
+  switch(c){
+    case '1': c='9'; break;
+    case '9': c='1'; break;
+  }
+  putchar(c);
+  c=getchar();
+  switch(c){
+    case '1': c='9'; break;
+    case '9': c='1'; break;
+  }
+  putchar(c);
+  c=getchar();
+  switch(c){
+    case '1': c='9'; break;
+    case '9': c='1'; break;
+  }
+  putchar(c);
+}
