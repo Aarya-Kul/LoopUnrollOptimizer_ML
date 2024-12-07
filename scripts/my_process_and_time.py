@@ -145,10 +145,10 @@ def main():
                     logging.error(f"Error during processing for LUF={luf}: {e}")
                     continue
                 
-                # finally:
-                    # Cleanup the temporary file after testing the LUF
-                    # if os.path.exists(temp_file_path):
-                    #     os.remove(temp_file_path)
+                finally:
+                    Cleanup the temporary file after testing the LUF
+                    if os.path.exists(temp_file_path):
+                        os.remove(temp_file_path)
 
             # Log summary of averages for the loop
             logging.info("\nSummary of averages:")
