@@ -2,6 +2,9 @@
 
 # Define the output JSON file
 OUTPUT_JSON="loop_features.json"
+FAILED_DIR="data_trash"
+
+mkdir -p "$FAILED_DIR"
 
 # Clear the output JSON file
 echo "{}" > $OUTPUT_JSON
@@ -25,6 +28,12 @@ for file in $FILES; do
         ll_file="${file%.c}.ll"
         echo "Compiling $file to $ll_file"
         clang -g -emit-llvm -S "$file" -Xclang -disable-O0-optnone -o "$ll_file"
+        # Check if compilation failed
+        if [[ $? -ne 0 ]]; then
+            echo "----------------------------Compilation failed for $file. Moving to $FAILED_DIR"
+            mv "$file" "$FAILED_DIR"
+            continue
+        fi
     elif [[ $file == *.ll ]]; then
         # Use LLVM IR file directly
         ll_file="$file"

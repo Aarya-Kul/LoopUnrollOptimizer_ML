@@ -12,12 +12,8 @@ logging.basicConfig(
 )
 
 INCLUDES_AND_DIRECTIVES = """
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <chrono>
-#include <cstdlib>
-#include <cstdint>
+#include <stdio.h>
+#include <time.h>
 """
 
 def insert_timing_code(file_content, loop_line, loop_unroll_factor, loop_index):
@@ -30,13 +26,15 @@ def insert_timing_code(file_content, loop_line, loop_unroll_factor, loop_index):
 
     # Add timing code around the loop
     before_timed_loop = f"""
-    auto start_{loop_index} = std::chrono::high_resolution_clock::now();
+    struct timespec start_{loop_index}, end_{loop_index};
+    clock_gettime(CLOCK_MONOTONIC, &start_{loop_index});
     #pragma clang loop unroll_count({loop_unroll_factor})
     """
     after_timed_loop = f"""
-    auto end_{loop_index} = std::chrono::high_resolution_clock::now();
-    auto duration_{loop_index} = std::chrono::duration_cast<std::chrono::nanoseconds>(end_{loop_index} - start_{loop_index});
-    std::cout << "Loop {loop_index} duration: " << duration_{loop_index}.count() << " ns" << std::endl;
+    clock_gettime(CLOCK_MONOTONIC, &end_{loop_index});
+    long duration_{loop_index} = (end_{loop_index}.tv_sec - start_{loop_index}.tv_sec) * 1e9 + 
+                                 (end_{loop_index}.tv_nsec - start_{loop_index}.tv_nsec);
+    printf("Loop {loop_index} with LUF={loop_unroll_factor} took %ld ns\\n", duration_{loop_index});
     """
 
     # Find the loop's closing brace and place the end timing code there
@@ -62,7 +60,8 @@ def compile_and_run(temp_file_path):
     Compiles and runs the temporary .c file.
     """
     exe_file = "temp_exe"
-    compile_command = ["clang++", "-std=c++17", "-O2", "-funroll-loops", temp_file_path, "-o", exe_file]
+    compile_command = ["clang", "-O0", "-funroll-loops", temp_file_path, "-o", exe_file]
+
     run_command = f"./{exe_file}"
 
     # Compile the code
@@ -86,7 +85,7 @@ def compile_and_run(temp_file_path):
 
 def main():
     source_dir = "dataset_depracated"  # Update with your source directory
-    features_file = "/n/eecs583a/home/amszuch/LoopUnrollOptimizer_ML/loop_features.json"  # Update with your features file
+    features_file = "/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML/loop_features.json"  # Update with your features file
     output_file = "optimal_luf.json"
     loop_unroll_factors = [1, 2, 4, 6, 8]
 
@@ -119,7 +118,7 @@ def main():
                 modified_content = insert_timing_code(content, line_number, luf, loop_index)
 
                 # Write to a temporary file
-                temp_file_path = f"temp_{os.path.basename(filename)}_loop_{loop_index}_luf_{luf}.cpp"
+                temp_file_path = f"temp_{os.path.basename(filename)}_loop_{loop_index}_luf_{luf}.c"
                 with open(temp_file_path, "w") as temp_file:
                     temp_file.write(modified_content)
 
@@ -145,10 +144,10 @@ def main():
                     logging.error(f"Error during processing for LUF={luf}: {e}")
                     continue
                 
-                finally:
-                    Cleanup the temporary file after testing the LUF
-                    if os.path.exists(temp_file_path):
-                        os.remove(temp_file_path)
+                # finally:
+                #     #Cleanup the temporary file after testing the LUF
+                #     if os.path.exists(temp_file_path):
+                #         os.remove(temp_file_path)
 
             # Log summary of averages for the loop
             logging.info("\nSummary of averages:")

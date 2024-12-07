@@ -31,7 +31,7 @@
 #include <set>
 #include <climits>
 #include <cmath>
-#include <iostream>
+#include <iostream> 
 
 using namespace llvm;
 using json = nlohmann::json;
@@ -62,22 +62,22 @@ namespace {
             int tripCount = 0; // good
             int numUses = 0; // good
             int numDefs = 0; // good
-            int loopStartLine = -1;
+            // int loopStartLine = -1;
         };
 
         std::vector<LoopFeatures> allLoopFeatures;
 
-        int getLoopStartLine(Loop *L) {
-            BasicBlock *header = L->getHeader(); // Get the loop header
-            if (header) {
-                for (Instruction &I : *header) {
-                    if (DILocation *debugLoc = I.getDebugLoc()) {
-                        return debugLoc->getLine(); // Return the line number
-                    }
-                }
-            }
-            return -1; // Return -1 if no debug information is found
-        }
+        // int getLoopStartLine(Loop *L) {
+        //     BasicBlock *header = L->getHeader(); // Get the loop header
+        //     if (header) {
+        //         for (Instruction &I : *header) {
+        //             if (DILocation *debugLoc = I.getDebugLoc()) {
+        //                 return debugLoc->getLine(); // Return the line number
+        //             }
+        //         }
+        //     }
+        //     return -1; // Return -1 if no debug information is found
+        // }
         
         // Utility methods to check instruction types
         bool isFloatingPointOperation(const Instruction *I) {
@@ -387,7 +387,7 @@ namespace {
                     {"tripCount", feature.tripCount},
                     {"numUses", feature.numUses},
                     {"numDefs", feature.numDefs},
-                    {"loopStartLine", feature.loopStartLine}
+                    // {"loopStartLine", feature.loopStartLine}
                 });
             }
 
@@ -450,7 +450,7 @@ namespace {
 
 
         void processLoop(Loop *L, ScalarEvolution &SE, DependenceInfo &DI, TargetTransformInfo &TTI, PostDominatorTree &PDT, std::vector<LoopFeatures> &allLoopFeatures) {
-            // If the loop is an innermost loop, collect features
+            // Check if this is an innermost loop
             if (L->getSubLoops().empty()) {
                 LoopFeatures features;
 
@@ -473,10 +473,6 @@ namespace {
                 features.cycleLengthEstimate = loopInfo[10];
 
                 // Dependency Features
-                // [0] = maxMemoryDependencyHeight,
-                // [1] = minMemoryLoopCarriedDep, [2] = memoryToMemoryDeps,
-                // [3] = criticalPathLatency, [4] = parallelComputations
-                // [5] = totalDependenceHeight, [6] = numDependencies
                 auto dependencyInfo = getDependencyInfo(L, DI, TTI);
                 features.maxMemoryDependencyHeight = dependencyInfo[0];
                 features.minMemoryLoopCarriedDep = dependencyInfo[1];
@@ -491,19 +487,15 @@ namespace {
                 auto [maxCDH, totalCDH, numChains] = calculateMaxTotalInstructionControlDependencyHeightAndChains(L, PDT);
                 features.maxControlDependencyHeight = maxCDH;
                 features.maxDependenceHeight = std::max(maxCDH, features.maxMemoryDependencyHeight);
-                features.avgDependenceHeight = (numDependencies > 0) 
-                                                ? float(totalDependenceHeight + totalCDH) / (numDependencies + numChains) 
-                                                : 0;
+                features.avgDependenceHeight = (numDependencies > 0)
+                                            ? float(totalDependenceHeight + totalCDH) / (numDependencies + numChains)
+                                            : 0;
 
-                features.loopStartLine = getLoopStartLine(L);
-                llvm::errs() << features.loopStartLine << '\n';
+                // features.loopStartLine = getLoopStartLine(L);
+                // llvm::errs() << "Loop start line: " << features.loopStartLine << "\n";
+
                 // Add the collected features to the vector
                 allLoopFeatures.push_back(features);
-            }
-
-            // Recursively process subloops
-            for (Loop *SubLoop : L->getSubLoops()) {
-                processLoop(SubLoop, SE, DI, TTI, PDT, allLoopFeatures);
             }
         }
 
@@ -514,11 +506,12 @@ namespace {
             TargetTransformInfo &TTI = FAM.getResult<TargetIRAnalysis>(F);
             PostDominatorTree &PDT = FAM.getResult<PostDominatorTreeAnalysis>(F);
 
-            for (Loop *L : LI) {
+            // Loop through all loops in preorder
+            for (Loop *L : LI.getLoopsInPreorder()) {
                 processLoop(L, SE, DI, TTI, PDT, allLoopFeatures);
             }
 
-            // Use a shared JSON file and group by file
+            // Save features to JSON
             std::string jsonOutputFile = "loop_features.json";
             std::string currentFile = F.getParent()->getSourceFileName();
             saveFeaturesToJson(jsonOutputFile, currentFile, allLoopFeatures);

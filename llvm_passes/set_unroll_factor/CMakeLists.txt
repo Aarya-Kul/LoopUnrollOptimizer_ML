@@ -1,1 +1,1 @@
-add_llvm_pass_plugin(feature_exraction_pass feature_exraction_pass.cpp)
+add_llvm_pass_plugin(SetUnrollFactorPass set_unroll_factor.cpp)
