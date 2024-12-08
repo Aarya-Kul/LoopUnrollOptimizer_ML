@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define the directory containing the executables and input files
-EXECUTABLE_DIR="./data_unrolled_small"
-INPUT_FILES_DIR="./dataset_small"
+EXECUTABLE_DIR="./data_unrolled"
+INPUT_FILES_DIR="./dataset"
 OUTPUT_JSON="loop_labels.json"
 
 # Initialize an empty JSON object
@@ -25,7 +25,6 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
         # Check executables for different factors (1, 2, 4, 6, 8)
         for factor in 1 2 4 6 8; do
             executable="$EXECUTABLE_DIR/${filename%.c}_loop_${loop_count}_factor_${factor}.ll"
-            echo "Running $executable"
 
             if [[ -x "$executable" ]]; then
                 found_loop=true
@@ -35,25 +34,25 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                 
                 # Run the executable 5 times and calculate the total time
                 for i in $(seq 1 $NUM_RUNS); do
-                    # Use perf to measure execution time
-                    perf_output=$(perf stat -e task-clock -x, -r 5 $executable 2>&1)
-                    echo "fight $perf_output"
-                    # Extract task-clock (CPU time) from the perf output
+                    # Capture the start time (in nanoseconds)
+                    start_time=$(date +%s%N)
                     
-                    task_clock=$(echo "$perf_output" | grep 'task-clock' | awk -F, '{print $1}' | awk '{print $1}' | tr -d ',')
-                    echo "task clock $task_clock"
-                    total_time=$(echo "$total_time + $task_clock" | bc)
-                    echo "total time $total_time"
-                    # task_clock=$(echo "$perf_output" | grep 'task-clock' | awk -F, '{print $1}' | awk '{print $1}')
-                    # echo "win"
-                    # # Add the task-clock time to total_time
-                    # total_time=$(echo "$total_time + $task_clock" | bc)
-                    echo "done"
+                    # Execute the program
+                    # echo $executable
+                    lli $executable
+                    
+                    # Capture the end time (in nanoseconds)
+                    end_time=$(date +%s%N)
+
+                    # Calculate the elapsed time in nanoseconds
+                    elapsed_time=$((end_time - start_time))
+                    total_time=$((total_time + elapsed_time))
                 done
 
                 # Calculate the average time
                 avg_time=$(echo "$total_time / $NUM_RUNS" | bc -l)
-                echo $avg_time
+                avg_time=${avg_time%.*}
+                echo "avg_time for factor $factor: $avg_time"
 
                 if [[ $avg_time -lt $min_avg_time ]]; then
                     min_avg_time=$avg_time
