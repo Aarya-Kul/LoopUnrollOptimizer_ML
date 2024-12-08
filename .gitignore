@@ -9,3 +9,7 @@ loop_features.json
 error_log.txt
 dataset/*.ll
 env
+.DS_Store
+*/.DS_Store
+dataset/*.cc
+data_unrolled/*.ll
