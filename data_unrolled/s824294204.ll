@@ -1,0 +1,124 @@
+; ModuleID = 'dataset/s824294204.c'
+source_filename = "dataset/s824294204.c"
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+@.str = private unnamed_addr constant [3 x i8] c"%s\00", align 1, !dbg !0
+@.str.1 = private unnamed_addr constant [3 x i8] c"%d\00", align 1, !dbg !7
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local void @main() #0 !dbg !19 {
+  %1 = alloca i32, align 4
+  %2 = alloca [3 x i8], align 1
+  call void @llvm.dbg.declare(metadata ptr %1, metadata !23, metadata !DIExpression()), !dbg !25
+  call void @llvm.dbg.declare(metadata ptr %2, metadata !26, metadata !DIExpression()), !dbg !27
+  %3 = getelementptr inbounds [3 x i8], ptr %2, i64 0, i64 0, !dbg !28
+  %4 = call i32 (ptr, ...) @__isoc99_scanf(ptr noundef @.str, ptr noundef %3), !dbg !29
+  store i32 0, ptr %1, align 4, !dbg !30
+  br label %5, !dbg !32
+
+5:                                                ; preds = %20, %0
+  %6 = load i32, ptr %1, align 4, !dbg !33
+  %7 = icmp slt i32 %6, 3, !dbg !35
+  br i1 %7, label %8, label %23, !dbg !36
+
+8:                                                ; preds = %5
+  %9 = load i32, ptr %1, align 4, !dbg !37
+  %10 = sext i32 %9 to i64, !dbg !40
+  %11 = getelementptr inbounds [3 x i8], ptr %2, i64 0, i64 %10, !dbg !40
+  %12 = load i8, ptr %11, align 1, !dbg !40
+  %13 = sext i8 %12 to i32, !dbg !40
+  %14 = icmp eq i32 %13, 49, !dbg !41
+  br i1 %14, label %15, label %17, !dbg !42
+
+15:                                               ; preds = %8
+  %16 = call i32 (ptr, ...) @printf(ptr noundef @.str.1, i32 noundef 9), !dbg !43
+  br label %19, !dbg !45
+
+17:                                               ; preds = %8
+  %18 = call i32 (ptr, ...) @printf(ptr noundef @.str.1, i32 noundef 1), !dbg !46
+  br label %19
+
+19:                                               ; preds = %17, %15
+  br label %20, !dbg !48
+
+20:                                               ; preds = %19
+  %21 = load i32, ptr %1, align 4, !dbg !49
+  %22 = add nsw i32 %21, 1, !dbg !49
+  store i32 %22, ptr %1, align 4, !dbg !49
+  br label %5, !dbg !50, !llvm.loop !51
+
+23:                                               ; preds = %5
+  ret void, !dbg !54
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare void @llvm.dbg.declare(metadata, metadata, metadata) #1
+
+declare i32 @__isoc99_scanf(ptr noundef, ...) #2
+
+declare i32 @printf(ptr noundef, ...) #2
+
+attributes #0 = { noinline nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+
+!llvm.dbg.cu = !{!9}
+!llvm.module.flags = !{!11, !12, !13, !14, !15, !16, !17}
+!llvm.ident = !{!18}
+
+!0 = !DIGlobalVariableExpression(var: !1, expr: !DIExpression())
+!1 = distinct !DIGlobalVariable(scope: null, file: !2, line: 6, type: !3, isLocal: true, isDefinition: true)
+!2 = !DIFile(filename: "dataset/s824294204.c", directory: "/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML", checksumkind: CSK_MD5, checksum: "4d9ad1c2a27e4a8e18b58d5a75917b80")
+!3 = !DICompositeType(tag: DW_TAG_array_type, baseType: !4, size: 24, elements: !5)
+!4 = !DIBasicType(name: "char", size: 8, encoding: DW_ATE_signed_char)
+!5 = !{!6}
+!6 = !DISubrange(count: 3)
+!7 = !DIGlobalVariableExpression(var: !8, expr: !DIExpression())
+!8 = distinct !DIGlobalVariable(scope: null, file: !2, line: 9, type: !3, isLocal: true, isDefinition: true)
+!9 = distinct !DICompileUnit(language: DW_LANG_C11, file: !2, producer: "clang version 18.1.8 (https://github.com/llvm/llvm-project.git 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, globals: !10, splitDebugInlining: false, nameTableKind: None)
+!10 = !{!0, !7}
+!11 = !{i32 7, !"Dwarf Version", i32 5}
+!12 = !{i32 2, !"Debug Info Version", i32 3}
+!13 = !{i32 1, !"wchar_size", i32 4}
+!14 = !{i32 8, !"PIC Level", i32 2}
+!15 = !{i32 7, !"PIE Level", i32 2}
+!16 = !{i32 7, !"uwtable", i32 2}
+!17 = !{i32 7, !"frame-pointer", i32 2}
+!18 = !{!"clang version 18.1.8 (https://github.com/llvm/llvm-project.git 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)"}
+!19 = distinct !DISubprogram(name: "main", scope: !2, file: !2, line: 3, type: !20, scopeLine: 3, spFlags: DISPFlagDefinition, unit: !9, retainedNodes: !22)
+!20 = !DISubroutineType(types: !21)
+!21 = !{null}
+!22 = !{}
+!23 = !DILocalVariable(name: "i", scope: !19, file: !2, line: 4, type: !24)
+!24 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
+!25 = !DILocation(line: 4, column: 9, scope: !19)
+!26 = !DILocalVariable(name: "n", scope: !19, file: !2, line: 5, type: !3)
+!27 = !DILocation(line: 5, column: 10, scope: !19)
+!28 = !DILocation(line: 6, column: 16, scope: !19)
+!29 = !DILocation(line: 6, column: 5, scope: !19)
+!30 = !DILocation(line: 7, column: 10, scope: !31)
+!31 = distinct !DILexicalBlock(scope: !19, file: !2, line: 7, column: 5)
+!32 = !DILocation(line: 7, column: 9, scope: !31)
+!33 = !DILocation(line: 7, column: 13, scope: !34)
+!34 = distinct !DILexicalBlock(scope: !31, file: !2, line: 7, column: 5)
+!35 = !DILocation(line: 7, column: 14, scope: !34)
+!36 = !DILocation(line: 7, column: 5, scope: !31)
+!37 = !DILocation(line: 8, column: 14, scope: !38)
+!38 = distinct !DILexicalBlock(scope: !39, file: !2, line: 8, column: 12)
+!39 = distinct !DILexicalBlock(scope: !34, file: !2, line: 7, column: 21)
+!40 = !DILocation(line: 8, column: 12, scope: !38)
+!41 = !DILocation(line: 8, column: 17, scope: !38)
+!42 = !DILocation(line: 8, column: 12, scope: !39)
+!43 = !DILocation(line: 9, column: 13, scope: !44)
+!44 = distinct !DILexicalBlock(scope: !38, file: !2, line: 8, column: 24)
+!45 = !DILocation(line: 10, column: 9, scope: !44)
+!46 = !DILocation(line: 12, column: 13, scope: !47)
+!47 = distinct !DILexicalBlock(scope: !38, file: !2, line: 11, column: 13)
+!48 = !DILocation(line: 14, column: 5, scope: !39)
+!49 = !DILocation(line: 7, column: 18, scope: !34)
+!50 = !DILocation(line: 7, column: 5, scope: !34)
+!51 = distinct !{!51, !36, !52, !53}
+!52 = !DILocation(line: 14, column: 5, scope: !31)
+!53 = !{!"llvm.loop.mustprogress"}
+!54 = !DILocation(line: 15, column: 1, scope: !19)
