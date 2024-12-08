@@ -32,6 +32,8 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                 total_time=0
                 NUM_RUNS=5
                 
+                # echo "running $executable"
+
                 # Run the executable 5 times and calculate the total time
                 for i in $(seq 1 $NUM_RUNS); do
                     # Capture the start time (in nanoseconds)
@@ -39,7 +41,7 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                     
                     # Execute the program
                     # echo $executable
-                    lli $executable
+                    lli $executable < input.txt > exec_out.txt
                     
                     # Capture the end time (in nanoseconds)
                     end_time=$(date +%s%N)
@@ -52,7 +54,7 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                 # Calculate the average time
                 avg_time=$(echo "$total_time / $NUM_RUNS" | bc -l)
                 avg_time=${avg_time%.*}
-                echo "avg_time for factor $factor: $avg_time"
+                # echo "avg_time for factor $factor: $avg_time"
 
                 if [[ $avg_time -lt $min_avg_time ]]; then
                     min_avg_time=$avg_time
@@ -65,6 +67,8 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
         if [[ $found_loop == false ]]; then
             break
         fi
+        
+        echo "Best LUF for Loop $loop_count is $best_factor."
 
         # Add the best factor for this loop to the list
         best_factors+=("$best_factor")
@@ -90,4 +94,4 @@ sed -i '$ s/,$//' $OUTPUT_JSON
 echo "}" >> $OUTPUT_JSON
 
 # Notify the user
-echo "Best factors written to $OUTPUT_JSON"
+echo "Done."

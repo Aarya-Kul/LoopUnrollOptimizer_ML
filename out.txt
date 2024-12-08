@@ -1,0 +1,142 @@
+Processing arrayReversal.c
+Best LUF for Loop 0 is 1.
+Processing bubbleSort.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Processing factorial.c
+Best LUF for Loop 0 is 1.
+Processing fibSequence.c
+Best LUF for Loop 0 is 1.
+Processing insertionSort.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Processing matrixMult.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is 1.
+Processing mergeSort.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is 1.
+Best LUF for Loop 3 is 2.
+Best LUF for Loop 4 is 6.
+Processing power.c
+Best LUF for Loop 0 is 1.
+Processing quickSort.c
+Best LUF for Loop 0 is 1.
+Processing s002492473.c
+Best LUF for Loop 0 is 1.
+Processing s004386874.c
+Best LUF for Loop 0 is 1.
+Processing s004899111.c
+Best LUF for Loop 0 is 1.
+Processing s007554645.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Best LUF for Loop 2 is 2.
+Best LUF for Loop 3 is 2.
+Best LUF for Loop 4 is 2.
+Best LUF for Loop 5 is 2.
+Best LUF for Loop 6 is 1.
+Best LUF for Loop 7 is .
+Best LUF for Loop 8 is .
+Best LUF for Loop 9 is .
+Best LUF for Loop 10 is .
+Best LUF for Loop 11 is .
+Best LUF for Loop 12 is .
+Processing s008727376.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is 1.
+Processing s009976511.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is .
+Best LUF for Loop 2 is .
+Best LUF for Loop 3 is .
+Processing s011881720.c
+Best LUF for Loop 0 is 1.
+Processing s012032525.c
+Best LUF for Loop 0 is 1.
+Processing s013281008.c
+Best LUF for Loop 0 is 2.
+Processing s013555618.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 4.
+Processing s014344137.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Best LUF for Loop 2 is 1.
+Best LUF for Loop 3 is .
+Best LUF for Loop 4 is .
+Best LUF for Loop 5 is .
+Processing s014407137.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Processing s014876801.c
+Best LUF for Loop 0 is 1.
+Processing s015015185.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Best LUF for Loop 2 is 2.
+Processing s016223099.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Processing s016343885.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Processing s019339884.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is .
+Processing s022474572.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is .
+Best LUF for Loop 2 is .
+Best LUF for Loop 3 is .
+Best LUF for Loop 4 is .
+Best LUF for Loop 5 is .
+Best LUF for Loop 6 is .
+Best LUF for Loop 7 is .
+Processing s026991955.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is 2.
+Best LUF for Loop 3 is 6.
+Best LUF for Loop 4 is 1.
+Best LUF for Loop 5 is 4.
+Best LUF for Loop 6 is 1.
+Best LUF for Loop 7 is 1.
+Processing s028428011.c
+Best LUF for Loop 0 is 2.
+Processing s028807969.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Best LUF for Loop 2 is 1.
+Best LUF for Loop 3 is 1.
+Processing s031919084.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Processing s032739621.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is .
+Processing s033565025.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is 1.
+Processing s035320811.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Processing s035605664.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 1.
+Best LUF for Loop 2 is 1.
+Best LUF for Loop 3 is 1.
+Best LUF for Loop 4 is .
+Best LUF for Loop 5 is .
+Processing s036271262.c
+Best LUF for Loop 0 is 1.
+Best LUF for Loop 1 is 2.
+Processing s038043119.c
+Best LUF for Loop 0 is 1.
+Processing s039416155.c
