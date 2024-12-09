@@ -1,11 +1,11 @@
+
 #include <stdio.h>
 
 int main(void)
 {
-    char c[3];
+    char c[93];
 
-    scanf("%c%c%c", &c[0], &c[1], &c[2]);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 93; i++)
     {
         switch (c[i])
         {

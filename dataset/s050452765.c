@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20190820
 #include<stdio.h>
@@ -58,7 +59,7 @@ int chsortfncsj(const void *a,const void *b){if(*(char *)a>*(char *)b){return 1;
 int chsortfnckj(const void *a,const void *b){if(*(char *)a<*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 
 void shuffledget(int x[],int n){
-    int i,b[524288],p,c;
+    int i,b[69],p,c;
     for(i=0;i<n;i++){
         b[i]=i;
     }
@@ -66,9 +67,9 @@ void shuffledget(int x[],int n){
         p=rand()%i;
         c=b[i-1];b[i-1]=b[p];b[p]=c;
     }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
+    //for(i=0;i<n;i++){
+    //    scanf("%d",&x[b[i]]);
+    //}
 }
 
 int dx4[4]={1,-1,0,0};
@@ -87,11 +88,11 @@ int search(int x,int a[],int n){
 
 void prarr(int arr[],int n){
   int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
+  //for(i=0;i<n;i++){
+  //  if(i){printf(" ");}
+  //  printf("%d",arr[i]);
+  //}
+  //printf("\n");
   return;
 }
 
@@ -119,23 +120,23 @@ return 0;
 
 void coordinate_comp(int a[],int n){
   int i,c=0;
-  sd dat[524288];
+  sd dat[69];
   for(i=0;i<n;i++){
     dat[i].val=a[i];
     dat[i].node=i;
   }
   qsort(dat,n,sizeof(dat[0]),sdsortfnc);
-  a[dat[0].node]=c;
+  //a[dat[0].node]=c;
   for(i=1;i<n;i++){
-    if(dat[i-1].val!=dat[i].val){c++;}
-    a[dat[i].node]=c;
+    //if(dat[i-1].val!=dat[i].val){c++;}
+    //a[dat[i].node]=c;
   }
 }
 
 int main(void){
-  int i,j,n,m,k,a[524288],b,c,h,w,r=0,l,t;
-  char s[524288],key[8]="keyence",pk[8];
-  scanf("%s",s);
+  int i,j,n=69,m,k,a[69],b,c,h,w,r=0,l,t;
+  char s[69],key[8]="keyence",pk[8];
+  //scanf("%s",s);
   l=strlen(s);
   for(i=0;i<=7;i++){
     c=0;
@@ -148,8 +149,11 @@ int main(void){
       c++;
     }
     pk[7]=0;
-    if(strcmp(pk,key)==0){printf("YES\n");return 0;}
+    if(strcmp(pk,key)==0){
+      //printf("YES\n");
+      return 0;
+    }
   }
-  printf("NO\n");
+  //printf("NO\n");
   return 0;
 }

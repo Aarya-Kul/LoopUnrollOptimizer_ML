@@ -1,5 +1,4 @@
-//set many funcs template
-//Ver.20190820
+
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -57,54 +56,6 @@ int strsortfnckj(const void *a,const void *b){return strcmp((char *)b,(char *)a)
 int chsortfncsj(const void *a,const void *b){if(*(char *)a>*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 int chsortfnckj(const void *a,const void *b){if(*(char *)a<*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 
-void shuffledget(int x[],int n){
-    int i,b[524288],p,c;
-    for(i=0;i<n;i++){
-        b[i]=i;
-    }
-    for(i=n;i>=1;i--){
-        p=rand()%i;
-        c=b[i-1];b[i-1]=b[p];b[p]=c;
-    }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
-}
-
-int dx4[4]={1,-1,0,0};
-int dy4[4]={0,0,1,-1};
-int dx8[8]={-1,-1,-1,0,0,1,1,1};
-int dy8[8]={-1,0,1,-1,1,-1,0,1};
-
-int search(int x,int a[],int n){
-    int st=0,fi=n-1,te;
-    while(st<=fi){
-        te=(st+fi)/2;
-        if(a[te]<x){st=te+1;}else{fi=te-1;}
-    }
-    return st;
-}
-
-void prarr(int arr[],int n){
-  int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
-  return;
-}
-
-void getperm(int a[],int n){
-  int i,p;
-  for(i=0;i<n;i++){
-    a[i]=i;
-  }
-  for(i=n-1;i>=1;i--){
-    p=rand()%(i+1);
-    swap(&a[p],&a[i]);
-  }
-}
 
 typedef struct{
 long long val;
@@ -122,7 +73,6 @@ return 0;
 long long dp[2048][2048],n;
 sd dat[2048];
 long long rep(long long st,long long fi){
-  //fprintf(stderr,"%lld %lld\n",st,fi);
   if(st>fi){return 0;}
   if(dp[st][fi]!=-1){return dp[st][fi];}
   long long i=(st-1)+(n-fi);
@@ -133,14 +83,14 @@ long long rep(long long st,long long fi){
 
 int main(void){
   long long i,j;
-  scanf("%lld",&n);
+  n = 135; //Fixed n to 135
   for(i=0;i<2048;i++){
     for(j=0;j<2048;j++){
       dp[i][j]=-1;
     }
   }
   for(i=0;i<n;i++){
-    scanf("%lld",&dat[i].val);
+    dat[i].val = i; //Example values, replace with your actual data if needed.
     dat[i].node=i+1;
   }
   qsort(dat,n,sizeof(dat[0]),sdsortfnc);

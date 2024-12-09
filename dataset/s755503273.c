@@ -1,3 +1,4 @@
+
 #include <malloc.h>
 #include <math.h>
 #include <stdio.h>
@@ -27,13 +28,15 @@ void QuickSort(long long A[], long long B[], long long left, long long right) { 
 }
 
 int main(void) {
-  long long n, k, i, mod=1000000007, dpl, dpr, dpmax=0;
-  scanf(" %lld", &n);
-  long long a[n], b[n], dp[n + 1][n + 1]; //dp[左寄せの数][同右]
+  long long n = 51, k, i, mod=1000000007, dpl, dpr, dpmax=0;
+  long long a[51], b[51], dp[52][52]; //dp[左寄せの数][同右]
+
+  // Initialize a and b arrays with sample data (replace with your actual initialization if needed)
   for(i=0; i < n; i++){
-    scanf(" %lld", &a[i]);
+    a[i] = i + 1; 
     b[i]=i;
   }
+
   QuickSort(a, b, 0, n - 1);
 
   dp[1][0]=a[n - 1] * b[n - 1], dp[0][1]=a[n - 1] * (n - 1 - b[n - 1]);
@@ -50,6 +53,6 @@ int main(void) {
   }
   for(i=0; i <= n; i++) if(dpmax < dp[i][n - i]) dpmax=dp[i][n - i];
 
-  printf("%lld", dpmax);
+  //printf("%lld", dpmax); //removed print statement
   return 0;
 }

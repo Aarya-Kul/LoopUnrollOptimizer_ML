@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20190820
 #include<stdio.h>
@@ -65,9 +66,7 @@ void shuffledget(int x[],int n){
         p=rand()%i;
         c=b[i-1];b[i-1]=b[p];b[p]=c;
     }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
+    
 }
 
 int dx4[4]={1,-1,0,0};
@@ -86,11 +85,8 @@ int search(int x,int a[],int n){
 
 void prarr(int arr[],int n){
   int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
+  
+  
   return;
 }
 
@@ -173,7 +169,8 @@ int main(void){
   long long dp[524288]={0};
   long long ndiv[4096],idiv[4096];
   long long ndc,idc;
-  scanf("%lld%s",&n,s);
+  n = 107;
+  strcpy(s,"010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101");
   l=strlen(s);
   for(i=0;i<n;i++){
     r*=2;r%=mod;

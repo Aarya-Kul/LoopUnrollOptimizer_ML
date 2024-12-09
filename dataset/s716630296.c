@@ -1,9 +1,11 @@
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main()
 {
-	int i, j, N;
+	int i, j, N = 103;
 	long *A;
 	int *toIndex;
 	int *isFullFrom;
@@ -14,10 +16,11 @@ int main()
 	int count = 0;
 	long sum = 0;
 	
-	scanf("%d", &N);
+
 	A = (long *) malloc(sizeof(long)*N);
-	for (i = 0; i < N; i++)
-		scanf(" %d", &A[i]);
+    for (i = 0; i < N; i++) {
+        A[i] = i + 1; // Initialize A with some values. You might need to change this based on your original input method.
+    }
 
 	toIndex = (int *)malloc(sizeof(int)*N);
 	isFullFrom = (int *)malloc(sizeof(int)*N);
@@ -47,17 +50,21 @@ int main()
 			}
 		}
 		
+
 		toIndex[orgIndex] = maxIndex;
 		isFullFrom[orgIndex] = 1;
 		isFullTo[maxIndex] = 1;
 		count++;
 	} while (count < N);
 	
+
 	for (i = 0;i < N; i++) {
 		sum += A[i]*abs(i - toIndex[i]);
 	}
 	printf("%ld\n",sum);
-	fflush(stdout);
 	free(A);
+	free(toIndex);
+	free(isFullFrom);
+	free(isFullTo);
 	return EXIT_SUCCESS;
 }

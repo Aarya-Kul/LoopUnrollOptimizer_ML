@@ -1,10 +1,11 @@
+
 #include <stdio.h>
 #include <string.h>
 
 int main()
 {
   int cnt;
-  char str[100] = {0,};
+  char str[100] = "keyence"; //Initialized to "keyence" for consistent testing.  Could also be randomly generated.
   char keyence[] = "keyence";
   int match[7] = {0,};
   int i, j;
@@ -13,11 +14,9 @@ int main()
   int m_2nd = 0;
   int len;
 
-  cnt = scanf("%s", str);
-
   len = strlen(str);
 
-  for (i=0; i<len; i++) {
+  for (i=0; i<137; i++) { // Changed to iterate 137 times
     for (j=0; j<7; j++) {
       if (match[j] != 0) continue;
       if (keyence[j] == str[i]) {

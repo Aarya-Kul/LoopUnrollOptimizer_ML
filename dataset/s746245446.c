@@ -1,3 +1,4 @@
+
 #include <malloc.h>
 #include <math.h>
 #include <stdio.h>
@@ -28,20 +29,23 @@ void QuickSort(int A[], int B[], int left, int right) { //クイックソート/
 }
 
 int main(void) {
-  int n, k, i, cou=0, tmp;
+  int n = 99;
+  int k, i;
   long long mod=1000000007, happy=0, dpl, dpr, dpmax=0;
-  scanf(" %d", &n);
-  int a[n], ax[n], b[n];
-  long long dp[n + 1][n + 1]; //dp[左寄せの数][同右]
+  int a[99], ax[99], b[99];
+  long long dp[100][100]; //dp[左寄せの数][同右]
+
+  //Simulate input.  Replace with your actual input mechanism if needed.
   for(i=0; i < n; i++){
-    scanf(" %d", &a[i]);
-    ax[i]=a[i], b[i]=i;
+    a[i] = i; //Example input values.  Change as needed.
+    ax[i]=a[i]; 
+    b[i]=i;
   }
   QuickSort(a, b, 0, n - 1);
 
-  dp[1][0]=a[n - 1] * b[n - 1], dp[0][1]=a[n - 1] * (n - 1 - b[n - 1]);
-  //printf("dp[1][0]=%lld\n", dp[1][0]);
-  //printf("dp[0][1]=%lld\n", dp[0][1]);
+  dp[1][0]=a[n - 1] * b[n - 1]; 
+  dp[0][1]=a[n - 1] * (n - 1 - b[n - 1]);
+
   for(i=2; i <= n; i++){
     for(k=0; k <= i; k++){
       if(k == 0) dp[i][0]=dp[i - 1][0] + abs(i - b[n - i]-1) * a[n - i];
@@ -49,15 +53,10 @@ int main(void) {
       else{
         dpl=dp[i - k - 1][k] + abs(i - k - 1 - b[n - i]) * a[n - i];
         dpr=dp[i - k][k-1] + abs(n - k - b[n - i]) * a[n - i];
-        //printf(" dpl=%lld+%d*%d=%d\n dpr=%lld+%d*%d=%d\n",
-        //    dp[i - k - 1][k] ,abs(i - k - 1 - b[n - i]), a[n - i],dpl,
-        //    dp[i - k][k - 1] ,abs(n - k  - b[n - i]), a[n - i], dpr);
         if(dpl > dpr) dp[i - k][k]=dpl;
         else dp[i - k][k]=dpr;
       }
-      //printf("dp[%d][%d]=%lld\n", i - k, k, dp[i - k][k]);
     }
-
   }
   for(i=0; i <= n; i++)
     if(dpmax < dp[i][n - i]) dpmax=dp[i][n - i];

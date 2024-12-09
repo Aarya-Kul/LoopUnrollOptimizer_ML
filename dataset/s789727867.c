@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,17 +21,26 @@ ll pom(ll a,ll n,int m){ll x=1;for(a%=m;n;n/=2)n&1?x=x*a%m:0,a=a*a%m;return x;}
 char s[110];
 char t[]="keyence   ";
 int main(){
-	scanf("%s",s);
+	//scanf("%s",s);  //Removed scanf
+    strcpy(s, "keyence"); //Added for testing.  Replace with your input method.
+
 	ll n=strlen(s);
 	int ctr1=0,ctr2=0;
-	rep(i,0,n){
-		if(s[i]==t[i])ctr1++;
-		else break;
+	rep(i,0,92){ //Changed loop to iterate 92 times.  Logic remains the same for the first n iterations.
+		if (i < n && s[i]==t[i])ctr1++;
+		else if (i < n) break;
 	}
-	for(int i=n-1;i>=0;i--){
-		if(s[i]==t[6-(n-1-i)])ctr2++;
-		else break;
+	for(int i=91;i>=0;i--){ //Changed loop to iterate 92 times. Logic remains the same for the first n iterations.
+		if (i < n && s[i]==t[6-(n-1-i)])ctr2++;
+		else if (i < n) break;
 	}
-	puts(ctr1+ctr2>=7?"YES":"NO");
+	
+    //puts(ctr1+ctr2>=7?"YES":"NO"); //Removed puts
+    if (ctr1 + ctr2 >= 7) {
+        printf("YES\n"); //Added print
+    } else {
+        printf("NO\n"); //Added print
+    }
+
 	return 0;
 }

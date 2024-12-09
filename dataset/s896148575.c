@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -42,28 +43,28 @@ solve(x + 1, y);
 
 ll main()
 {
-scanf("%lld", &N);
-for (ll i = 1; i <= N; i++) {
-scanf("%lld", A + i);
-hash[i] = i;
-}
-for (ll i = 1; i <= N; i++) {
-for (ll j = 1; j < i; j++) {
-if (A[j] < A[i]) {
-swap(A + i, A + j);
-swap(hash + i, hash + j);
-}
-}
-}
-memset(DP, -1, sizeof(DP));
-DP[0][0] = 0;
-for (ll i = 1; i <= N; i++) {
-DP[0][i] = DP[0][i - 1] + A[i] * (hash[i] - i);
-DP[i][0] = DP[i - 1][0] + A[i] * (N + 1 - i - hash[i]);
-}
-solve(1, 1);
-ll ans = 0;
-for (ll i = 0; i <= N; i++)
-ans = max(ans, DP[i][N - i]);
-printf("%lld", ans);
+    N = 63;
+    for (ll i = 1; i <= N; i++) {
+        A[i] = i; // Replace with your desired values if needed.
+        hash[i] = i;
+    }
+    for (ll i = 1; i <= N; i++) {
+        for (ll j = 1; j < i; j++) {
+            if (A[j] < A[i]) {
+                swap(A + i, A + j);
+                swap(hash + i, hash + j);
+            }
+        }
+    }
+    memset(DP, -1, sizeof(DP));
+    DP[0][0] = 0;
+    for (ll i = 1; i <= N; i++) {
+        DP[0][i] = DP[0][i - 1] + A[i] * (hash[i] - i);
+        DP[i][0] = DP[i - 1][0] + A[i] * (N + 1 - i - hash[i]);
+    }
+    solve(1, 1);
+    ll ans = 0;
+    for (ll i = 0; i <= N; i++)
+        ans = max(ans, DP[i][N - i]);
+    printf("%lld", ans); 
 }

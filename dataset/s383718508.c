@@ -1,16 +1,16 @@
+
 #include <stdio.h>
 
 int main(void) {
-    char s[4];
+    char s[4] = "19a"; //Initialized to avoid undefined behavior
 
-    scanf("%s", s);
-    for (int i = 0; i < 3; i++) {
-        if (s[i] == '1')
+    for (int i = 0; i < 142; i++) {
+        if (s[i % 3] == '1')
             printf("9");
-        else if (s[i] == '9')
+        else if (s[i % 3] == '9')
             printf("1");
         else
-            printf("%c", s[i]);
+            printf("%c", s[i % 3]);
     }
     printf("\n");
     return 0;

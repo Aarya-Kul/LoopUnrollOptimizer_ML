@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -15,11 +16,11 @@ int comp2(const void *p,const void *q){
 	else return a->x-b->x;
 }
 int main(){
-	int i,j,n,w,h,nx,ny,an,bn,k,ans,m;
-	scanf("%d%d%d",&w,&h,&n);
+	int i,j,n=71,w=71,h=71,nx,ny,an,bn,k,ans,m;
 	an=bn=0;
 	for(i=0;i<n;i++){
-		scanf("%d%d",&a[i].x,&a[i].y);
+		a[i].x = i; //Dummy values for testing
+		a[i].y = i; //Dummy values for testing
 		for(j=0;j<an;j++)if(x[j]==a[i].x)break;
 		if(j==an)x[an++]=a[i].x;
 		for(j=0;j<bn;j++)if(y[j]==a[i].y)break;
@@ -49,6 +50,5 @@ int main(){
 	}
 	printf("%d\n",ans-m);
 	printf("%d %d\n",nx,ny);
-	
 	return 0;
 }

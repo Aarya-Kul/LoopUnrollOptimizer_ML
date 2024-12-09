@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,13 +12,14 @@ int compare(const void *a, const void *b)
 
 int main(void)
 {
-    char n[4];
-    int i;
-    scanf("%s",n);
-    for(i=0;i<3;++i){
-        if(n[i]=='9')n[i]='1';
-        else if(n[i]=='1')n[i]='9';
+    char n[4] = "123"; //Initialized to avoid undefined behavior
+
+    for (int iter = 0; iter < 55; ++iter) {
+        for(int i=0;i<3;++i){
+            if(n[i]=='9')n[i]='1';
+            else if(n[i]=='1')n[i]='9';
+        }
     }
-    puts(n);
+    printf("%s\n", n); 
     return 0;
 }

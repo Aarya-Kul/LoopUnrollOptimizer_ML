@@ -1,7 +1,8 @@
-#include<stdio.h>
+
+#include <stdio.h>
 int main(void)
 {
-	unsigned long long int a, b, c, d, e;
+	unsigned long long int a = 86, b, c, d, e;
 	unsigned long long int i, j;
 	unsigned long long int sum = 0;
 	unsigned long long int A[2000];
@@ -9,13 +10,11 @@ int main(void)
 	int max, min;
 	int tab;
 
-	scanf("%lld", a);
-
 	min = 0;
 	max = a - 1;
 
 	for (i = 0; i < a; i++) {
-		scanf("%lld", A[i]);
+		A[i] = i + 1; //Example values, replace with your desired initialization if needed.
 		B[i] = i;
 	}
 

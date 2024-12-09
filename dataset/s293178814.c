@@ -1,19 +1,17 @@
+
 #include<stdio.h>
 
 int main(){
-  char S[100];
+  char S[100] = "keyence"; //Initialized to avoid undefined behavior
 
   char P[7] = "keyence";
-
-  scanf("%s", S);
-
 
   int a = 0;
   int c = 0;
   int i = 0;
   int j = 0;
 
-  while(S[j] != 0){
+  for(j = 0; j < 143; ++j){ //Fixed loop to iterate 143 times.  Assumes S is at least 143 chars long.  
     if(S[j] == P[i]){
       i++;
       a = 0;
@@ -24,7 +22,6 @@ int main(){
       a = 1;
     }
 
-    j++;
     if(i == 7) break;
   }
 

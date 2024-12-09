@@ -1,9 +1,12 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+
 #define mem(x,y)		(x*)malloc(sizeof(x)*(y))
 #define PI 3.14159265358979
+#define N 65
 
 int int_sort(const void* a,const void* b)
 {
@@ -20,10 +23,8 @@ int int_sort(const void* a,const void* b)
 
 int main()
 {
-	int w,h,n;
+	int w,h,n = N;
 	int i,j;
-	scanf("%d %d",&w,&h);
-	scanf("%d",&n);
 	int** list = mem(int*,2);
 	int** data = mem(int*,n);
 	list[0] = mem(int,n);
@@ -31,7 +32,9 @@ int main()
 	for(i = 0;i < n;i++)
 	{
 		data[i] = mem(int,2);
-		scanf("%d %d",&data[i][0],&data[i][1]);
+		//scanf("%d %d",&data[i][0],&data[i][1]);  Removed scanf
+        data[i][0] = i*2; //Example data
+        data[i][1] = i*3; //Example data
 		list[0][i] = data[i][0];
 		list[1][i] = data[i][1];
 	}

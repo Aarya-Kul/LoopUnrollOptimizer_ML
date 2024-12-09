@@ -1,11 +1,9 @@
-#include <stdio.h>
+
 #include <string.h>
 
 int check(char *s, char *key){
     int i;
     for(i=0; s[i] == key[i]; i++);
-//    printf("%s, %s\n",s+i, key+i);
-    //return extract(s+i, key+i);
 
     if(i >= 6)
         return 1;
@@ -18,22 +16,25 @@ int check(char *s, char *key){
 int main() {
     int i=0;
     char s[101], *ky = "keyence";
-    scanf("%s", s);
-restart:
-    for(; s[i] != 'k' && s[i] != '\0'; i++);
-    if(!*(s+i)){
-        printf("NO\n");
-        return 0;
+    //Simulate 131 iterations with a sample string.  Actual input is removed.
+    for (int j=0; j<131; ++j){
+        strcpy(s, "This is a sample string for testing keyence"); //Replace with your test string
+
+        for(; s[i] != 'k' && s[i] != '\0'; i++);
+        if(!*(s+i)){
+            //printf("NO\n"); //Removed print
+            continue; //Simulate NO print and proceed to next iteration.
+        }
+        if(check(s+i, ky))
+            //printf("YES\n"); //Removed print
+            ; //Simulate YES print
+        else{
+            //printf("NO\n"); //Removed print
+            ; //Simulate NO print
+
+        }
+        i=0; //Reset i for the next iteration
     }
-    if(check(s+i, ky))
-        printf("YES\n");
-    else{ 
-        //if(*(s+i+7) == '\0')
-            printf("NO\n");
-        // else{
-        //     i++;
-        //     goto restart;
-        // }
-    }
+
   return 0;
 }

@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20190820
 #include<stdio.h>
@@ -65,9 +66,9 @@ void shuffledget(int x[],int n){
         p=rand()%i;
         c=b[i-1];b[i-1]=b[p];b[p]=c;
     }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
+    //for(i=0;i<n;i++){
+    //    scanf("%d",&x[b[i]]);
+    //}
 }
 
 int dx4[4]={1,-1,0,0};
@@ -84,15 +85,15 @@ int search(int x,int a[],int n){
     return st;
 }
 
-void prarr(int arr[],int n){
-  int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
-  return;
-}
+//void prarr(int arr[],int n){
+//  int i;
+//  for(i=0;i<n;i++){
+//    if(i){printf(" ");}
+//    printf("%d",arr[i]);
+//  }
+//  printf("\n");
+//  return;
+//}
 
 void getperm(int a[],int n){
   int i,p;
@@ -162,10 +163,10 @@ long long lit(char s[],long long l){
 
 int main(void){
   //srand(time(0));
-  long long i,j,n,m,k,a[524288],b,c,h,w,r=0,l,t;
-  char s[524288],att[524288];
+  long long i,j,n=50,m,k,a[524288],b,c,h,w,r=0,l,t;
+  char s[524288]="01010101010101010101010101010101010101010101010101",att[524288];
   long long dp[524288]={0};
-  scanf("%lld%s",&n,s);
+  //scanf("%lld%s",&n,s);
   l=strlen(s);
   for(i=0;i<n;i++){
     r*=2;r%=mod;

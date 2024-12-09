@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -29,17 +30,16 @@ int main(void)
     static int hx[100000], hy[100000];
     static int mx[100000], my[100000];
     int i;
-    int w, h, n;
+    int w = 10, h = 10, n = 90; //Dummy values for testing.  Replace with your I/O mechanism if needed.
     int pivx, pivy;
     ll res;
     
-    scanf("%d%d", &w, &h);
-    scanf("%d", &n);
-    
+    //Dummy data for testing. Replace with your I/O mechanism if needed.
     for (i = 0; i < n; i++){
-        scanf("%d%d", &hx[i], &hy[i]);
+        hx[i] = i;
+        hy[i] = i;
     }
-    
+
     memcpy(my, hy, sizeof(hy));
     memcpy(mx, hx, sizeof(hx));
     

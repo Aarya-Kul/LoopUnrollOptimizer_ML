@@ -1,15 +1,22 @@
+
 #include<stdio.h>
 int main(int argc, char const *argv[])
 {
     char str[3];
-    scanf("%s",str);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 59; i++)
     {
-        if (str[i]=='1')
+        str[0] = '1';
+        str[1] = '1';
+        str[2] = '1';
+
+        for (int j = 0; j < 3; j++)
         {
-            str[i]='9';
-        }else{
-            str[i]='1';
+            if (str[j]=='1')
+            {
+                str[j]='9';
+            }else{
+                str[j]='1';
+            }
         }
     }
     printf("%s\n",str);

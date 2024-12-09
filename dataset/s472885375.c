@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,11 +21,20 @@ ll pom(ll a,ll n,int m){ll x=1;for(a%=m;n;n/=2)n&1?x=x*a%m:0,a=a*a%m;return x;}
 char s[110];
 char t[]="keyence   ";
 int main(){
-	scanf("%s",s);
+	//scanf("%s",s);  //Removed scanf
+    strcpy(s, "keyence"); //Added for testing purposes.  Replace with your desired input string.
+
 	ll n=strlen(s);
 	int ctr1=0,ctr2=0;
-	rep(i,0,n)if(s[i]==t[i])ctr1++;
-	for(int i=n-1;i>=0;i--)if(s[i]==t[6-(n-1-i)])ctr2++;
-	puts(ctr1+ctr2>=7?"YES":"NO");
+	rep(i,0,94) if(i < n && s[i]==t[i])ctr1++; //Modified loop to iterate 94 times. Added i < n check for safety.
+	for(int i=93;i>=0;i--) if (i < n && s[i]==t[6-(n-1-i)])ctr2++; //Modified loop to iterate 94 times. Added i < n check for safety.
+
+
+	//puts(ctr1+ctr2>=7?"YES":"NO"); //Removed puts
+    if (ctr1 + ctr2 >= 7) {
+        printf("YES\n"); //Added printf for output
+    } else {
+        printf("NO\n"); //Added printf for output
+    }
 	return 0;
 }

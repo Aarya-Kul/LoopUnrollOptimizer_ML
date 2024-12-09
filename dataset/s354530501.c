@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,41 +25,32 @@ int utoi(char c){return c-'A';}
 long long mod=1000000007;
 
 int main(void){
-    int n,m=40;
-    scanf("%d",&n);
-    int x[n],y[n];
-    for (int i=0; i<n; i++){
-        scanf("%d%d",&x[i],&y[i]);
+    int n = 81; //Fixed n to 81
+    int m=40;
+    int x[81],y[81];
+    //Assuming some default values for x and y to avoid runtime errors.  Replace with your actual logic if needed.
+    for (int i=0; i<81; i++){
+        x[i] = 0;
+        y[i] = 0;
         if ( abs(x[i]+y[i])%2!=abs(x[0]+y[0])%2 ){
-            printf("-1\n");
+            //printf("-1\n"); //Removed print statement
             return 0;
         }
     }
     m-=abs(x[0]+y[0])%2;
-    printf("%d\n%d %d\n",m,1,1);
-    for (int i=0; i<n; i++){
-        
+    //printf("%d\n%d %d\n",m,1,1); //Removed print statement
+
+    for (int i=0; i<81; i++){
         for (int j=0; j<abs(x[i]); j++){
-            if (x[i]>0){
-                printf("R");
-            } else {
-                printf("L");
-            }
+            //if (x[i]>0){ printf("R"); } else { printf("L"); } //Removed print statements
         }
         for (int j=0; j<abs(y[i]); j++){
-            if (y[i]>0){
-                printf("U");
-            } else {
-                printf("D");
-            }
+            //if (y[i]>0){ printf("U"); } else { printf("D"); } //Removed print statements
         }        
         for (int j=0; j<(m-abs(x[i]+y[i]))/2; j++){
-            printf("UD");
+            //printf("UD"); //Removed print statement
         }
-        printf("\n");
-    }
-    
-    
-    
-	return 0 ;
+        //printf("\n"); //Removed print statement
+    }    
+    return 0 ;
 }

@@ -1,5 +1,7 @@
+
 #include <stdio.h>
 #include <math.h>
+
 #define DOT(v1, v2) (v1.x * v2.x + v1.y * v2.y)
 #define CROSS(v1, v2) (v1.x * v2.y - v1.y * v2.x)
 #define NORM(v) (v.x * v.x + v.y * v.y)
@@ -56,11 +58,15 @@ int main(int argc, char **argv) {
   int q, i;
   segment_t s1, s2;
 
-  scanf("%d", &q);
+  //Removed scanf,  using fixed values for demonstration.  Replace with your I/O if needed.
+  q = 127; //Fixed number of iterations
+
   for (i = 0; i < q; ++i) {
-    scanf("%lf %lf %lf %lf %lf %lf %lf %lf",
-        &s1.p0.x, &s1.p0.y, &s1.p1.x, &s1.p1.y,
-        &s2.p0.x, &s2.p0.y, &s2.p1.x, &s2.p1.y);
+    // Example values - replace with your actual I/O mechanism if needed.
+    s1.p0.x = 1.0; s1.p0.y = 2.0; s1.p1.x = 3.0; s1.p1.y = 4.0;
+    s2.p0.x = 5.0; s2.p0.y = 6.0; s2.p1.x = 7.0; s2.p1.y = 8.0;
+
     printf("%.10lf\n", distance(s1, s2));
   }
+  return 0;
 }

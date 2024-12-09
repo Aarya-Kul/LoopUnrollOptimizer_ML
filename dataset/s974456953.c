@@ -1,29 +1,20 @@
+
 #include <stdio.h>
 
 int main(void)
 {
     int i;
-    char n[4];
-    scanf("%s", n);
-    while (n[i] != '\0')
-    {
-        if (n[i] == '1')
-        {
-            n[i] = '9';
-            goto end;
-        }
+    char n[4] = "111"; //Initialized to a fixed value for consistent iteration
 
-        if (n[i] == '9')
-        {
-            n[i] = '1';
-            goto end;
+    for (i = 0; i < 106; i++) {
+        if (n[i % 3] == '1') {
+            n[i % 3] = '9';
+        } else if (n[i % 3] == '9') {
+            n[i % 3] = '1';
         }
-
-        end:
-        i++;
     }
 
-    printf ("%s", n);
+    printf("%s", n); 
 
     return (0);
 }

@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 long long R=1,C=1,H[2000010],N[2000010];
@@ -23,23 +24,19 @@ int hout(){
 long long MAX(long long a,long long b){return a<b?b:a;}
 int main(){
   long long i,j,n,a,d[2010][2010]={};
-  scanf("%lld",&n);
+  n = 51; //Fixed n to 51
   for(i=0;i<n;i++){
-    scanf("%lld",&a);
+    a = i + 1; //Simulate input
     hin(a);
   }
   for(i=0;i<n;i++){
     a=hout();
-    //printf("%lld %lld\n",a,N[a]);
     for(j=0;j<=i;j++){
       d[i+1][j  ]=MAX(d[i+1][j  ],d[i][j]+N[a]*labs((n-i+j)-a));
       d[i+1][j+1]=MAX(d[i+1][j+1],d[i][j]+N[a]*labs(a-(j+1)));
     }
   }
-  /*for(i=0;i<=n;i++){
-    for(j=0;j<=n;j++)printf("%3lld ",d[i][j]);printf("\n");
-    }//*/
   for(i=j=0;i<=n;i++)j=MAX(j,d[n][i]);
-  printf("%lld\n",j);
+  printf("%lld\n",j); 
   return 0;
 }

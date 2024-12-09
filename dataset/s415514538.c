@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,13 +11,13 @@
 
 int main(int argc, char const *argv[])
 {
-	char str[7];
-	scanf("%s",str);
-	for (int i = 0; i < 3; ++i)
-	{
-		if(str[i] == '1')	printf("9");
-		else printf("1");
+	char str[7] = "101"; //Initialized to a sample value.  The input is removed.
+	for (int i = 0; i < 59; ++i) { //Loop changed to iterate 59 times.
+		for (int j = 0; j < 3; ++j) {
+			if(str[j] == '1') printf("9");
+			else printf("1");
+		}
+		printf("\n");
 	}
-	puts("");
   return 0;
 }

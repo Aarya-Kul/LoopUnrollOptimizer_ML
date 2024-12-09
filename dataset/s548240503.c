@@ -1,13 +1,3 @@
-#if 0
-cat <<EOF >mistaken-paste
-#endif
-// thx Ebi-chan!
-
-// #pragma GCC optimize("unroll-loops")
-// #pragma GCC optimize("O3")
-
-#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
-#define _USE_MATH_DEFINES
 
 #include <stdio.h>
 #include <stdint.h>
@@ -27,40 +17,6 @@ typedef uint64_t ull;
 typedef  int64_t sll;
 
 #define N_MAX 1048576
-
-#ifdef __cplusplus
-#include <queue>
-#include <stack>
-#include <tuple>
-#include <set>
-#include <map>
-#include <string>
-#include <algorithm>
-#include <functional>
-#include <array>
-
-using std::queue;
-using std::priority_queue;
-using std::stack;
-using std::tuple;
-using std::set;
-using std::map;
-using std::vector;
-using std::greater;
-using std::pair;
-using std::string;
-using std::get;
-
-template <typename T, typename U>
-pair<T, U> operator+(pair<T, U> l, pair<T, U> r) {
-	return pair<T, U>(l.first + r.first, l.second + r.second);
-}
-
-#endif
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846264338327950
-#endif
 
 typedef struct {
 	sll a;
@@ -171,17 +127,6 @@ int bitcount (ull n) {
 #define DEFLR(TYPE) TYPE l=*(TYPE*)left,r=*(TYPE*)right
 #define CMPRET(L, R) if((L)<(R))return-1;if((L)>(R))return+1
 
-// int32_t pullcomp (const void *left, const void *right) {
-// 	ull l = *(ull*)left;
-// 	ull r = *(ull*)right;
-// 	if (l < r) {
-// 		return -1;
-// 	}
-// 	if (l > r) {
-// 		return +1;
-// 	}
-// 	return 0;
-// }
 BEGCMP(pullcomp){
 	DEFLR(ull);
 	CMPRET(l, r);
@@ -295,24 +240,17 @@ ull ncr (sll n, sll r, ull m) {
 }
 
 sll a[N_MAX + 5];
-// ull a[N_MAX + 5];
-// sll a[3001][3001];
 sll b[N_MAX + 5];
-// ull b[N_MAX + 5];
-// sll b[3001][3001];
 sll c[N_MAX + 5];
 sll d[N_MAX + 5];
 sll e[N_MAX * 4];
 char s[N_MAX + 1];
-// char s[3010][3010];
 char t[N_MAX + 1];
-// char t[3010][3010];
 char u[N_MAX + 1];
 hwll xy[N_MAX + 5];
 hwllc tup[N_MAX + 5];
 sll table[3005][3005];
 ull gin[N_MAX];
-// here we go
 
 ull parent[N_MAX], size[N_MAX];
 void init (ull n) {
@@ -342,32 +280,26 @@ bool unite (ull a, ull b) {
 }
 
 
-
 ull divs[N_MAX], dp[N_MAX], dlen = 0;
 
 ull solve () {
 	sll i, j, ki, li;
-	// ull result = 0;
 	sll result = 0;
 	double dresult = 0;
-	// ull maybe = 0;
 	sll maybe = 0;
-	// ull sum = 0;
 	sll sum = 0;
 	sll item;
 	sll *dpcell;
 
-	for (i = 1; i <= n * 2; i++) {
-		if (n % i == 0) continue;
-		if ((n * 2) % i != 0) continue;
+    for (i = 0; i < 111; ++i) {
+        if (n % i == 0) continue;
+        if ((n * 2) % i != 0) continue;
 
-		divs[dlen] = i;
-		dlen++;
-	}
+        divs[dlen] = i;
+        dlen++;
+    }
 
-	for (i = 0; i < dlen; i++) {
-		// dp[i] = bitpow(2, divs[i] / 2, FOD);
-
+	for (i = 0; i < 111; i++) {
 		ull d = divs[i] / 2;
 		for (j = 0; j < d; j++) {
 			dp[i] = (dp[i] * 2) % FOD;
@@ -384,11 +316,7 @@ ull solve () {
 				break;
 			}
 		}
-		// printf("%s\n", (isok ? "ok" : "no"));
 		if (isok) dp[i]++;
-		// dp[i]--;
-
-		// printf("%lld: %llu?\n", divs[i], dp[i]);
 
 		sum = 0;
 		for (j = 0; j < i; j++) {
@@ -402,28 +330,9 @@ ull solve () {
 	}
 	result %= FOD;
 
-	printf("%lld\n", result);
-	// printf("%.15f\n", dresult);
-	// puts(s);
+    printf("%lld\n", result);
 
 	return 0;
-
-	success:
-	puts("YES");
-	// puts("Yes");
-	// printf("%llu\n", result);
-	// puts("0");
-	// puts("First");
-	return 0;
-
-	fail:
-	puts("NO");
-	// puts("No");
-	// puts("0");
-	// puts("-1");
-	// puts("-1 -1 -1");
-	// puts("Second");
-	return 1;
 }
 
 int32_t main (int argc, char *argv[]) {
@@ -431,81 +340,8 @@ int32_t main (int argc, char *argv[]) {
 
 	n = 3;
 	m = 0;
+    strcpy(s,"100");
 
-	// scanf("%llu", &m);
-	// scanf("%llu%llu", &h, &w);
-	scanf("%llu", &n, &m);
-	// scanf("%llu", &k, &n, &m);
-	// scanf("%llu%llu", &h, &w);
-	// scanf("%llu", &q);
-	// scanf("%lld%lld", &va, &vb, &vc, &vd);
-	// va--;
-	// vb--;
-	// scanf("%llu%llu%llu%llu", &ua, &ub, &uc, &ud, &ue);
-	scanf("%s", s);
-	// scanf("%s", t);
-	// scanf("%s", u);
-	// scanf("%llu", &k);
-	// scanf("%lld", &m);
-	// for (i = 0; i < n; i++) {
-	// 	// scanf("%lld", &a[i]);
-	// 	scanf("%lld", &d[i]);
-	// }
-	// scanf("%llu", &q);
-	for (i = 0; i < 0; i++) {
-		// scanf("%lld%lld", &xy[i].a, &xy[i].b);
-		// scanf("%lld%lld%lld", &tup[i].a, &tup[i].b, &tup[i].c);
-		// scanf("%lld", &c[i]);
-
-		scanf("%lld", &a[i]);
-		// scanf("%lld", &b[i]);
-		// scanf("%lld", &c[i]);
-		// scanf("%lld", &d[i]);
-		// a[i]--;
-		// b[i]--;
-		// c[i]--;
-		// d[i]--;
-		// xy[i].a--;
-		// xy[i].b--;
-		// tup[i].a--;
-		// tup[i].b--;
-	}
-	// scanf("%lld%lld", &va, &vb);
-	// scanf("%llu", &m);
-	// scanf("%llu", &q);
-	// scanf("%s", s);
-	// for (i = 0; i < n; i++) {
-	// 	// scanf("%lld%lld", &xy[i].a, &xy[i].b);
-	// 	// xy[i].a--;
-	// 	// xy[i].b--;
-	// 	// scanf("%lld", &a[i], &b[i]);
-	// 	// scanf("%lld", &b[i]);
-	// 	// a[i]--;
-	// 	// b[i]--;
-	// 	scanf("%lld", &c[i]);
-	// 	scanf("%lld", &d[i]);
-	// 	// scanf("%lld", &e[i]);
-	// 	c[i]--;
-	// 	d[i]--;
-	// }
-
-	// for (i = 0; i < q; i++) {
-	// 	// scanf("%lld%lld", &xy[i].a, &xy[i].b);
-	// 	scanf("%lld", &c[i]);
-	// 	// xy[i].a--;
-	// 	// xy[i].b--;
-	// }
-
-	// for (i = 0; i < h; i++) {
-	// 	for (j = 0; j < w; j++) {
-	// 		scanf("%lld", &table[i][j]);
-	// 		// table[i][j]--;
-	// 	}
-	// }
-	// for (i = 0; i < n; i++) {
-	// 	scanf("%s", s[i]);
-	// }
-	// scanf("%llu", &q);
 
 	solve();
 

@@ -1,13 +1,23 @@
+
 #include <stdio.h>
 
 int main(void) {
-	char n[8];
+	char n[8] = "19191919"; //Initialized to a sample string.  Could also be zeroed.
 	int i;
-	if (scanf("%7s", n) != 1) return 1;
-	for (i = 0; n[i] != '\0'; i++) {
-		int c = (unsigned char)n[i];
-		putchar(c == '1' ? '9' : (c == '9' ? '1' : c));
+	for (i = 0; i < 64; i++) {
+		int c = (unsigned char)n[i % 8]; //Allows looping beyond string length.
+		char output = (c == '1' ? '9' : (c == '9' ? '1' : c));
+		//putchar(output); //Removed putchar. Output is now handled differently.
+                //The below simulates the putchar behavior for demonstration.
+                if (i < 64){
+                    if (output == '1' || output == '9'){
+                        printf("%c", output);
+                    } else {
+                         printf("%c", c);
+                    }
+                }
+
 	}
-	putchar('\n');
+	printf("\n"); // Simulates the final newline
 	return 0;
 }

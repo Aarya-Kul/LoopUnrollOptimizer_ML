@@ -1,50 +1,46 @@
+
 #include <stdio.h>
 #include <math.h>
 
 int main(void)
 {
-	int n, mod, d1[31], d2[31];
+	int n = 140, mod, d1[31], d2[31];
 	long x[1000], y[1000], k, u, v;
 	char ans[31];
-	scanf("%d", &n);
-	for (int i = 0; i < n; ++i)
-	{
-		scanf("%ld%ld", &x[i], &y[i]);
-	}
+    
+    // Initialize x and y to some values.  Input is removed.
+    for (int i = 0; i < n; ++i) {
+        x[i] = i * 2; // Example values
+        y[i] = i * 3; // Example values
+    }
+
 	k=2000000000;
 	mod=((x[0]+y[0])+k+2)%2;
 	for (int i = 0; i < n; ++i)
 	{
 		if (((x[i]+y[i])+k+2)%2 != mod)
 		{
-			printf("%d\n", -1);
+			//printf("%d\n", -1);
 			return 0;
 		}
 	}
 
-	if (mod==0)
-	{
-		printf("%d\n", 32);
-		for (int i = 0; i < n; ++i)
-		{
-			x[i]-=1;
-		}
-		printf("%d ", 1);
-		for (int i = 0; i < 31; ++i)
-		{
-			printf("%ld ", (long)pow(2,i));
-		}
-		printf("\n");
-	}
-	else
-	{
-		printf("%d\n", 31);
-		for (int i = 0; i < 31; ++i)
-		{
-			printf("%d ", (int)pow(2,i));
-		}
-		printf("\n");
-	}
+	//printf("%d\n", (mod == 0) ? 32 : 31);
+    if (mod==0)
+    {
+        //printf("%d ", 1);
+        for (int i = 0; i < n; ++i)
+        {
+            x[i]-=1;
+        }
+        // for loop to print powers of 2 is removed, as it's not directly related to the core logic
+    }
+    else
+    {
+        // for loop to print powers of 2 is removed, as it's not directly related to the core logic
+    }
+
+
 	for (int j = 0; j < n; ++j)
 	{
 		u=(x[j]+y[j]-1)/2+(long)pow(2,30);
@@ -86,14 +82,8 @@ int main(void)
 				ans[i]='L';
 			}
 		}
-		if (mod==1)
-		{
-			printf("%s\n", ans);
-		}
-		else
-		{
-			printf("R%s\n", ans);
-		}
+        //printf("%s\n", (mod==1) ? ans : "R"); //removed print
+
 	}
 	return 0;
 }

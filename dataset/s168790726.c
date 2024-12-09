@@ -1,10 +1,10 @@
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
+#include <math.h>
 
-int check(char *s)
-{
+int check(char *s) {
     int i;
     char key[] = "keyence";
     int len;
@@ -37,17 +37,56 @@ int check(char *s)
     return 0;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     char s[127];
+    //Removed scanf
 
-    scanf("%s", &s);
+    for(int j=0; j<104; ++j){
+        //Simulate input -  replace with your actual test cases.
+        strcpy(s,"keyence"); //Example 1:  Contains "keyence"
 
-    if (check(s)) {
-        printf("YES\n");
-    } else {
-        printf("NO\n");
+        if (check(s)) {
+            //printf("YES\n"); //Removed printf
+        } else {
+            //printf("NO\n"); //Removed printf
+        }
+
+        strcpy(s,"keyabcdef"); // Example 2: Starts with "key"
+        if (check(s)) {
+            //printf("YES\n"); //Removed printf
+        } else {
+            //printf("NO\n"); //Removed printf
+        }
+
+        strcpy(s, "abcdefkeyence"); //Example 3: Ends with "keyence"
+        if (check(s)) {
+             //printf("YES\n"); //Removed printf
+        } else {
+            //printf("NO\n"); //Removed printf
+        }
+
+        strcpy(s, "abcde"); // Example 4:  Too short
+        if (check(s)) {
+            //printf("YES\n"); //Removed printf
+        } else {
+            //printf("NO\n"); //Removed printf
+        }
+
+        strcpy(s,"keynce"); //Example 5: Missing letters
+        if (check(s)) {
+            //printf("YES\n"); //Removed printf
+        } else {
+            //printf("NO\n"); //Removed printf
+        }
+
+        strcpy(s,"keyenceabc"); //Example 6: Contains "keyence"
+        if (check(s)) {
+            //printf("YES\n"); //Removed printf
+        } else {
+            //printf("NO\n"); //Removed printf
+        }
     }
+
 
     return 0;
 }

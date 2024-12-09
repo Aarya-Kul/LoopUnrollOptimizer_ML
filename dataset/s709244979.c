@@ -1,13 +1,17 @@
-#include<stdio.h>
-#include<stdlib.h>
+
+#include <stdio.h>
+#include <stdlib.h>
 #define ll long long
+#define N 136
+
 int cmp(const void*a,const void*b){return*(long long*)a-*(long long*)b;}
+
 int main(){
-    ll n, i, j, ans = 0;
-    scanf("%lld",&n);
-    ll a[n + 1], b[n], c[n + 1], d[n + 1];
+    ll n = N, i, j, ans = 0;
+    ll a[N + 1], b[N], c[N + 1], d[N + 1];
     for(i = 1; i <= n; i++)
-        scanf("%lld",&a[i]);
+        a[i] = i; // Replace with your desired initialization
+
     for(i = 1; i <= n; i++)
         b[i - 1] = a[i];
     for(i = 0; i <= n; i++)
@@ -22,19 +26,21 @@ int main(){
                 if(d1 < d2){
                     ans += a[j] * d2;
                     d[end] = a[j];
-                    end --;
+                    end--;
                 }
                 else{
                     ans += a[j] * d1;
                     d[start] = a[j];
                     start++;
                 }
+                c[j] = 1;
             }
         }
     }
+    printf("Array d: ");
     for(i = 1; i <= n; i++)
         printf("%lld ",d[i]);
     printf("\n");
-    printf("%lld\n",ans);
+    printf("ans: %lld\n",ans);
     return 0;
 }

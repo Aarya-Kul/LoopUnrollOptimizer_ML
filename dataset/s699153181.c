@@ -1,11 +1,15 @@
+
 #include <stdio.h>
 #include <string.h>
-//異なる列が前か中か後かを判定(変わるタイミングでフラグを立てる)
+
 int main(){
   int i=0,ok=-1,str=0,change=0;
   char key[8],ch;
   strcpy(key,"keyence");
-  while(scanf("%c",&ch)!=EOF){
+  for(int k=0; k<72; ++k){ //Simulate 72 inputs.  Replace with actual input if needed.
+      ch = (k < 7) ? key[k] : 'x'; //Simulate keyence then other characters.
+
+
     if(key[i]==ch){
       if(ok==0) change++;
       i++; 
@@ -18,6 +22,7 @@ int main(){
     else ok=0;
     str++;
   }
-  if(i==7&&(str==7||ok==1)&&change<=2)printf("YES");
+  if(i==7&&(str==72||ok==1)&&change<=2)printf("YES");
   else printf("NO");
+  return 0;
 }

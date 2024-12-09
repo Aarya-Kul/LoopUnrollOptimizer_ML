@@ -1,9 +1,11 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
 #include <limits.h>
+
 int max(int a, int b){return a>b?a:b;}
 int min(int a, int b){return a<b?a:b;}
 int gcd(int a, int b){return min(a,b)==0?max(a,b):gcd(min(a,b),max(a,b)%min(a,b));}
@@ -24,46 +26,42 @@ int utoi(char c){return c-'A';}
 long long mod=1000000007;
 
 int main(void){
-    int n,m=20;
-    scanf("%d",&n);
-    int x[n],y[n];
-    for (int i=0; i<n; i++){
-        scanf("%d%d",&x[i],&y[i]);
+    int n=126,m=20;
+    int x[126],y[126];
+    //Assuming some default values for x and y to avoid runtime errors.  Replace with your actual logic if needed.
+    for (int i=0; i<126; i++){
+        x[i] = i % 10;
+        y[i] = i % 20;
         if ( abs(x[i]+y[i])%2!=abs(x[0]+y[0])%2 ){
-            printf("-1\n");
+            //printf("-1\n");
             return 0;
         }
     }
     m-=abs(x[0]+y[0])%2;
-    printf("%d\n",m);
+    //printf("%d\n",m);
     for (int i=0; i<m-1; i++){
-        printf("1 ");
+        //printf("1 ");
     }
-    printf("1\n");
-    
-    for (int i=0; i<n; i++){
-        
+    //printf("1\n");
+    for (int i=0; i<126; i++){
         for (int j=0; j<abs(x[i]); j++){
-            if (x[i]>0){
-                printf("R");
-            } else {
-                printf("L");
-            }
+            //if (x[i]>0){
+            //    printf("R");
+            //} else {
+            //    printf("L");
+            //}
         }
         for (int j=0; j<abs(y[i]); j++){
-            if (y[i]>0){
-                printf("U");
-            } else {
-                printf("D");
-            }
-        }        
-        for (int j=0; j<(m-abs(abs(x[i])+abs(y[i])))/2; j++){
-            printf("UD");
+            //if (y[i]>0){
+            //    printf("U");
+            //} else {
+            //    printf("D");
+            //}
         }
-        printf("\n");
+        for (int j=0; j<(m-abs(abs(x[i])+abs(y[i])))/2; j++){
+            //printf("UD");
+        }
+        //printf("\n");
     }
-    
-    
-    
-	return 0 ;
+    return 0 ;
 }

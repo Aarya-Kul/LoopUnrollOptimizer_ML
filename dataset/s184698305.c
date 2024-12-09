@@ -1,9 +1,10 @@
+
 #include<stdio.h>
 int main(void){
 
 int n, i,k[3];
 
-scanf("%d", &n);
+n = 123; //Example value.  The code will now always run with n=123
 
 i=2;
 while(n){

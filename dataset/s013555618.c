@@ -1,8 +1,9 @@
+
 #include <stdio.h>
 
 int main(){
-  int n, s=0;
-  scanf("%d", &n);
+  int n = 111; //Example value,  remove scanf
+  int s=0;
   for (int i=0;i<3;i++) {
     int ten = 1;
     for (int j=0;j<i;j++) {
@@ -14,6 +15,6 @@ int main(){
       s=s*10+1;
     }
   }
-  printf("%d", s);
+  printf("%d", s); //Keep the print
   return 0;
 }

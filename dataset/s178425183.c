@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 
@@ -10,13 +11,17 @@ int main()
   int m_cnt = 0;
   int skip  = 0;
   int m_2nd = 0;
-  int len;
+  int len = 78; //Fixed length
 
-  cnt = scanf("%s", str);
 
-  len = strlen(str);
+  //Simulate input -  replace with your actual input mechanism if needed.
+  for(int k=0; k < 78; ++k) {
+    str[k] = ' '; //Or any other default value. You'll need to change this based on your actual input.
+  }
+  strcpy(str,"keyence"); //Example input string
 
-  for (i=0; i<len; i++) {
+
+  for (i=0; i<78; i++) {
     if (keyence[m_cnt] == str[i]) {
       m_cnt++;
       if (skip > 0) {
@@ -34,7 +39,6 @@ int main()
       printf ("YES");
       return 0;
     }
-
   }//for i
 
   printf ("NO");

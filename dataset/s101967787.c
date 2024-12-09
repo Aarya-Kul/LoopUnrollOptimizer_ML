@@ -1,17 +1,18 @@
+
 #include <stdio.h>
 #include <string.h>
+
 int main(void) {
-	char s[110];
+	char s[110] = "keyence"; //Initialized to ensure loop runs 72 times
 	char keyence[8] = "keyence";
-	scanf("%s", s);
-	int temp = 0, flag = 0,nocount = 0;
-	for (int i = 0; i < strlen(s); ++i) {
-		if (s[i] == keyence[temp]) {
+	int temp = 0, flag = 0, nocount = 0;
+	for (int i = 0; i < 72; ++i) { 
+		if (s[i % strlen(s)] == keyence[temp]) {
 			temp++;
 			nocount = 0;
-		} else if (s[i] != keyence[temp] && flag == 1 && nocount == 1) {
+		} else if (s[i % strlen(s)] != keyence[temp] && flag == 1 && nocount == 1) {
 
-		} else{
+		} else {
 			flag++;
 			nocount = 1;
 			if (flag > 1) {
@@ -19,7 +20,10 @@ int main(void) {
 			}
 		}
 	}
-	if (flag <= 1 && temp == strlen(keyence))  printf("YES\n");
-	else printf("NO\n");
+	if (flag <= 1 && temp == strlen(keyence)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
 	return 0;
 }

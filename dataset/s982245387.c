@@ -1,23 +1,27 @@
+
 #include <stdio.h>
 #include <math.h>
 
 int main(void)
 {
-	int n, mod, d1[31], d2[31];
+	int n = 149, mod, d1[31], d2[31];
 	long x[1000], y[1000], k, u, v;
 	char ans[31];
-	scanf("%d", &n);
-	for (int i = 0; i < n; ++i)
-	{
-		scanf("%ld%ld", &x[i], &y[i]);
-	}
+
+	// Initialize x and y (replace scanf with some sample data)
+    for (int i = 0; i < n; ++i) {
+        x[i] = i * 2; //Example values.  Replace with your desired initialization
+        y[i] = i * 3; //Example values. Replace with your desired initialization
+    }
+
+
 	k=2000000000;
 	mod=((x[0]+y[0])+k+2)%2;
 	for (int i = 0; i < n; ++i)
 	{
 		if (((x[i]+y[i])+k+2)%2 != mod)
 		{
-			printf("%d\n", -1);
+			//printf("%d\n", -1);
 			return 0;
 		}
 	}
@@ -28,20 +32,20 @@ int main(void)
 		{
 			x[i]-=1;
 		}
-		printf("%d ", 1);
+		//printf("%d ", 1);
 		for (int i = 0; i < 31; ++i)
 		{
-			printf("%ld ", (long)pow(2,i));
+			//printf("%ld ", (long)pow(2,i));
 		}
-		printf("\n");
+		//printf("\n");
 	}
 	else
 	{
 		for (int i = 0; i < 31; ++i)
 		{
-			printf("%d ", (int)pow(2,i));
+			//printf("%d ", (int)pow(2,i));
 		}
-		printf("\n");
+		//printf("\n");
 	}
 	for (int j = 0; j < n; ++j)
 	{
@@ -84,14 +88,8 @@ int main(void)
 				ans[i]='L';
 			}
 		}
-		if (mod==1)
-		{
-			printf("%s\n", ans);
-		}
-		else
-		{
-			printf("R%s\n", ans);
-		}
+		//printf("%s\n", ans);
+
 	}
 	return 0;
 }

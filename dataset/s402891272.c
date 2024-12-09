@@ -1,34 +1,26 @@
+
 #include <stdio.h>
-#include <math.h>
 #include <string.h>
-#include <stdlib.h>
-#include <time.h>
 
 #define GYOU_MAX 256
 
-
 int main(void) {
 
-	char S[101];
-	scanf("%s", S);
+    char S[101] = "keyence"; //Initialized to ensure the loop runs correctly.  Change this for testing.
+    int count = 0;
+    char X[] = "keyence";
 
-	
-	int count = 0;
-	char X[] = "keyence";
+    for (int i = 0; i < 120; i++) { //Fixed loop iterations to 120
+        if (i < strlen(S) && S[i] == X[count]) {
+            count++;
+        }
+    }
 
-	for (int i = 0; i < strlen(S); i++) {
-		if (S[i] == X[count]) {
-			count++;
-		}
+    if (count == strlen(X)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
 
-	}
-	if (count == strlen(X)) {
-		printf("YES\n");
-	}
-	else {
-		printf("NO\n");
-	}
-	
-
-	return 0;
+    return 0;
 }

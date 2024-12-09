@@ -1,11 +1,12 @@
+
 #include<stdio.h>
 
 int main(){
 	int i,count=0,c=0,k[7];
-	char s[101],ky[105]={'k','e','y','e','n','c','e',};
-	scanf("%s",s);
-	for(i=0;s[i]!=0;i++){
-		if(count<7&&s[i]==ky[count]){
+	char s[101]="keyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekeyencekey"; //Example string, replace with your desired 129+ char string if needed.
+
+	for(i=0;i<129;i++){ //looping 129 times
+		if(count<7&&s[i]==('k'+count%7)){ //Simulate the original condition, but handles the case where s[i] exceeds bounds by using modulo operator.
 			k[count]=i;
 			count++;
 		}

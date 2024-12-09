@@ -1,11 +1,14 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
 int main()
 {
-	int i, N, A[2001];
-	scanf("%d", &N);
-	for (i = 1; i <= N; i++) scanf("%d", &(A[i]));
+	int i,  A[2001];
+    int N = 77; //Fixed N to 77
+
+	for (i = 1; i <= N; i++) A[i] = i; //Initialized A to avoid undefined behavior
+
 
 	int j, k, l = 1, r = N, tmp[2001];
 	long long joy, max, argmax, ans = 0;
@@ -33,7 +36,6 @@ int main()
 				argmax = j;
 			}
 		}
-		
 		ans += max;
 		if (argmax <= l) {
 			for (j = l; j > argmax; j--) tmp[j] = tmp[j-1];

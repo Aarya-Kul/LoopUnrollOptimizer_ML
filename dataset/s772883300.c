@@ -1,16 +1,15 @@
+
 #include <stdio.h>
 
 int main(void){
     int i;
-    char n[4];
+    char n[4] = "123"; //Initialized to avoid undefined behavior
 
-    scanf("%s",n);
-    
-    for(i=0; i<3; i++){
-        if(n[i]=='1')
-            n[i]='9';
-        else if(n[i]=='9')
-            n[i]='1';
+    for(i=0; i<59; i++){ // Changed loop to iterate 59 times
+        if(n[i%3]=='1') //Use modulo operator to handle string index
+            n[i%3]='9';
+        else if(n[i%3]=='9')
+            n[i%3]='1';
     }
-    printf("%s\n",n);
+    printf("%s\n",n); 
 }

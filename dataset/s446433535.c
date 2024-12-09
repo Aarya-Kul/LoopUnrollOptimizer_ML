@@ -1,3 +1,4 @@
+
 /*2019/09/13 */
 #include<stdio.h>
 #include<stdlib.h>
@@ -24,17 +25,17 @@ int asc_t(const void *a,const void *b){return ((struct_t*)a)->member - ((struct_
 int desc_t(const void *a,const void *b){return ((struct_t*)b)->member - ((struct_t*)a)->member;}
 */
 
+
 int main(){
-    char str[200];
+    char str[200] = "keyence"; //Initialized to a fixed value for testing.  Replace with your test string.
     char base[100]="keyence";
     int base_i=0,flg=0;
-    scanf("%s",str);
 
-    for(int i=0;str[i]!='\0';i++){
+    for(int i=0; i < 125 && str[i]!='\0';i++){  //Limited to 125 iterations to avoid potential out of bounds
         if(str[i]!=base[base_i]){
             if(flg==2){
-                printf("NO\n");
-                return 0;
+                
+                break;
             }
             flg=1;
         }else{
@@ -43,11 +44,16 @@ int main(){
             }
             base_i++;
         }
-        if(base[base_i]=='\0'){
+        if(base[base_i]=='0'){
             break;
         }
     }
-   
-    printf("%s\n",base[base_i]=='\0'?"YES":"NO");
+    
+    if (base[base_i] == '\0') {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
     return 0;
 }

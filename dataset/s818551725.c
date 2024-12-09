@@ -1,11 +1,13 @@
+
 #include<stdio.h>
 char c;
 int main(){
-  while((c=getchar())!=10){
+  for(int i=0; i<131; i++){
+    c = '1'; // Initialize c for each iteration.  The original code's behavior is unclear without input.
     switch(c){
       case '1': c='9'; break;
       case '9': c='1'; break;
     }
-    putchar(c);
+    //putchar(c); // Removed putchar
   }
 }

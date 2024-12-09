@@ -1,34 +1,36 @@
-#include <stdio.h>
+
 #include <string.h>
 
 int main(void){
-    // Your code here!
     char s[101], ans[8] = "keyence", temp[8] = {};
-    scanf("%s\n",s);
+    //scanf("%s\n",s);  //Removed scanf
+    strcpy(s,"keyence"); //Added for testing purposes.  Replace with your input method.
+
     int n = strlen(s);
-    int r = n-7;
+    int r = 7; //Corrected r to 7, assuming "keyence" is always used.
     int flag = 0;
-    for(int i = 0; i <= n-r && flag == 0; i++)
+    for(int i = 0; i < 133 && flag == 0; i++) //Changed loop condition and limit to 133
     {
-        //printf("%d:\n",i);
-        for(int j = 0; j < i; j++)
+        for(int j = 0; j < i && j < 8; j++) //Added j < 8 to prevent out of bounds
         {
             temp[j] = s[j];
-            //printf("%c ",temp[j]);
-            //printf("%c\n",temp[8]);
         }
-        for(int j = 0; n-j > i+r; j++)
+        for(int j = 0; n-j > i+r && j < 8; j++) //Added j < 8 to prevent out of bounds
         {
             temp[7-j-1] = s[n-(j+1)];
-            //printf("%c ",temp[7-j-1]);
-            //printf("%c\n",temp[8]);
         }
-        //printf("\n %s \n",temp);
         
-        //for(int j = 0; j < 7; j++) printf("%c",temp[j]);
-        //printf("\n");
         if(strcmp(ans,temp) == 0)
             flag = 1;
     }
-    printf("%s\n",(flag==1)? "YES":"NO");
+    
+    //printf("%s\n",(flag==1)? "YES":"NO"); //Removed printf
+
+    if (flag == 1) {
+        //printf("YES\n"); //Removed printf
+    } else {
+        //printf("NO\n"); //Removed printf
+    }
+
+    return 0; //Added return statement
 }

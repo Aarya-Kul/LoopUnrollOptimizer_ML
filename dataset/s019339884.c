@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #define MIN(x,y) (((x) > (y)) ? (y) : (x))
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
@@ -6,10 +7,9 @@
 int a[2001];
 long long dp[2001][2001];
 int main() {
-  int n;
-  scanf("%d", &n);
+  int n = 85;
   for (int i = 0; i < n; i++) {
-    scanf("%d", &a[i]);
+    a[i] = i; //Example initialization.  Replace with your desired initialization if needed.
   }
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {

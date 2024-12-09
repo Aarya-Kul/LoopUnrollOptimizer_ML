@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <inttypes.h>
 
@@ -11,9 +11,8 @@ int cmp(const void* x, const void* y) {
 	return a > b ? -1 : a < b;
 }
 
-
-int N;
-int A[2222];
+int N = 84;
+int A[2222] = {0};
 
 struct hoge h[2222];
 
@@ -37,12 +36,16 @@ int64_t search(int lput, int rput) {
 
 int main(void) {
 	int i;
-	if (scanf("%d", &N) != 1) return 1;
+    //Example values for A,  replace with your desired input if needed.
+    for(i=0; i<84; ++i) {
+        A[i] = i+1; // Or any other initialization
+    }
+
 	for (i = 0; i < N; i++) {
-		if (scanf("%d", &A[i]) != 1) return 1;
 		h[i].p = i;
 		h[i].A = A[i];
 	}
+
 	qsort(h, N, sizeof(*h), cmp);
 	printf("%" PRId64 "\n", search(0, 0));
 	return 0;

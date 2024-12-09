@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -5,6 +6,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <math.h>
+
 int acs(const void *a, const void *b){return *(int*)a - *(int*)b;} /* 1,2,3,4.. */
 int des(const void *a, const void *b){return *(int*)b - *(int*)a;} /* 8,7,6,5.. */
 int cmp_char(const void *a, const void *b){return *(char*)a - *(char*)b;} /* a,b,c,d.. */
@@ -18,10 +20,22 @@ int cmp_str(const void *a, const void *b){return strcmp(*(const char **)a, *(con
 typedef long long int lli;
 
 int main(void) {
-  char s[MAX];
-  scanf("%s", s);
+  char s[MAX] = "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"; //Example string with length 137.  Replace with your desired string if needed.
+
   int n = strlen(s);
-  rep(i, 0, n) {
+  
+  if (n > 137) {
+      n = 137; //Limit to 137 characters to prevent runtime issues if input is larger
+      s[137] = '\0'; //Null terminate the string.
+  } else if (n < 137){
+      for (int i = n; i < 137; i++){
+          s[i] = '0'; // Pad with zeros if input is less than 137 chars.
+      }
+      s[137] = '\0'; //Null terminate the string
+  }
+
+
+  rep(i, 0, 137) {
     if (s[i] == '1') printf("9");
     else printf("1");
   }

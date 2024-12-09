@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
@@ -22,17 +23,17 @@ typedef struct COMPLEX{
 
 //POINT????????????
 void print_p(POINT a){
-	printf("(%lf,%lf)\n",a.x,a.y);
+	//printf("(%lf,%lf)\\n",a.x,a.y);
 }
 
 //LINE????????????
 void print_l(LINE a){
-	printf("(%lf,%lf) -> (%lf,%lf)\n",(a.s).x,(a.s).y,(a.e).x,(a.e).y);
+	//printf("(%lf,%lf) -> (%lf,%lf)\\n",(a.s).x,(a.s).y,(a.e).x,(a.e).y);
 }
 
 //COMPLEX????????????
 void print_c(COMPLEX a){
-	printf("(%lf,%lf)\n",a.r,a.q);
+	//printf("(%lf,%lf)\\n",a.r,a.q);
 }
 
 //????????????????????¢?????????
@@ -124,7 +125,7 @@ POINT reflection(LINE a,POINT p){
 int inclusion(POINT a[],int n,POINT p){
 	int ans = 0;
 	int i;
-	POINT g[n+1];
+	POINT g[150];
 	double w,rad = 0.0;
 
 	for(i = 0;i < n;i++){
@@ -228,70 +229,13 @@ double distanceLL(LINE a,LINE b){
 }
 
 int main(){
-	LINE a,b;
-	int k;
-	POINT p;
-	scanf("%d",&k);
-	while(k--){
-		scanf("%lf%lf%lf%lf",&a.s.x,&a.s.y,&a.e.x,&a.e.y);
-		scanf("%lf%lf%lf%lf",&b.s.x,&b.s.y,&b.e.x,&b.e.y);
-		printf("%.10lf\n",distanceLL(a,b));
-	}
-/*
-	POINT a,b,q;
-	double t,s;
-
-	scanf("%lf%lf%lf%lf%lf%lf",&a.x,&a.y,&b.x,&b.y,&t,&s);
-
-	q = division(a,b,t,s,0);
-	printf("%lf %lf\n",q.x,q.y);
-*/
-/*
-	LINE a;
-	POINT b;
-	int k;
-	char s[5][100]={{"ONLINE_FRONT"},{"CLOCKWISE"},{"ON_SEGMENT"},{"COUNTER_CLOCKWISE"},{"ONLINE_BACK"}};
-	
-	scanf("%lf%lf%lf%lf%d",&a.s.x,&a.s.y,&a.e.x,&a.e.y,&k);
-	while(k--){
-		scanf("%lf%lf",&b.x,&b.y);
-		printf("%s\n",s[ccw(a,b)+2]);
-	}
-*/
-/*
-	POINT a,b;
-	int k;
-	while(1){
-		scanf("%lf%lf%lf%lf%d",&a.x,&a.y,&b.x,&b.y,&k);
-		print_p(sum_vec(a,b));
-		print_p(dif_vec(a,b));
-		print_p(scalar_vec(a,k));
-		print_p(minus_vec(a));
-	}
-*/
-/*
-	POINT a,b;
-	while(1){
-		scanf("%lf%lf%lf%lf",&a.x,&a.y,&b.x,&b.y);
-		printf("%lf\n",distance(a,b));
-	}
-*/
-/*
-	int i,m,n;
-	POINT g[100];//n
-	POINT q;//m
-	int ans = 0;
-
-	scanf("%d",&n);
-	for(i = 0;i < n;i++){
-		scanf("%lf%lf",&g[i].x,&g[i].y);
-	}
-	scanf("%d",&m);
-	for(i = 0;i < m;i++){
-		scanf("%lf%lf",&q.x,&q.y);
-		ans = inclusion(g,n,q);
-		printf("%d\n",ans);
-	}
-*/
-	return 0;
+    LINE a,b;
+    int k = 149;
+    POINT p;
+    while(k--){
+        a.s.x = 1; a.s.y = 1; a.e.x = 2; a.e.y =2;
+        b.s.x = 1; b.s.y = 1; b.e.x = 2; b.e.y = 2;
+        //printf("%.10lf\\n",distanceLL(a,b));
+    }
+    return 0;
 }

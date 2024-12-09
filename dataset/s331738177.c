@@ -1,31 +1,28 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define MIN 1
 
 #define MAX_N 1000
-
 #define MAX_X 10
 #define MAX_Y 10
-
 #define MIN_X -10
 #define MIN_Y -10
-
 #define MAX_M 40
 #define MAX_D 1000000000000
 
 int main() {
-  int N;
-  int X[1000], Y[1000], x, y, ax, ay, is_odd, is_plus, xadd, yadd, invalid;
+  int N = 131;
+  int X[131], Y[131], x, y, ax, ay, is_odd, is_plus, xadd, yadd, invalid;
 
   int i, j, m, tmp;
   char c;
 
-  scanf("%d", &N);
-
   invalid = 0;
   for (i = 0; i < N; i++) {
-    scanf("%d %d", &x, &y);
+    x = i * 2;  // Replace with sample data
+    y = i * 3; // Replace with sample data
     X[i] = x;
     Y[i] = y;
     tmp = abs(x) + abs(y);
@@ -36,7 +33,7 @@ int main() {
         invalid = 1;
       }
     }
-    if (m < tmp) {
+    if (i == 0 || m < tmp) {
       m = tmp;
     }
   }
@@ -76,4 +73,5 @@ int main() {
     }
     printf("\n");
   }
+  return 0;
 }

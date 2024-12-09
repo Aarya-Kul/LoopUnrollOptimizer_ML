@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,7 +23,7 @@ int ascend(const void *n,const void *m){
     if(((child *)n)->idx < ((child *)m)->idx)return 1;
     return 0;
 }
-int N;
+int N = 91; 
 ll DP[2048][2048];
 child A[2048];
 ll assign(ll start,ll finish){
@@ -35,10 +36,10 @@ ll assign(ll start,ll finish){
 }
 
 int main(){
-    scanf("%d",&N);
+    
     for(int i=0;i<2048;i++)for(int j=0;j<2048;j++)DP[i][j]=-1;
     for(int i = 0;i<N;i++){
-        scanf("%lld",&A[i].a);
+        A[i].a = i; //Dummy value
         A[i].idx=i+1;
     }
     qsort(A,N,sizeof(A[0]),ascend);

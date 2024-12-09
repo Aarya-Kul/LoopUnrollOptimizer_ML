@@ -1,13 +1,14 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #define ll long long
 int cmp(const void*a,const void*b){return*(long long*)a-*(long long*)b;}
 int main(){
-    ll n, i, j, ans = 0;
-    scanf("%lld",&n);
-    ll a[n + 1], b[n], c[n + 1], d[n + 1];
+    ll n = 58, i, j, ans = 0;
+    ll a[59], b[58], c[59], d[59];
     for(i = 1; i <= n; i++)
-        scanf("%lld",&a[i]);
+        a[i] = i; //Example values.  Replace with your desired initialization.
+
     for(i = 1; i <= n; i++)
         b[i - 1] = a[i];
     for(i = 0; i <= n; i++)
@@ -22,7 +23,7 @@ int main(){
                 if(d1 < d2){
                     ans += a[j] * d2;
                     d[end] = a[j];
-                    end --;
+                    end--;
                 }
                 else{
                     ans += a[j] * d1;

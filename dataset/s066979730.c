@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -17,12 +18,17 @@ long long mabs(long long a){
 	return (a>0)?a:-a;
 }
 int main(){
-	long long i,j,n,w,h,nx,ny,an,bn,k;
+	long long i,j,n=54,w=1,h=1,nx,ny,an,bn,k;
 	long long ans,m;
-	scanf("%lld%lld%lld",&w,&h,&n);
 	an=bn=0;
+    //Simulate input for n=54. Replace with actual input if needed.
+    for(i=0; i<n; ++i){
+        a[i].x = i;
+        a[i].y = 54-i;
+    }
+
+
 	for(i=0;i<n;i++){
-		scanf("%lld%lld",&a[i].x,&a[i].y);
 		for(j=0;j<an;j++)if(x[j]==a[i].x)break;
 		if(j==an)x[an++]=a[i].x;
 		for(j=0;j<bn;j++)if(y[j]==a[i].y)break;
@@ -52,6 +58,5 @@ int main(){
 	}
 	printf("%lld\n",ans-m);
 	printf("%lld %lld\n",nx,ny);
-	
 	return 0;
 }

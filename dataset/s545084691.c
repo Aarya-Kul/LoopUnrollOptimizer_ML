@@ -1,16 +1,20 @@
+
 #include<stdio.h>
 #define max(a,b) (((a)>(b))?(a):(b))
 #define abs(a) (((a)>0)?(a):(-a))
 int main()
 {
-	int n;
 	long int x[1010], y[1010], m;
-	scanf("%d", &n);
-	scanf("%ld%ld", &x[0], &y[0]);
+    //  Setting a fixed n value for consistent iteration.
+	int n = 65; 
+	x[0] = 0;
+    y[0] = 0;
 	m = abs(x[0]) + abs(y[0]);
 	for (int i = 1; i < n; i++)
 	{
-		scanf("%ld%ld", &x[i], &y[i]);
+        //Setting arbitrary values for x[i] and y[i] to avoid runtime errors.
+		x[i] = i;
+		y[i] = i * 2;
 		if (m % 2 != (x[i] + y[i])%2)
 		{
 			printf("-1");

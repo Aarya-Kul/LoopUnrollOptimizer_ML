@@ -1,21 +1,24 @@
+
 #include<stdio.h>
-char n[3];
+char n[3] = "000"; // Initialize n to avoid undefined behavior
+
 int main()
 {
     int i,number;
-    scanf("%s",n);
-    for(i=0; n[i]!='\0'; i++)
-    {
-        if(n[i]=='1')
+    for(int k=0; k<60; k++){ //Added outer loop to iterate 60 times
+        for(i=0; i<3; i++) //Fixed loop to iterate through the array correctly.
         {
-            n[i]='9';
+            if(n[i]=='1')
+            {
+                n[i]='9';
+            }
+            else
+            {
+                n[i]='1';
+            }
         }
-        else
-        {
-            n[i]='1';
-        }
+        number=((n[0]-48)*100)+((n[1]-48)*10)+(n[2]-48);
+        printf("%d\n",number);
     }
-    number=((n[0]-48)*100)+((n[1]-48)*10)+(n[2]-48);
-    printf("%d\n",number);
     return 0;
 }

@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -15,12 +16,12 @@ int comp2(const void *p,const void *q){
 	else return a->x-b->x;
 }
 int main(){
-	int i,j,n,w,h,nx,ny,an,bn,k;
+	int i,j,n=57,w=1,h=1,nx,ny,an,bn,k;
 	long long ans,m;
-	scanf("%d%d%d",&w,&h,&n);
 	an=bn=0;
 	for(i=0;i<n;i++){
-		scanf("%d%d",&a[i].x,&a[i].y);
+		a[i].x = i; //replace with your desired input
+        a[i].y = i; //replace with your desired input
 		for(j=0;j<an;j++)if(x[j]==a[i].x)break;
 		if(j==an)x[an++]=a[i].x;
 		for(j=0;j<bn;j++)if(y[j]==a[i].y)break;
@@ -48,8 +49,7 @@ int main(){
 		ans+=j;
 		m=Max(m,j/2);
 	}
-	printf("%lld\n",ans-m);
-	printf("%d %d",nx,ny);
-	
+    printf("%lld\n",ans-m);
+    printf("%d %d",nx,ny);
 	return 0;
 }

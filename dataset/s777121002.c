@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
@@ -44,18 +45,15 @@ void strsortup(fr*a,int n){qsort(a,n,sizeof(fr),cmp1);}
 void strsortdown(fr*a,int n){qsort(a,n,sizeof(fr),cmp2);}
 
 int main(void){
-    // char ;
-    ll n,ans=0;
-    scanf("%lld",&n);
+    ll n=141,ans=0;
     fr chi[n];
     fr p[n];
     ll left=0,right=n-1;
     rep(i,0,n){
-        scanf("%lld",&chi[i].a);
+        chi[i].a = i; 
         chi[i].b=i;
         chi[i].c=0;
     }
-    // strsortdown(chi,n);
     rep(i,0,n){
         rep(j,0,n){
             p[j].a = chi[j].a * max2( ABS(chi[j].b - left)-1 , ABS(chi[j].b - right)-1 );
@@ -63,11 +61,6 @@ int main(void){
             p[j].c = chi[j].a;
         }
         strsortdown(p,n);
-        // rep(j,0,n){
-        //     printf("%lld ",p[j].a);
-        // }
-        // PN;
-        // ll piv;
         rep(j,0,n){
             if(chi[ p[j].b ].c==0){
                 chi[ p[j].b ].c = 1;
@@ -80,15 +73,7 @@ int main(void){
                 break;
             }
         }
-        // printf("   %lld %lld\n",left,right);
-        // printf("ANS%lld\n",ans);
     }
-
-    // rep(i,0,n){
-    //     ans+=chi[i].a;
-    // }
-
-    
     printf("%lld\n",ans);
     return 0;
 }

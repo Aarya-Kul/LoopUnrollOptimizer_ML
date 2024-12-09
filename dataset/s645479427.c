@@ -1,11 +1,6 @@
+
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
-#include <ctype.h>
-#include <stdint.h>
 #include <string.h>
-#include <wchar.h>
 
 #define N_MAX (100)
 #define P_MAX (100)
@@ -47,9 +42,7 @@ static uint64_t gcd(uint64_t m, uint64_t n)
 int main(void) {
 	const char patternBase[] = "keyence";
 	char top[8], bottom[8];
-	char S[101];
-
-	scanf("%s", S);
+    char S[101] = "keyence"; //Initialized to ensure the loop runs without errors.  Change this to test other cases.
 
 	const size_t len = strlen(S);
 	bool found = false;
@@ -86,7 +79,12 @@ int main(void) {
 		}
 	}
 
-	puts((found ? "YES" : "NO"));
+    //Simulate the puts function without actual I/O.
+    if (found) {
+        //puts("YES"); //This line is replaced with a dummy print.
+    } else {
+        //puts("NO"); //This line is replaced with a dummy print.
+    }
 
 	return 0;
 }

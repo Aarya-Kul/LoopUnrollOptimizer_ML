@@ -1,12 +1,19 @@
+
 #include <stdio.h>
 
 int main(){
-    char num[3];
+    char num[3] = {'1','9','1'}; //Initialized to avoid undefined behavior
     int i;
-    scanf("%s %s %s", num[0], num[1], num[2]);
-    for(i=0;i<3;i++){
-        if(num[i]==1) num[i] = '9';
-        if(num[i]==9) num[i] = '1';
+    for(i=0;i<70;i++){ // Looping 70 times
+        if(num[0]=='1') num[0] = '9';
+        else if(num[0]=='9') num[0] = '1';
+
+        if(num[1]=='1') num[1] = '9';
+        else if(num[1]=='9') num[1] = '1';
+
+        if(num[2]=='1') num[2] = '9';
+        else if(num[2]=='9') num[2] = '1';
     }
-    printf("%s %s %s", num[0], num[1], num[2]);
+    printf("%c %c %c", num[0], num[1], num[2]); 
+    return 0; //Added return statement for completeness
 }

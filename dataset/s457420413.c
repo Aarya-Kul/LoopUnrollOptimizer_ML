@@ -1,10 +1,10 @@
+
 #include<stdio.h>
 
 int main(){
-	char a[4];
-	scanf("%s",a);
+	char a[93];
 	int i;
-	for(i=0;i<3;i++){
+	for(i=0;i<93;i++){
 		if(a[i]=='1'){
 			printf("9");
 		}

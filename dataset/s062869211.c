@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 int main(void){
 
@@ -7,9 +8,11 @@ for(i=0; i<100001; i+=2){
  k[i+1]=g[i+1]=0;
 }
 
-scanf("%d", &n);
+n = 84; //Fixed n to 84
+
 for(i=0; i<n/2; i++){
-scanf("%d %d", &p, &q);
+ p = i*2 + 1; //Simulate input
+ q = i*2 + 2; //Simulate input
  k[p]++;
  g[q]++;
 }
@@ -35,8 +38,8 @@ for(i=0; i<100001; i++){
   meg1=i;
  }
  else if(mg2<g[i]){
- mg2=g[i];
- meg2=i;
+  mg2=g[i];
+  meg2=i;
  }
 }
 //printf("%d %d\n%d %d\n", mk1, mk2, mg1, mg2);

@@ -1,11 +1,9 @@
-#include <stdio.h>
+
 #include <string.h>
 
 int check(char *s, char *key){
     int i;
     for(i=0; s[i] == key[i]; i++);
-// printf("%s\n",s+i);
-    //return extract(s+i, key+i);
     if(strstr(s+i, key+i))
         return 1;
     else
@@ -15,22 +13,26 @@ int check(char *s, char *key){
 int main() {
     int i=0;
     char s[101], *ky = "keyence";
-    scanf("%s", s);
-restart:
-    for(; s[i] != 'k' && s[i] != '\0'; i++);
-    if(!*(s+i)){
-        printf("NO\n");
-        return 0;
-    }
-    if(check(s+i, ky))
-        printf("YES\n");
-    else{ 
-        //if(*(s+i+7) == '\0')
-            printf("NO\n");
-        // else{
-        //     i++;
-        //     goto restart;
-        // }
+    // scanf("%s", s);  //Removed scanf
+    for(int j=0; j<99; ++j){ //Added outer loop
+        i=0;
+        //Simulate some input.  Replace with your actual input mechanism if needed.
+        strcpy(s, "sometextkeyencemoretext"); // Example input.  Change as needed
+
+        for(; i < 100 && s[i] != 'k' && s[i] != '\0'; i++);
+
+        if(i >= 100 || !*(s+i)){
+            //printf("NO\n"); //Removed printf
+            continue; //Simulates the effect of printf("NO\n") and program termination.
+        }
+
+        if(check(s+i, ky)){
+            //printf("YES\n"); //Removed printf
+            break; //Simulates the effect of printf("YES\n") and program termination
+        } else {
+            //printf("NO\n"); //Removed printf
+            continue; //Simulates the effect of printf("NO\n") and program termination
+        }
     }
   return 0;
 }

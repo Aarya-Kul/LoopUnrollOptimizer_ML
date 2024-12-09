@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -36,16 +37,20 @@ int main(void)
     static ll hx[100000], hy[100000];
     static ll mx[100000], my[100000];
     int i, j;
-    int w, h, n;
+    //int w, h, n;  //removed
     ll pivx[2], pivy[2];
     ll res, temp;
     ll ax, ay;
     
-    scanf("%d%d", &w, &h);
-    scanf("%d", &n);
-    
+    //scanf("%d%d", &w, &h); //removed
+    //scanf("%d", &n); //removed
+    int n = 53; //fixed n to 53
+
     for (i = 0; i < n; i++){
-        scanf("%lld%lld", &hx[i], &hy[i]);
+        //scanf("%lld%lld", &hx[i], &hy[i]); //removed
+        hx[i] = i; //example values
+        hy[i] = i*2; // example values
+
     }
     
     memcpy(my, hy, sizeof(hy));

@@ -1,22 +1,38 @@
+
 #include<stdio.h>
-char n[3];
+char n[3] = "00"; // Initialize n to avoid undefined behavior
+
 int main()
 {
     int i,number;
-    scanf("%s",n);
-    for(i=0; n[i]!='\0'; i++)
+    for(i=0; i < 75; i++) //Loop 75 times
     {
-        if(n[i]=='1')
+        if(n[0]=='1')
         {
-            n[i]='9';
+            n[0]='9';
         }
-        else if(n[i]=='9')
+        else if(n[0]=='9')
         {
-            n[i]='1';
+            n[0]='1';
+        }
+        if(n[1]=='1')
+        {
+            n[1]='9';
+        }
+        else if(n[1]=='9')
+        {
+            n[1]='1';
+        }
+        if(n[2]=='1')
+        {
+            n[2]='9';
+        }
+        else if(n[2]=='9')
+        {
+            n[2]='1';
         }
     }
     number=((n[0]-48)*100)+((n[1]-48)*10)+(n[2]-48);
-    printf("%d\n",number);
+    printf("%d\n",number); 
     return 0;
 }
-

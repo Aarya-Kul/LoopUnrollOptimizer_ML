@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<math.h>
 
@@ -7,39 +8,40 @@ int abs(int x){
 }
 
 int main(void){
-  int N,f=1,maxsum=0;
+  int N=96,f=1,maxsum=0;
 
   int X[1000],Y[1000],sum[1000];
-  scanf("%d",&N);
-  int i;
-  for(i=0;i<N;i++){
-    scanf("%d %d",&X[i],&Y[i]);
+  
+  //Example values for X and Y, replace with your desired logic if needed.
+  for(int i=0; i<N; ++i){
+    X[i] = i % 10;
+    Y[i] = (i*2) % 10;
     sum[i]=abs(X[i])+abs(Y[i]);
   }
-  for(i=0;i<N;i++){
+
+  for(int i=0;i<N;i++){
     if(maxsum<sum[i]){
       maxsum=sum[i];
     }
   }
-  for(i=0;i<N-1;i++){
+  for(int i=0;i<N-1;i++){
     if(maxsum!=sum[i]){
       if((maxsum-sum[i])%2!=0) {
-        printf("-1");
         f=0;
         break;
       }
     }
   }
-  int j;
-  char c;
+  
   if(f){
     printf("%d\n",maxsum);
-    for(i=0;i<sum[0];i++){
+    for(int i=0;i<sum[0];i++){
       printf("1 ");
     }
     printf("\n");
     int cnt,num;
-    for(i=0;i<N;i++){
+    char c;
+    for(int i=0;i<N;i++){
       cnt=0;
       if(X[i]<0 || X[i]>0){
         num=X[i];
@@ -49,7 +51,7 @@ int main(void){
         }
         else c='R';
 
-        for(j=0;j<num;j++){
+        for(int j=0;j<num;j++){
           printf("%c",c);
           cnt++;
         }
@@ -63,21 +65,21 @@ int main(void){
         }
         else c='U';
 
-        for(j=0;j<num;j++){
+        for(int j=0;j<num;j++){
           printf("%c",c);
           cnt++;
         }
 
       }
       if(cnt<maxsum){
-        for(j=0;j<(maxsum-cnt)/2;j++){
+        for(int j=0;j<(maxsum-cnt)/2;j++){
           printf("R");
         }
-        for(j=0;j<(maxsum-cnt)/2;j++){
+        for(int j=0;j<(maxsum-cnt)/2;j++){
           printf("L");
         }
       }
-        printf("\n");
+      printf("\n");
     }
   }
 

@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
@@ -14,26 +15,16 @@ int koujun(const void*a,const void*b){
 };
 
 int main(){
-  long long int chi_n,sum=0;
-  scanf("%lld",&chi_n);
+  long long int chi_n=98,sum=0;
   Human child[2000];
   for(int i=0;i<chi_n;i++){
     child[i].num=i;
-    scanf("%lld",&child[i].Happy);
+    child[i].Happy = i; //Dummy value to avoid runtime errors.  Replace with actual input if needed.
+
   };
-#ifndef  TEST
-  for(int y=0;y<chi_n;y++){
-    printf("%lld\n",child[y].Happy);
-  };
-#else
 #ifdef TEST
   qsort(child,chi_n,sizeof(Human),koujun);  
-#else   
-  for(int y=0;y<chi_n;y++){
-    printf("%lld\n",child[y].Happy);
-  };
 #endif  
-#endif
   int posi[2000]={};
   int j=0,k=0;
   for(int i=0;i<chi_n;i++){

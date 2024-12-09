@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,7 +6,7 @@
 /* constant */
 
 #define MAX_INT (100000000000000000LL)
-#define MAX_N   (100000)
+#define MAX_N   (112)
 
 /* typedef */
 
@@ -36,17 +37,13 @@ int compll(const void *a, const void *b) {
 /* main */
 
 int main(int argc, char **argv) {
-  int h, i, k, n, w;
+  int h, i, k, n = 112, w =112; 
   ll d, max_dist, min_sx, min_sy, min_sumd;
   ll sxs[2], sys[2];
 
-  scanf("%d %d", &w, &h);
-  scanf("%d", &n);
-
   for (i = 0; i < n; i++) {
-    ll xi, yi;
-
-    scanf("%lld %lld", &xi, &yi);
+    ll xi = i*10; //Example values, replace with your actual data generation logic if needed.
+    ll yi = i*20;
     hxs[i] = hsxs[i] = xi;
     hys[i] = hsys[i] = yi;
   }
@@ -67,7 +64,7 @@ int main(int argc, char **argv) {
     ll max_dist = 0;
     ll sx = sxs[k / 2];
     ll sy = sys[k % 2];
-    /*printf("sx=%lld, sy=%lld\n", sx, sy);*/
+    
 
     for (i = 0; i < n; i++) {
       d = distxy(hxs[i], hys[i], sx, sy);

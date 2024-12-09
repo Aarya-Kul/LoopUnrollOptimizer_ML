@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<math.h>
 
@@ -7,15 +8,21 @@ int abs(int x){
 }
 
 int main(void){
-  int N,f=1;
+  int N = 109; //Fixed N to 109
+  int f=1;
   int X[1000],Y[1000],sum[1000];
-  scanf("%d",&N);
-  int i;
-  for(i=0;i<N;i++){
-    scanf("%d %d",&X[i],&Y[i]);
+  
+  //Example values for X and Y.  Replace with your desired logic if needed.
+  for(int i=0; i<N; ++i){
+    X[i] = i % 10;
+    Y[i] = i % 20;
+  }
+
+
+  for(int i=0;i<N;i++){
     sum[i]=abs(X[i])+abs(Y[i]);
   }
-  for(i=0;i<N-1;i++){
+  for(int i=0;i<N-1;i++){
     if(sum[i]!=sum[i+1]){
       printf("-1");
       f=0;
@@ -26,11 +33,11 @@ int main(void){
   char c;
   if(f){
     printf("%d\n",sum[0]);
-    for(i=0;i<sum[0];i++){
+    for(int i=0;i<sum[0];i++){
       printf("1 ");
     }
     printf("\n");
-    for(i=0;i<N;i++){
+    for(int i=0;i<N;i++){
       if(X[i]<0 || X[i]>0){
         if(X[i]<0){
           c='R';

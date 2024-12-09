@@ -1,18 +1,20 @@
+
 #include <stdio.h>
- 
+
 int main()
 {
-int n, i, even[200000], odd[200000], a[200000], max_even=0, max_odd=0, value_even=0, value_odd=0;
-scanf("%d", &n);
+int n = 133, i, even[200000], odd[200000], a[200000], max_even=0, max_odd=0, value_even=0, value_odd=0;
+
 for(i=0;i<n;i++){
 even[i]=0;
 odd[i]=0;
 }
 for(i=0;i<n;i++){
-scanf("%d", &a[i]);
+a[i] = i; //Dummy values for a
 if(i%2==0)even[a[i]]++;
 else odd[a[i]]++;
 }
+
 while(1){
 for(i=0;i<200000;i++){
 if(max_even<=even[i]){

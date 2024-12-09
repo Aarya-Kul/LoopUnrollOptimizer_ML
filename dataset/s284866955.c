@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
@@ -36,7 +37,7 @@ int isIntersect(const line *a,const line *b){
   int q=func(a,&(b->t));
   int r=func(b,&(a->s));
   int s=func(b,&(a->t));
-  if(p==0 && q==0 && r==0 && s==0){//同一直線上に2つの線分有り
+  if(p==0 && q==0 && r==0 && s==0){
     if(a->s.x!=a->t.x){
       int64 p=a->s.x;
       int64 q=a->t.x;
@@ -58,11 +59,6 @@ int isIntersect(const line *a,const line *b){
   return p*q<=0 && r*s<=0;
 }
 
-void scanfLine(line *a){
-  scanf("%lld%lld%lld%lld",&(a->s.x),&(a->s.y),&(a->t.x),&(a->t.y));
-  return;
-}
-
 double calcPointDistance(const point *a,const point *b){
   int64 p=a->x;
   int64 q=a->y;
@@ -81,7 +77,7 @@ int64 calcLinePointDistanceInnerFunction(const line *x,const point *y){
   int64 t=y->y;
   int64 pq=ABS((s-a)*(s-a)+(t-b)*(t-b)-((s-c)*(s-c)+(t-d)*(t-d)));
   int64 ll=(a-c)*(a-c)+(b-d)*(b-d);
-  return pq<=ll;;
+  return pq<=ll;
 }
 
 double calcLinePointDistance(const line *a,const point *b){
@@ -104,7 +100,6 @@ double calcLinePointDistance(const line *a,const point *b){
 double calcLineDistance(const line *a,const line *b){
   if(isIntersect(a,b)) return 0;
 
-  //2点間の距離の計算
   double min=calcLinePointDistance(a,&(b->s));
   min=MIN(min,calcLinePointDistance(a,&(b->t)));
   min=MIN(min,calcLinePointDistance(b,&(a->s)));
@@ -113,12 +108,9 @@ double calcLineDistance(const line *a,const line *b){
 }
 
 void run(void){
-  int q;
-  scanf("%d",&q);
+  int q = 133;
   while(q--){
     line a,b;
-    scanfLine(&a);
-    scanfLine(&b);
     double ans=calcLineDistance(&a,&b);
     printf("%.9lf\n",ans);
   }
@@ -129,4 +121,3 @@ int main(void){
   run();
   return 0;
 }
-

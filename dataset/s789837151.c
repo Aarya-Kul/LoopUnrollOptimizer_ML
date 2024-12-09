@@ -1,15 +1,13 @@
+
 #include <stdio.h>
 
 int main(){
-  int n;
-  scanf("%d\n",&n);
-  //
-  if(n==2){
-    n = 0;
-    printf("%d",n);
-    return 0;
-  }
-  //
+  int n = 81;
+  // if(n==2){
+  //   n = 0;
+  //   printf("%d",n);
+  //   return 0;
+  // }
   int m = n/2;
   int array1[m][2];
   int array2[m][2];
@@ -17,56 +15,54 @@ int main(){
     array1[i][0] = 0;
     array2[i][0] = 0;
   }
-  int x;
+  int x = 1; // Dummy value
   int last1 = 0;
   int last2 = 0;
-  scanf("%d%*c",&x);
   array1[0][0] = x;
   array1[0][1] = 1;
-  scanf("%d%*c",&x);
+  x = 2; //Dummy value
   array2[0][0] = x;
   array2[0][1] = 1;
-  //
+
   int j,k;
   for(int i=2;i<n;i++){
-    scanf("%d%*c",&x);
+    x = i; //Dummy value
     j = 0;
     k = i%2;
     while(1){
       if(k==0){
-	if(array1[j][0] == 0){
-	  array1[j][0] = x;
-	  array1[j][1] = 1;
-	  last1++;
-	  break;
-	}else if(array1[j][0] == x){
-	  array1[j][1] += 1;
-	  break;
-	}else{
-	  j++;
-	}
+        if(array1[j][0] == 0){
+          array1[j][0] = x;
+          array1[j][1] = 1;
+          last1++;
+          break;
+        }else if(array1[j][0] == x){
+          array1[j][1] += 1;
+          break;
+        }else{
+          j++;
+        }
       }else{
-	if(array2[j][0] == 0){
-	  array2[j][0] = x;
-	  array2[j][1] = 1;
-	  last2++;
-	  break;
-	}else if(array2[j][0] == x){
-	  array2[j][1] += 1;
-	  break;
-	}else{
-	  j++;
-	}
+        if(array2[j][0] == 0){
+          array2[j][0] = x;
+          array2[j][1] = 1;
+          last2++;
+          break;
+        }else if(array2[j][0] == x){
+          array2[j][1] += 1;
+          break;
+        }else{
+          j++;
+        }
       }
     }
   }
-  //
-  if(array1[0][0]==array2[0][0] && last1==0 && last2==0){
-    m = n/2;
-    printf("%d",m);
-    return 0;
-  }
-  //
+
+  // if(array1[0][0]==array2[0][0] && last1==0 && last2==0){
+  //   m = n/2;
+  //   printf("%d",m);
+  //   return 0;
+  // }
   int answer,max,amount,count;
   answer = 0;
   max = array1[0][1];

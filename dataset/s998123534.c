@@ -1,16 +1,21 @@
+
 #include <stdio.h>
 
 int abs(int N){return N>0?N:-N;}
 
 int main(){
-  int N;
   int X[1000],Y[1000];
   int tmp,max;
 
-  scanf("%d",&N);
+  //Simulate input for N=91
+  int N = 91;
 
-  for(int i=0;i<N;i++)
-    scanf("%d %d",&X[i],&Y[i]);
+  //Simulate input for X and Y arrays.  Replace with your desired values if needed.
+  for(int i=0; i<N; ++i){
+    X[i] = i % 10;
+    Y[i] = (i*2) % 10;
+  }
+
 
   tmp = (40+X[0]+Y[0])%2;
   max = abs(X[0])+abs(Y[0]);
@@ -33,16 +38,16 @@ int main(){
       printf("DU");
     if(X[i]>0)
       for(int j=0;j<X[i];j++)
-	printf("R");
+        printf("R");
     if(X[i]<0)
       for(int j=0;j<-X[i];j++)
-	printf("L");
+        printf("L");
     if(Y[i]>0)
       for(int j=0;j<Y[i];j++)
-	printf("U");
+        printf("U");
     if(Y[i]<0)
       for(int j=0;j<-Y[i];j++)
-	printf("D");
+        printf("D");
     printf("\n");
   }
 

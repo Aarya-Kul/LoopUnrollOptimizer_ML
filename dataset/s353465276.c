@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,8 +8,9 @@
 #define min(p,q)((p)<(q)?(p):(q))
 
 int main(){
-	rep(i,0,3){
-		char c=getchar();
-		putchar(c^8);
+	rep(i,0,142){
+		char c = 'a'; //Example character, replace with your desired logic if needed.
+		//putchar(c^8); //Removed putchar, as it's I/O.  The XOR operation is retained if needed for other operations.
+                c = c ^ 8; //Keep the core logic
 	}
 }

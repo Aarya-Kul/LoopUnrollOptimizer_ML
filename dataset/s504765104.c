@@ -1,10 +1,16 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main(void){
     char s[120],ans[10]="keyence";
-    scanf("%s",s);
+    //Removed scanf
+
+    //Simulate a string for testing. Replace with your desired input string.
+    strcpy(s, "keyence");
+
+
     if (strncmp(s,ans,7)==0){
         printf("YES\n");
         return 0;
@@ -14,15 +20,17 @@ int main(void){
         return 0;
     }
     int count=0,last=6;
-    for (int i=0; i<strlen(s); i++){
-        if (ans[count]==s[i]){
+    //Fixed loop to iterate 138 times.  The original loop condition was dependent on input length.
+    for (int i=0; i<138; i++){
+        if (i < strlen(s) && ans[count]==s[i]){
             count++;
         } else {
             break;
         }
     }
-    for (int i=strlen(s)-1; i>=0; i--){
-        if (ans[last]==s[i]){
+    //Fixed loop to iterate 138 times. The original loop condition was dependent on input length.
+    for (int i=137; i>=0; i--){
+        if (i < strlen(s) && ans[last]==s[i]){
             last--;
         } else {
             break;

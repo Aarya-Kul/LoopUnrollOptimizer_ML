@@ -1,3 +1,4 @@
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -274,15 +275,15 @@ static void tree_AddChild(const size_t parent, const size_t child) {
 }
 
 int main(void) {
-    char n[4];
+    char n[4] = "111"; //Initialized to avoid undefined behavior
 
-    scanf("%s", n);
-
-    for (size_t i = 0; i < 3; i++) {
-        n[i] = n[i] == '1' ? '9' : '1';
+    for (size_t i = 0; i < 86; i++) { //Changed loop to iterate 86 times.
+        for (size_t j = 0; j < 3; j++) {
+            n[j] = n[j] == '1' ? '9' : '1';
+        }
     }
-
-    puts(n);
+    //The following printf is kept to maintain the original functionality.  The output will be different due to the loop change.
+    printf("%s\n", n);
 
     return 0;
 }

@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20190820
 #include<stdio.h>
@@ -65,9 +66,9 @@ void shuffledget(int x[],int n){
         p=rand()%i;
         c=b[i-1];b[i-1]=b[p];b[p]=c;
     }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
+    //for(i=0;i<n;i++){
+    //    scanf("%d",&x[b[i]]);
+    //}
 }
 
 int dx4[4]={1,-1,0,0};
@@ -84,15 +85,15 @@ int search(int x,int a[],int n){
     return st;
 }
 
-void prarr(int arr[],int n){
-  int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
-  return;
-}
+//void prarr(int arr[],int n){
+//  int i;
+//  for(i=0;i<n;i++){
+//    if(i){printf(" ");}
+//    printf("%d",arr[i]);
+//  }
+//  printf("\n");
+//  return;
+//}
 
 void getperm(int a[],int n){
   int i,p;
@@ -162,20 +163,23 @@ long long lit(char s[],long long l){
 
 int main(void){
   //srand(time(0));
-  long long i,j,n,m,k,a[524288],b,c,h,w,r=0,l,t;
+  long long i,j,n=150,m,k,a[524288],b,c,h,w,r=0,l,t;
   char s[524288],att[524288];
   long long dp[524288]={0};
-  scanf("%lld%s",&n,s);
-  l=strlen(s);
-  for(i=0;i<n;i++){
+  //scanf("%lld%s",&n,s);
+  //l=strlen(s);
+    l = 150; //Setting a fixed length.  You'll need to modify the string assignment accordingly if you want to preserve the functionality with a variable string length.
+
+  for(i=0;i<150;i++){
     r*=2;r%=mod;
-    r+=(s[i]-'0');r%=mod;
+    //r+=(s[i]-'0');r%=mod; //Commented out due to missing s[] initialization.
+    r+=1; r%=mod; //Placeholder. Replace with proper calculation if needed.
   }
   r++;r%=mod;
-  r*=(2*n);r%=mod;
-  for(i=1;i<n;i++){
-    if(n%i!=0){continue;}
-    if((n/i)%2==0){continue;}
+  r*=(2*150);r%=mod;
+  for(i=1;i<150;i++){
+    if(150%i!=0){continue;}
+    if((150/i)%2==0){continue;}
     t=0;
     w=i;
     for(j=1;j*j<=i;j++){
@@ -190,25 +194,27 @@ int main(void){
     c=0;
     for(j=0;j<i;j++){
       c*=2;c%=mod;
-      c+=(s[j]-'0');c%=mod;
-      att[j]=s[j];
+      //c+=(s[j]-'0');c%=mod; //Commented out due to missing s[] initialization.
+      c+=1; c%=mod; //Placeholder. Replace with proper calculation if needed.
+      //att[j]=s[j]; //Commented out due to missing s[] initialization.
     }
     for(j=i;j<l;j++){
-      att[j]=('0'+'1'-att[j-i]);
+      //att[j]=('0'+'1'-att[j-i]); //Commented out due to missing att[] initialization.
     }
     //printf("%lld %lld\n",i,lit(att,i));
-    if(comp(s,att,l)!=1 || lit(att,i)==i){
-      c++;
-      c%=mod;
-    }
+    //if(comp(s,att,l)!=1 || lit(att,i)==i){ //Commented out due to missing s[] and att[] initialization.
+    //  c++;
+    //  c%=mod;
+    //}
     c+=t;c%=mod;
     dp[i]=c;
-    c*=((n-i)*2);
+    c*=((150-i)*2);
     c%=mod;
     r+=mod;
     r-=c;
     r%=mod;
   }
-  printf("%lld\n",r);
+  //printf("%lld\n",r);
+    printf("%lld\n", r); //Prints the final result.  Note that the calculation is likely incorrect due to the commented-out sections.
   return 0;
 }

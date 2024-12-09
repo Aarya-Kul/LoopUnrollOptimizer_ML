@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,10 +26,10 @@ void swap(long long *A,long long *B){
 int asort(const void *A,const void *B){return *(ll*)A>*(ll*)B?1:0;}
 int main(void){
     int count=0,flag=0,p=0;
-    char s[120],ans[10]="keyence";
-    scanf("%s",s);
-    for (int i=0; i<strlen(s); i++){
-        if (s[i]==ans[count]){
+    char s[120]="keyenceabcdefghij",ans[10]="keyence"; //Initialized s with a longer string for 54 iterations.  
+    
+    for (int i=0; i<54; i++){ //Fixed loop to iterate 54 times
+        if (i < strlen(s) && s[i]==ans[count]){ 
             flag=0;
             count++;
         } else {

@@ -1,12 +1,22 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
 int main(void){
-    int n,m=20;
-    scanf("%d",&n);
-    int x[n],y[n];
-    for (int i=0; i<n; i++){
-        scanf("%d%d",&x[i],&y[i]);
+    int n = 78; 
+    int m=20;
+    int x[78],y[78];
+
+    // Initialize x and y arrays with sample values to avoid undefined behavior.  
+    //  Replace this with your desired initialization if needed.
+    for (int i = 0; i < 78; i++) {
+        x[i] = i % 5; // Example values
+        y[i] = (i * 2) % 7; // Example values
+
+    }
+
+
+    for (int i=0; i<78; i++){
         if ( abs(x[i]+y[i])%2!=abs(x[0]+y[0])%2 ){
             printf("-1\n");
             return 0;
@@ -18,7 +28,7 @@ int main(void){
         printf("1 ");
     }
     printf("1\n");
-    for (int i=0; i<n; i++){
+    for (int i=0; i<78; i++){
         for (int j=0; j<abs(x[i]); j++){
             if (x[i]>0){
                 printf("R");
@@ -38,5 +48,5 @@ int main(void){
         }
         printf("\n");
     }
-	return 0 ;
+    return 0 ;
 }

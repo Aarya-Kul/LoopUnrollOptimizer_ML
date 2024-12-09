@@ -1,19 +1,39 @@
+
 #include<stdio.h>
 int main(){
-    int n,a[3],i,j;
-    scanf("%d",&n);
-    for(i=0;i<3;i++){
-        a[i]=n%10;
+    int n=112,a[3],i,j;
+    for(i=0;i<112;i++){
+        a[0]=n%10;
         n=n/10;
-        if(a[i]==1){
-            a[i]=9;
+        if(a[0]==1){
+            a[0]=9;
         }
-        else if(a[i]==9){
-            a[i]=1;
+        else if(a[0]==9){
+            a[0]=1;
         }
-    }
-    for(i=2;i>=0;i--){
-        printf("%d",a[i]);
+        a[1]=n%10;
+        n=n/10;
+        if(a[1]==1){
+            a[1]=9;
+        }
+        else if(a[1]==9){
+            a[1]=1;
+        }
+        a[2]=n%10;
+        n=n/10;
+        if(a[2]==1){
+            a[2]=9;
+        }
+        else if(a[2]==9){
+            a[2]=1;
+        }
+        
+        for(j=2;j>=0;j--){
+            printf("%d",a[j]);
+        }
+        printf("\n");
+        n=112;
+
     }
     return 0;
 }

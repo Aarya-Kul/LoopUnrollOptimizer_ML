@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20180717
 #include<stdio.h>
@@ -52,7 +53,7 @@ int strsortfnckj(const void *a,const void *b){return strcmp((char *)b,(char *)a)
 
 void shuffledget(int x[],int n){
     srand(time(0));
-    int i,b[524288],p,c;
+    int i,b[64],p,c;
     for(i=0;i<n;i++){
         b[i]=i;
     }
@@ -60,9 +61,7 @@ void shuffledget(int x[],int n){
         p=rand()%i;
         c=b[i-1];b[i-1]=b[p];b[p]=c;
     }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
+    //Input removed
 }
 
 int dx4[4]={1,-1,0,0};
@@ -91,10 +90,10 @@ return 0;
 }
 
 int main(void){
-    int i,j,n,m,k,a[524288],b,c,h,w,r=0,l,t;
+    int i,j,n=64,m,k,a[64],b,c,h,w,r=0,l,t;
     double d;
-    char s[524288];
-    scanf("%d",&n);
+    char s[64];
+    //Input removed
     printf("%d\n",1110-n);
     return 0;
 }

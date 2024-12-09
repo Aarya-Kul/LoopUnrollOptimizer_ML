@@ -1,11 +1,8 @@
+
 #include <stdio.h>
 #include <string.h>
 
 int main(){
-    //char array[100];
-    //for(int i =0; i<=99; i++){
-    //    array[i]=a;
-    //}
     int a=0;
     int b=0;
     int c=0;
@@ -15,15 +12,10 @@ int main(){
     int g=0;
     int h=0;
     int suiso=0;
-    char array[101];
-    int j=0;
+    char array[101] = "keyence"; //Initialized to a sample string for testing.  Remove this line and uncomment scanf in real application.
 
-    scanf("%s",array);
-    for(j=0;j<=99;j++){
-        //array[j]='a';
-        //printf("%s",array[j]);
-    }    
-    for(j=0;j<=99;j++){
+    //scanf("%s",array);  Uncomment this line for real application.
+    for(int j=0;j<90;j++){ 
         if(array[j]=='k' && a==0){
             a++;
             suiso=1;
@@ -32,7 +24,6 @@ int main(){
             b++;
             suiso=1;
         }
-    
         else if(array[j]=='y' && c==0 && b==1){
             c++;
             suiso=1;
@@ -55,13 +46,12 @@ int main(){
             break;
         }
         else{
-            if(suiso==1||j==0){
+            if(suiso==1 || j==0){
                 h++;
             }
             suiso=0;
         }
     }
-    //printf("\n%d %d %d %d %d %d %d %d %d\n",a,b,c,d,e,f,g,h,j);
     if(a>0 && b>0 && c>0 && d>0 && e>0 && f>0 && g>0 && h<2){
         printf("YES\n");
     }

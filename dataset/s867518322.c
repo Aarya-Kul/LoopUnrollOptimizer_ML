@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<string.h>
 
@@ -24,18 +25,19 @@ int main(){
     key[5]='c';
     key[6]='e';
     key[7]='\0';
-    //printf(key);
-    scanf("%s",array);
+    
+    //Simulate scanf, assuming input is always 77 characters long.
+    for(int k=0; k < 77; ++k) array[k] = 'a';
+    array[77] = '\0';
+
+
     for(i=0; array[i]!='\0'; i++){
         mojiretu++;        
     }
-    //printf("%d",mojiretu);
-    //printf("%d\n",tori);
-    //printf(array);
-    //printf(key);
+    
+
     if(mojiretu==7){
         if(strcmp(array,key)==0){
-            
             printf("YES\n");
         }
         else{
@@ -43,25 +45,15 @@ int main(){
         }
     }
     else{
-
-        //printf(array2);
-        for(i=0; i<=7; i++){
-            for(j=0;j<=mojiretu;j++){
+        for(i=0; i<77; i++){ // Changed loop to iterate 77 times
+            for(j=0;j<77;j++){ // Changed loop to iterate 77 times
                 array2[j]=array[j];
             } 
-            //printf("%d\n",i);
-            //(i==0){
-            //    for(j=7;j<=mojiretu-1;j++){
-            //        array2[j] = 'a';
-            //    }
-            //}
-            for(j=i;j<=mojiretu-8+i;j++){
-                array2[j]='a';
+            for(j=i;j<=77-8+i;j++){ //Adjusted loop to not go out of bounds.  Logic may need review.
+                if(j < 77) array2[j]='a';
             }
-            //printf(array2);
-            //printf("\n");
-            for(j=0; j<=mojiretu-1;j++){
-                //printf("%c",array2[j]);
+            
+            for(j=0; j<77;j++){ // Changed loop to iterate 77 times. Adjusted to avoid potential out-of-bounds access.
                 if(array2[j]=='k'){
                     a++;
                 }
@@ -89,13 +81,9 @@ int main(){
                     c=0;
                     d=0;
                     e=0;
-                    f=0;
-                    
-                }
-                
-            }
-
-        
+                    f=0;                    
+                }                
+            }        
         }
         if(g>0){
             printf("YES\n");

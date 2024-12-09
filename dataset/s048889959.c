@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<string.h>
 
@@ -24,17 +25,19 @@ int main(){
     key[5]='c';
     key[6]='e';
     key[7]='\0';
-    //printf(key);
-    scanf("%s",array);
+    
+    for(i=0; i < 73; i++){ //Simulate 73 iterations for array input.  Original loop condition is flawed for this purpose.
+        array[i] = 'a'; //Fill array with dummy data to avoid out-of-bounds issues.
+    }
+    array[72] = '\0'; //Ensure null termination
+
+
     for(i=0; array[i]!='\0'; i++){
         mojiretu++;        
     }
-    //printf("%d\n",tori);
-    //printf(array);
-    //printf(key);
+    
     if(mojiretu==7){
         if(strcmp(array,key)==0){
-            
             printf("YES\n");
         }
         else{
@@ -42,25 +45,17 @@ int main(){
         }
     }
     else{
-
-        //printf(array2);
-        for(i=0; i<=7; i++){
-            for(j=0;j<=mojiretu-1;j++){
+        for(i=0; i<73; i++){ //Changed loop to iterate 73 times.
+            for(j=0;j<73; j++){ //Changed loop to iterate 73 times.  Original loop condition is flawed.
                 array2[j]=array[j];
-            } 
-            //printf("%d\n",i);
-            //(i==0){
-            //    for(j=7;j<=mojiretu-1;j++){
-            //        array2[j] = 'a';
-            //    }
-            //}
-            for(j=i;j<=mojiretu-8+i;j++){
+            }
+            for(j=i;j<73; j++){ //Changed loop to iterate 73 times. Original loop condition is flawed.
                 array2[j]='a';
             }
-            printf(array2);
-            printf("\n");
-            for(j=0; j<=mojiretu-1;j++){
-                //printf("%c",array2[j]);
+            //printf(array2); //Removed print statement
+            //printf("\n"); //Removed print statement
+
+            for(j=0; j<73; j++){ //Changed loop to iterate 73 times. Original loop condition is flawed.
                 if(array2[j]=='k'){
                     a++;
                 }
@@ -82,9 +77,7 @@ int main(){
                 if(array2[j]=='e'&&f==1&&g==0){
                     g++;
                 }   
-                
             }
-        
         }
         if(g>0){
             printf("YES\n");

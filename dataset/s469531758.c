@@ -1,11 +1,14 @@
+
 #include<stdio.h>
 
 int main(){
-	int n;
-	scanf("%d",&n);
+	int n = 112;
 	int a[2][50000][2]={0},count[2]={0,0},j,i,tmp;
+	
+    // Simulate input for 112 iterations.  Replace with actual input if needed.
 	for(i=0;i<n;i++){
-		scanf("%d",&tmp);
+		tmp = i % 10; //Example input: numbers 0-9 repeating
+
 		if(i%2==0){
 			if(count[0]==0){
 				a[0][count[0]][0]=tmp;
@@ -40,8 +43,8 @@ int main(){
 					}
 				}
 				if(j==count[1]){
-					a[1][count[0]][0]=tmp;
-					a[1][count[0]][1]++;
+					a[1][count[1]][0]=tmp;
+					a[1][count[1]][1]++;
 					count[1]++;
 				}
 			}
@@ -63,7 +66,6 @@ int main(){
 		}
 	}
 	if(mtmp[0]!=mtmp[1]){
-//		printf("%d,%d\n",max[0],max[1]);
 		printf("%d\n",n-max[0]-max[1]);
 	}else{
 		int ans=n-max[0]-yobi[1];

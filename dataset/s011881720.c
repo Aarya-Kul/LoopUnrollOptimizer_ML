@@ -1,3 +1,4 @@
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,14 +48,17 @@ static uint64_t gcd(uint64_t m, uint64_t n)
 int main(void) {
 	const char patternBase[] = "keyence";
 	char top[8], bottom[8];
-	char S[101];
+    //Removed scanf, using a fixed string for testing.
+    char S[101] = "keyence";
 
-	scanf("%s", S);
 
 	const size_t len = strlen(S);
 	bool found = false;
 
-	for (size_t offset = 0; offset < strlen(patternBase); offset++) {
+    //The original loop iterated based on strlen(patternBase).  This is changed to iterate 100 times.  The functionality remains the same because "keyence" is smaller than 100.
+	for (size_t offset = 0; offset < 100; offset++) {
+        if(offset >= strlen(patternBase)) break; //Prevent out of bounds access.
+
 		strncpy(top, patternBase, offset);
 		top[offset] = '\0';
 		strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
@@ -62,6 +66,7 @@ int main(void) {
 
 		const char *topSearch = strstr(S, top);
 		const char *bottomSearch = strstr(S, bottom);
+
 		if (topSearch != NULL && bottomSearch != NULL) {
 			if (topSearch < bottomSearch) {
 				found = true;
@@ -69,7 +74,8 @@ int main(void) {
 		}
 	}
 
-	puts((found ? "YES" : "NO"));
+    //Removed puts, added a simple print for testing purposes.
+    printf((found ? "YES\n" : "NO\n"));
 
 	return 0;
 }

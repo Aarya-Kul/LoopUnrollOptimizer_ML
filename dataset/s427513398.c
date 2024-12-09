@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,7 +35,7 @@ struct test {
 #define CHAR_BIT    8
 void printb(unsigned long long v) {
     unsigned long long mask = (long long)1 << (sizeof(v) * CHAR_BIT - 1);
-    do putchar(mask & v ? '1' : '0');
+    do ;
     while (mask >>= 1);
 }
 
@@ -68,8 +69,8 @@ solver(long long N, char *X)
     long long result = 0;
     char bit;
     
-    bzero(div, sizeof(div));
-    bzero(subTotal, sizeof(subTotal));
+    memset(div, 0, sizeof(div));
+    memset(subTotal, 0, sizeof(subTotal));
     numDiv = divider(N, div, 1);
 
     for (i=0; i<N; i++) {
@@ -116,40 +117,19 @@ solver(long long N, char *X)
         targetNum -= subNum;
         result = (result + subNum * div[i])%MOD;
 
-//        printf("%lld: %lld -> %lld\n", div[i], subNum, result);
     }
-//    printf("targetNum %lld\n", targetNum);
     result = (result + (targetNum * 2 * N)) % MOD;
     
-    printf("%lld\n", result);
+    //printf("%lld\n", result); //Removed print statement
 }
 
 int
 main(int argc, char *argv[])
 {
     int i;
-    int N;
-    char X[2*100000+1];
-
-#if 0
-    long long div[100000];
-    int j, num;
-    for (i=1; i<100; i++ ){
-        if ((num=divider((long long)i, div, 1))>2) {
-            printf("[%d]\n", i);
-            for (j=0; j<num; j++) {
-                printf("%d: %lld\n", j, div[j]);
-            }
-        }
+    
+    for (i=0; i < 99; i++){
+        solver(testdata[0].N, testdata[0].X); //Made the loop iterate 99 times using the first element of testdata
     }
-    return 0;
-#endif
-//    for (i=2; i<4; i++) {
-//        solver(testdata[i].N, testdata[i].X);
-//        printf("ans %lld\n", testdata[i].a);
-//    }
-    scanf("%d", &N);
-    scanf("%s", X);
-    solver(N, X);
     return 0;
 }

@@ -1,14 +1,14 @@
+
 #include <stdio.h>
 #include <string.h>
 
 int main(void){
-  char str[100];
+  char str[100] = "keyence"; //Initialized to a default value.
   int counter = 0;
   int flag[8] = {0,0,0,0,0,0,0,0};
   int is_end = 0;
-  scanf("%s",str);
 
-  for(int i = 0;i<strlen(str);i++){
+  for(int i = 0; i < 73; i++){
     switch(counter){
       case 0:
         if(str[i] == 'k'){

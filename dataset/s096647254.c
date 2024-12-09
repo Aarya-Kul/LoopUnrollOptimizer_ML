@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -12,7 +13,7 @@
 #define MOD 1000000007
 //#define MOD 998244353
 #define NUM 200010
- 
+
 void swap(int* a,int* b){int tmp=*a;*a=*b;*b=tmp;}
 int abs(int a){if(a<0)return -a;return a;}
 int dup(int a,int d){if(a%d==0)return a/d;else return a/d+1;}
@@ -46,16 +47,13 @@ ll dp[3000][3000];
 qwe u[2000];
 
 int main(){
-  ll n, b, ans=0;
+  ll n = 59, b, ans=0;
   ll a;
-
-  scanf("%lld", &n);
 
   for (int i = 0; i < n; i++)
   {
-      scanf("%lld", &a);
       u[i].index = i;
-      u[i].a = a;
+      u[i].a = i; //replace with actual value if needed.  
   }
   
   qsort(u, n, sizeof(qwe), cmp_qwe);
@@ -65,9 +63,6 @@ int main(){
   {
       for (int j = 0; i + j + 1 <= n; j++)
       {
-        //   if (i == 0 && j==0) break;
-        //   if (i == 0) dp[i][j] =  
-        //   dp[i][j] = MAX(dp[i-1][j] + u[i+j].a * (u[i+j].index - i), dp[i][j-1] + u[i+j].a * (n - j - u[i+j].index) );
         dp[i+1][j] = MAX(dp[i+1][j], dp[i][j] + u[i+j].a * (u[i+j].index - i));
         dp[i][j+1] = MAX(dp[i][j+1], dp[i][j] + u[i+j].a * (n - 1 - j - u[i+j].index) );
       }
@@ -76,7 +71,6 @@ int main(){
   {
       ans = MAX(ans, dp[i][n-i]);
   }
-  printf("%lld", ans);
-  
+  printf("%lld", ans); 
   return 0;
 }

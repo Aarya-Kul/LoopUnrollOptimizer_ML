@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20181228
 #include<stdio.h>
@@ -52,44 +53,6 @@ int strsortfnckj(const void *a,const void *b){return strcmp((char *)b,(char *)a)
 int chsortfncsj(const void *a,const void *b){if(*(char *)a>*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 int chsortfnckj(const void *a,const void *b){if(*(char *)a<*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 
-void shuffledget(int x[],int n){
-    srand(time(0));
-    int i,b[524288],p,c;
-    for(i=0;i<n;i++){
-        b[i]=i;
-    }
-    for(i=n;i>=1;i--){
-        p=rand()%i;
-        c=b[i-1];b[i-1]=b[p];b[p]=c;
-    }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
-}
-
-int dx4[4]={1,-1,0,0};
-int dy4[4]={0,0,1,-1};
-int dx8[8]={-1,-1,-1,0,0,1,1,1};
-int dy8[8]={-1,0,1,-1,1,-1,0,1};
-
-int search(int x,int a[],int n){
-    int st=0,fi=n-1,te;
-    while(st<=fi){
-        te=(st+fi)/2;
-        if(a[te]<x){st=te+1;}else{fi=te-1;}
-    }
-    return st;
-}
-
-void prarr(int arr[],int n){
-  int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
-  return;
-}
 
 typedef struct{
 int val;
@@ -104,22 +67,21 @@ return 0;
 
 int main(void){
     char str[16]="keyence";
-    int i,j,n,m,k,a,b,c,h,w,r=0,l,t;
-    int pt;
+    int i,j,n,m,k,a,b,c,h,w,r=0,l,pt;
     char s[524288];
-    scanf("%s",s);
-    if(strcmp(s,str)==0){
-      printf("YES\n");
-      return 0;
-    }
-    l=strlen(s);
-    for(i=0;i<l;i++){
-      for(j=i;j<l;j++){
+    
+    //Removed scanf("%s",s);  All I/O removed
+
+    l = 86; //Fixed length for testing.  Replace with strlen(s) if needed and restore I/O
+
+
+    for(i=0;i<86;i++){
+      for(j=i;j<86;j++){
         pt=0;
-        for(k=0;k<l;k++){
+        for(k=0;k<86;k++){
           if(i<=k && k<=j){continue;}
           if(pt>=7){pt=inf;break;}
-          if(str[pt]!=s[k]){pt=inf;break;}
+          if(str[pt]!=str[k]){pt=inf;break;} //Using str instead of s for testing
           pt++;
         }
         if(pt==7){

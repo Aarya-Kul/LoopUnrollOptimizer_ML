@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 int main(void)
 {
@@ -9,13 +10,13 @@ int main(void)
 	int max, min;
 	int tab;
 
-	scanf("%lld", &a);
+	a = 124;
 
 	min = 0;
 	max = a - 1;
 
 	for (i = 0; i < a; i++) {
-		scanf("%lld", &(A[i]));
+		A[i] = i +1; //Example values. Replace with your desired initialization if needed.
 		B[i] = i;
 	}
 

@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20190820
 #include<stdio.h>
@@ -56,6 +57,7 @@ int strsortfnckj(const void *a,const void *b){return strcmp((char *)b,(char *)a)
 int chsortfncsj(const void *a,const void *b){if(*(char *)a>*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 int chsortfnckj(const void *a,const void *b){if(*(char *)a<*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 
+
 void shuffledget(int x[],int n){
     int i,b[524288],p,c;
     for(i=0;i<n;i++){
@@ -65,9 +67,9 @@ void shuffledget(int x[],int n){
         p=rand()%i;
         c=b[i-1];b[i-1]=b[p];b[p]=c;
     }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
+    //for(i=0;i<n;i++){
+    //    scanf("%d",&x[b[i]]);
+    //}
 }
 
 int dx4[4]={1,-1,0,0};
@@ -84,15 +86,15 @@ int search(int x,int a[],int n){
     return st;
 }
 
-void prarr(int arr[],int n){
-  int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
-  return;
-}
+//void prarr(int arr[],int n){
+//  int i;
+//  for(i=0;i<n;i++){
+//    if(i){printf(" ");}
+//    printf("%d",arr[i]);
+//  }
+//  printf("\n");
+//  return;
+//}
 
 void getperm(int a[],int n){
   int i,p;
@@ -165,17 +167,19 @@ int main(void){
   long long i,j,n,m,k,a[524288],b,c,h,w,r=0,l,t;
   char s[524288],att[524288];
   long long dp[524288]={0};
-  scanf("%lld%s",&n,s);
+  //scanf("%lld%s",&n,s);
+    n = 73;
+    strcpy(s, "0101010101010101010101010101010101010101010101010101010101010101010101010101010101");
   l=strlen(s);
-  for(i=0;i<n;i++){
+  for(i=0;i<73;i++){
     r*=2;r%=mod;
     r+=(s[i]-'0');r%=mod;
   }
   r++;r%=mod;
-  r*=(2*n);r%=mod;
-  for(i=1;i<n;i++){
-    if(n%i!=0){continue;}
-    if((n/i)%2==0){continue;}
+  r*=(2*73);r%=mod;
+  for(i=1;i<73;i++){
+    if(73%i!=0){continue;}
+    if((73/i)%2==0){continue;}
     t=0;
     for(j=1;j*j<=i;j++){
       if(j==i){continue;}
@@ -200,7 +204,7 @@ int main(void){
     }
     c+=t;c%=mod;
     dp[i]=c;
-    c*=((n-i)*2);
+    c*=((73-i)*2);
     c%=mod;
     r+=mod;
     r-=c;

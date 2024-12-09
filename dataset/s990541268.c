@@ -1,14 +1,16 @@
+
 #include<stdio.h>
 int main() 
 {
-    long long int t, l, p, index, i, s, x, y, a[2100], sum=0,cnt=1,flag=0,flag1=0;
-    scanf("%lli", &t) ;
+    long long int t = 118, l, p, index, i, s, x, y, a[2100], sum=0,cnt=1,flag=0,flag1=0;
+    
     for(i=1;i<=t;i++) 
-    scanf("%lli", &a[i]) ;
-    
-    
+         a[i] = i*10; //Example values. Replace with your desired initialization.
+
     s=0;
-    for(l=1,p=t;cnt<=t;) 
+    l=1;
+    p=t;
+    for(cnt=1;cnt<=t;) 
    { for(i=1;i<=t;i++) 
     {
     	if(s<a[i]) 
@@ -45,7 +47,7 @@ int main()
     			flag1=flag;
     		} 
     	} 
-   } 
+    } 
    sum+=(x*s);
    a[index]=0;
   if(flag1==1)
@@ -55,7 +57,6 @@ int main()
   
   cnt+=1;
   
-   
    flag=flag1=0;
    s=0;
   } 

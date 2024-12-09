@@ -1,3 +1,4 @@
+
 //set many funcs template
 //Ver.20190820
 #include<stdio.h>
@@ -56,55 +57,6 @@ int strsortfnckj(const void *a,const void *b){return strcmp((char *)b,(char *)a)
 int chsortfncsj(const void *a,const void *b){if(*(char *)a>*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 int chsortfnckj(const void *a,const void *b){if(*(char *)a<*(char *)b){return 1;}if(*(char *)a==*(char *)b){return 0;}return -1;}
 
-void shuffledget(int x[],int n){
-    int i,b[524288],p,c;
-    for(i=0;i<n;i++){
-        b[i]=i;
-    }
-    for(i=n;i>=1;i--){
-        p=rand()%i;
-        c=b[i-1];b[i-1]=b[p];b[p]=c;
-    }
-    for(i=0;i<n;i++){
-        scanf("%d",&x[b[i]]);
-    }
-}
-
-int dx4[4]={1,-1,0,0};
-int dy4[4]={0,0,1,-1};
-int dx8[8]={-1,-1,-1,0,0,1,1,1};
-int dy8[8]={-1,0,1,-1,1,-1,0,1};
-
-int search(int x,int a[],int n){
-    int st=0,fi=n-1,te;
-    while(st<=fi){
-        te=(st+fi)/2;
-        if(a[te]<x){st=te+1;}else{fi=te-1;}
-    }
-    return st;
-}
-
-void prarr(int arr[],int n){
-  int i;
-  for(i=0;i<n;i++){
-    if(i){printf(" ");}
-    printf("%d",arr[i]);
-  }
-  printf("\n");
-  return;
-}
-
-void getperm(int a[],int n){
-  int i,p;
-  for(i=0;i<n;i++){
-    a[i]=i;
-  }
-  for(i=n-1;i>=1;i--){
-    p=rand()%(i+1);
-    swap(&a[p],&a[i]);
-  }
-}
-
 typedef struct{
 int val;
 int node;
@@ -114,21 +66,6 @@ int sdsortfnc(const void *a,const void *b){
 if(((sd*)a)->val < ((sd*)b)->val){return -1;}
 if(((sd*)a)->val > ((sd*)b)->val){return 1;}
 return 0;
-}
-
-void coordinate_comp(int a[],int n){
-  int i,c=0;
-  sd dat[524288];
-  for(i=0;i<n;i++){
-    dat[i].val=a[i];
-    dat[i].node=i;
-  }
-  qsort(dat,n,sizeof(dat[0]),sdsortfnc);
-  a[dat[0].node]=c;
-  for(i=1;i<n;i++){
-    if(dat[i-1].val!=dat[i].val){c++;}
-    a[dat[i].node]=c;
-  }
 }
 
 long long comp(char s[],char t[],long long l){
@@ -152,20 +89,20 @@ long long getdiv(long long x,long long res[]){
 }
 
 int main(void){
-  //srand(time(0));
-  long long i,j,n,m,k,a[524288],b,c,h,v,w,r=0,l,t;
-  char s[524288],att[524288];
-  long long mem[4096],mc[4096];
-  long long ndiv[4096];
+  long long i,j,n,m,k,a[132],b,c,h,v,w,r=0,l,t;
+  char s[132],att[132];
+  long long mem[132],mc[132];
+  long long ndiv[132];
   long long ndc;
-  scanf("%lld%s",&n,s);
-  l=strlen(s);
-  for(i=0;i<n;i++){
+  n = 132;
+  strcpy(s,"010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101");
+    l=strlen(s);
+  for(i=0;i<132;i++){
     r*=2;r%=mod;
     r+=(s[i]-'0');r%=mod;
   }
   r++;r%=mod;
-  r*=(2*n);r%=mod;
+  r*=(2*132);r%=mod;
 
   ndc=getdiv(n,ndiv);
   qsort(ndiv,ndc,sizeof(long long),llsortfncsj);

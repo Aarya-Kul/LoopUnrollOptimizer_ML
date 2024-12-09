@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,23 +14,18 @@ int cmpfunc( const void *a, const void *b )
 
 int main( int argc, char *argv[] )
 {
-    int n;
-//    int dp[10000][2];
-    struct d a[10000];
+    int n = 99; 
+    struct d a[99];
     long long l, r;
     long long dpl, dplx, dply;
     long long dpr, dprx, dpry;
 
-    scanf( "%d", &n );
     for( int i=0; i<n; i++ ) {
         a[i].n = i+1;
-        scanf( "%d", &a[i].v );
+        a[i].v = rand() % 100; // Replace with actual value assignment if needed.
     }
 
     qsort( a, n, sizeof(struct d), cmpfunc );
-
-//    for( int i=0; i<n; i++ )
-//        printf( "%2d : %d\n", a[i].n, a[i].v );
 
     dpl = (long long) a[0].v * (a[0].n - 1);
     dpr = (long long) a[0].v * (n - a[0].n);
@@ -39,8 +35,6 @@ int main( int argc, char *argv[] )
     dpry = 1;
 
     for( int i=1; i<n; i++ ) {
-
-//    printf( "%d %d %d : %d %d %d\n", dpl, dplx, dply, dpr, dprx, dpry );
 
         l = dpl + a[i].v * abs(dplx+1 - a[i].n);
         r = dpl + a[i].v * abs(n-dply - a[i].n);
@@ -65,6 +59,7 @@ int main( int argc, char *argv[] )
         }
     }
 
-    if( dpl > dpr ) printf( "%lld\n", dpl );
-    else            printf( "%lld\n", dpr );
+    printf("%lld\n", (dpl > dpr) ? dpl : dpr); 
+
+    return 0;
 }

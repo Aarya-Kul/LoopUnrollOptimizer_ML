@@ -1,8 +1,8 @@
+
 #include <stdio.h>
 
 int main(void){
-  int n;
-  scanf("%d", &n);
+  int n = 999; //Initialized to a value that won't cause runtime errors.
   int m, temp;
   int ans[3];
   m = n;

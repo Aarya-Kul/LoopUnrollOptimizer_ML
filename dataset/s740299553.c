@@ -1,17 +1,21 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
 #define min(p,q)((p)<(q)?(p):(q))
 #define zahyoutype double
 
 typedef struct Point{zahyoutype x,y;}P;
 typedef struct line{P p1,p2;}L;
+
 int sgn(zahyoutype x){return x<0?-1:x>0;}
 double seglen(L s){return hypot(s.p2.x-s.p1.x,s.p2.y-s.p1.y);}
 
 //opとoqの内積と外積
 zahyoutype innerproduct(P p,P q,P o){return (p.x-o.x)*(q.x-o.x)+(p.y-o.y)*(q.y-o.y);}
 zahyoutype crossproduct(P p,P q,P o){return (p.x-o.x)*(q.y-o.y)-(p.y-o.y)*(q.x-o.x);}
+
 int iscross(L s,L t){
 	//点(p,q)が直線f(x,y)=ax+by+c=0のどっち側にあるかは外積を見ればよい
 	zahyoutype t1=crossproduct(t.p1,s.p2,s.p1);
@@ -39,19 +43,16 @@ double distPS(P p,L s){
 }
 double distSS(L s,L t){return iscross(s,t)?0:min(min(distPS(s.p1,t),distPS(s.p2,t)),min(distPS(t.p1,s),distPS(t.p2,s)));}
 
-void readpoint(P*p){zahyoutype x=1;scanf(x/2?"%lf%lf":"%ld%ld",&p->x,&p->y);}
-void printpoint(P p){zahyoutype x=1;printf(x/2?"%.9lf %.9lf\n":"%ld %ld\n",p.x,p.y);}
-
 int main(){
-	int q;
-	scanf("%d",&q);
-	while(q--){
-		L s,t;
-		for(int i=0;i<2;i++){
-			readpoint(&s.p1);
-			readpoint(&s.p2);
-			if(!i)t=s;
-		}
-		printf("%.9f\n",distSS(s,t));
-	}
+    for (int q = 0; q < 115; ++q) {
+        L s,t;
+        //Simulate the reading of points.  Replace with your actual point data if needed.
+        s.p1.x = 1.0; s.p1.y = 2.0;
+        s.p2.x = 3.0; s.p2.y = 4.0;
+        t.p1.x = 5.0; t.p1.y = 6.0;
+        t.p2.x = 7.0; t.p2.y = 8.0;
+
+        printf("%.9f\n",distSS(s,t));
+    }
+    return 0;
 }

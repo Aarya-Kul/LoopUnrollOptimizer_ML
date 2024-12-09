@@ -1,31 +1,30 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int **dmatrix(int x,int y);	//x行y列の配列を確保する.
 void free_dmatrix(int **a,int x);//x行の配列を解放する
- 
+
 int main(void){
-	int N,*A,max_score;
+	int N, *A, max_score;
 	int *max_num;//数字Anの大きい順に配列の場所が収納される
 	int **DP,x,y;    //DP[x][y]は右に移動がx左に移動がy個での最大スコア
 	int i,j,k;
-	char str[10000];
- 
-	fgets(str, sizeof(str), stdin);
-	N=atoi(strtok(str," "));
-	
+    
+
+	N = 139;
+
 	A = (int*)calloc(N,sizeof(int));
 	max_num = (int*)calloc(N,sizeof(int));
 	DP=dmatrix(N+1,N+1);//x,yの範囲は0～N
-	
+
 	/*順番などを収納*/
-	fgets(str, sizeof(str), stdin);	
-	A[0]=atoi(strtok(str," "));
-	for(i=1;i<N;i++){		//大きい順にmax_numに値が入ってない要修正
-		A[i]=atoi(strtok(NULL," "));
+	for(i=0; i < N; i++){
+        A[i] = 139 - i; // Replace with actual A values if available.  This ensures all loops run without errors.
+
 		for(j=0;j<i;j++){
-			 if(A[max_num[j]] < A[i]) break; 
+			if(A[max_num[j]] < A[i]) break; 
 		}
 		for(k=i;k>j;k--){
 			max_num[k]=max_num[k-1];
@@ -37,7 +36,7 @@ int main(void){
 	/*マップの作成*/
 	DP[1][0]=A[max_num[0]]*abs(N-1-max_num[0]);	//最大値を一番右へ
 	DP[0][1]=A[max_num[0]]*abs(max_num[0]-0);	//最大値を一番左へ
-	for(i=2;i<=N;i++){//移動させる個数i=x+y
+	for(i=2;i<=139;i++){//移動させる個数i=x+y
 		for(x=1;x<=i;x++){//右へ移動
 			y=i-x;
 			DP[x][y]=DP[x-1][y]+A[max_num[i-1]]*abs( (N-x)-max_num[i-1]);
@@ -53,8 +52,8 @@ int main(void){
 
 	/*最大スコアの計算*/
 	max_score=0;
-	for(i=0;i<=N;i++){
-		x=i;y=N-x;
+	for(i=0;i<=139;i++){
+		x=i;y=139-x;
 		if(DP[x][y] > max_score) max_score=DP[x][y];
 	}
 	printf("%d\n",max_score);
@@ -62,7 +61,7 @@ int main(void){
 
 	free(A);
 	free(max_num);
-	free_dmatrix(DP,N);
+	free_dmatrix(DP,N+1);
 
 	return 0;
 }
@@ -72,7 +71,6 @@ int **dmatrix(int x,int y)			//x行y列の配列を確保する.
 	int i;
 	int **a;
 	if ( ( a = (int**)calloc(x,sizeof(int*)) ) == NULL){
-		//printf("メモリの確保に失敗しました.\nプログラムを終了します.");
 		exit(1);
 	}
 	for(i=0;i<x;i++) a[i]=(int*)calloc(y,sizeof(int));

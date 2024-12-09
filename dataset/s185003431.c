@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -16,11 +17,9 @@ int count_digit(int a){int i=0;while(a!=0){a=a/10;i++;}return i;}
 int euclid( int a, int b ){int temp;if(a<b){temp=a;a=b;b=temp;}if(b<1)return -1;if(a%b==0) return b;return euclid(b,a%b);}
 
 int main(void){
- 
-    char a[3];
-    
-    scanf("%s", a);
-    
+
+    char a[3] = "111"; //Initialized to a default value
+
     rep(i, 3){
         if (a[i]=='1') {
             a[i]='9';
@@ -28,9 +27,8 @@ int main(void){
             a[i]='1';
         }
     }
-    
-    printf("%s", a);
-    
+
+    printf("%s", a); //No change in the print statement
+
     return 0;
 }
-

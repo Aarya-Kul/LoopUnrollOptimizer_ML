@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 int main(void)
 {
@@ -9,13 +10,13 @@ int main(void)
 	int max, min;
 	int tab;
 
-	scanf("%lld", &a);
+	a = 113;
 
 	min = 0;
 	max = a - 1;
 
 	for (i = 0; i < a; i++) {
-		scanf("%lld", &(A[i]));
+		A[i] = i * 2; //Example values, replace with your desired initialization
 		B[i] = i;
 	}
 
@@ -41,7 +42,7 @@ int main(void)
 		}
 	}
 
-	printf("%lld", sum);
+	printf("%llu", sum);
 
 	return 0;
 }

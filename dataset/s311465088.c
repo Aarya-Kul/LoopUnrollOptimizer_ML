@@ -1,9 +1,13 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
 #include<math.h>
+
 #define MAX 2001
+#define ITERATIONS 130
+
 typedef long long ll;
 int N,A[MAX];
 int hash[MAX];
@@ -28,9 +32,10 @@ void solve(int x,int y){
     solve(x+1,y);
 }
 int main(){
-    scanf("%d",&N);
+    N = ITERATIONS; //Fixed N to 130
+
     for(int i=1;i<=N;i++){
-        scanf("%d",A+i);
+        A[i] = i; //Dummy values for A
         hash[i] = i;
     }
     for(int i=1;i<=N;i++){

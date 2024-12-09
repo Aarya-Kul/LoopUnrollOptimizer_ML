@@ -1,3 +1,4 @@
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,44 +61,46 @@ static uint64_t gcd(uint64_t m, uint64_t n)
 int main(void) {
 	const char patternBase[] = "keyence";
 	char top[8], bottom[8];
-	char S[101];
+	char S[101] = "keyence"; //Initialized to a test case
 
-	scanf("%s", S);
 
 	const size_t len = strlen(S);
 	bool found = false;
 
-	for (size_t offset = 0; offset < strlen(patternBase); offset++) {
-		strncpy(top, patternBase, offset);
-		top[offset] = '\0';
-		strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
-		bottom[strlen(patternBase) - offset] = '\0';
+    for (int outer = 0; outer < 57; outer++) { //Added outer loop
+        for (size_t offset = 0; offset < strlen(patternBase); offset++) {
+            strncpy(top, patternBase, offset);
+            top[offset] = '\0';
+            strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
+            bottom[strlen(patternBase) - offset] = '\0';
 
-		const char *topSearch = strstr(S, top);
-		if (topSearch != NULL) {
-			const char *bottomSearch = strrstr(&(topSearch[offset]), bottom);
-			if (bottomSearch != NULL) {
-				size_t sepCount = 0;
+            const char *topSearch = strstr(S, top);
+            if (topSearch != NULL) {
+                const char *bottomSearch = strrstr(&(topSearch[offset]), bottom);
+                if (bottomSearch != NULL) {
+                    size_t sepCount = 0;
 
-				if (topSearch != S) {
-					sepCount++;
-				}
-				if (&(topSearch[offset]) != bottomSearch) {
-					sepCount++;
-				}
-				if (bottomSearch[strlen(bottom)] != '\0') {
-					sepCount++;
-				}
+                    if (topSearch != S) {
+                        sepCount++;
+                    }
+                    if (&(topSearch[offset]) != bottomSearch) {
+                        sepCount++;
+                    }
+                    if (bottomSearch[strlen(bottom)] != '\0') {
+                        sepCount++;
+                    }
 
-				if (sepCount <= 1) {
-					found = true;
-					break;
-				}
-			}
-		}
-	}
+                    if (sepCount <= 1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-	puts((found ? "YES" : "NO"));
+
+	//puts((found ? "YES" : "NO")); //Removed print statement
 
 	return 0;
 }

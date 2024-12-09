@@ -1,19 +1,22 @@
+
 #include <stdio.h>
 #include <math.h>
 
 int main(void)
 {
-	int n, mod, d1[31], d2[31];
+	int n = 142, mod, d1[31], d2[31];
 	long x[1000], y[1000], k, u, v;
 	char ans[31];
-	scanf("%d", &n);
-	for (int i = 0; i < n; ++i)
-	{
-		scanf("%ld%ld", &x[i], &y[i]);
-	}
+    
+    // Initialize x and y to avoid undefined behavior
+    for (int i = 0; i < 142; ++i) {
+        x[i] = i;
+        y[i] = i * 2;
+    }
+
 	k=2000000000;
 	mod=((x[0]+y[0])+k+2)%2;
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < 142; ++i)
 	{
 		if (((x[i]+y[i])+k+2)%2 != mod)
 		{
@@ -24,7 +27,7 @@ int main(void)
 
 	if (mod==0)
 	{
-		for (int i = 0; i < n; ++i)
+		for (int i = 0; i < 142; ++i)
 		{
 			x[i]-=1;
 		}
@@ -43,7 +46,7 @@ int main(void)
 		}
 		printf("\n");
 	}
-	for (int j = 0; j < n; ++j)
+	for (int j = 0; j < 142; ++j)
 	{
 		u=(x[j]+y[j]-1)/2+(long)pow(2,30);
 		v=(x[j]-y[j]-1)/2+(long)pow(2,30);

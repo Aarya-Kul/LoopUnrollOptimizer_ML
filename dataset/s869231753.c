@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
@@ -12,12 +13,12 @@ int syoujun(const void*a,const void*b){
 };
 
 int main(){
-  long int chi_n,sum=0;
-  scanf("%ld",&chi_n);
+  long int chi_n=109,sum=0;
   Human child[2000];
   for(int i=0;i<chi_n;i++){
     child[i].num=i;
-    scanf("%ld",&child[i].Happy);
+    child[i].Happy = i; //Dummy value.  Replace with your desired logic if needed.
+
   };
   qsort(child,sizeof(child)/sizeof(child[0]),sizeof(Human),syoujun);
   int posi[2000]={};

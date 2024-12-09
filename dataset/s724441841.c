@@ -1,9 +1,11 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
 #include <limits.h>
+
 int max(int a, int b){return a>b?a:b;}
 int min(int a, int b){return a<b?a:b;}
 int gcd(int a, int b){return min(a,b)==0?max(a,b):gcd(min(a,b),max(a,b)%min(a,b));}
@@ -24,15 +26,17 @@ int utoi(char c){return c-'A';}
 long long mod=1000000007;
 
 int main(void){
-    char s[4];
-    scanf("%s",s);
-    for (int i=0; i<strlen(s); i++){
-        if (s[i]=='1'){
-            s[i]='9';
-        } else if (s[i]=='9'){
-            s[i]='1';
+    char s[4] = "123"; //Initialized to avoid undefined behavior
+
+    for (int i=0; i<109; i++){ //Fixed loop iterations
+        if (i < strlen(s)){ //Check to avoid out of bounds access
+            if (s[i]=='1'){
+                s[i]='9';
+            } else if (s[i]=='9'){
+                s[i]='1';
+            }
         }
     }
-    printf("%s\n",s);
-	return 0 ;
+    //printf("%s\n",s); //Removed printf
+    return 0;
 }

@@ -1,10 +1,13 @@
+
 #include <stdio.h>
+
 int main(void){
-    char s[101], j=0, i=0, sinkou=0, w=0;
+    char s[101];
+    int j=0, i=0, sinkou=0, w=0;
 
-    scanf("%s", s);
+    for(int k=0; k < 138; ++k){ //Simulate 138 iterations.  Input is removed.
+        s[i] = (k % 26) + 'a'; //Populate s with dummy data.  This part is arbitrary, and could be changed.
 
-    while(s[i] != '\0'){
         if(sinkou == 0){
             if(s[i] == 'k'){
                 sinkou = 1;

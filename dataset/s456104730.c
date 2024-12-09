@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,35 +6,35 @@
 // 5*300
 #define BUF_SIZE 1600
 
-int get_int(void) {
-  int num;
-#ifdef BUF_SIZE
-  static char line[BUF_SIZE];
-  if(!fgets(line, BUF_SIZE, stdin)) return 0;
-  sscanf(line, "%d", &num);
-#else
-#error
-#endif
-  return num;
-}
+//int get_int(void) {
+//  int num;
+//#ifdef BUF_SIZE
+//  static char line[BUF_SIZE];
+//  if(!fgets(line, BUF_SIZE, stdin)) return 0;
+//  sscanf(line, "%d", &num);
+//#else
+//#error
+//#endif
+//  return num;
+//}
 
 // <arr[0]> <arr[1]> .. <arr[size-1]>
-int fget_array(int *arr, int size) {
-#ifdef BUF_SIZE
-    static char line[BUF_SIZE];
-    char *tmpbuf = line;
-    int i;
-    if(!fgets(line, BUF_SIZE, stdin)) return -1;
-    for(i = 0; i < size; i++) {
-        char *tmp = strtok(tmpbuf, " ");
-        arr[i] = strtol(tmp, NULL, 10);
-        tmpbuf = NULL;
-    }
-#else
-#error
-#endif
-    return 0;
-}
+//int fget_array(int *arr, int size) {
+//#ifdef BUF_SIZE
+//    static char line[BUF_SIZE];
+//    char *tmpbuf = line;
+//    int i;
+//    if(!fgets(line, BUF_SIZE, stdin)) return -1;
+//    for(i = 0; i < size; i++) {
+//        char *tmp = strtok(tmpbuf, " ");
+//        arr[i] = strtol(tmp, NULL, 10);
+//        tmpbuf = NULL;
+//    }
+//#else
+//#error
+//#endif
+//    return 0;
+//}
 #define NUM_MAX 300
 #define WEIGHT_MAX 1000
 #define SET_MAX 50
@@ -52,12 +53,15 @@ int main(void) {
     int idx = 0;
     int i;
     // dp[size][start];
-    while(1) {
+    for (int iter = 0; iter < 79; ++iter){
         int dp[NUM_MAX+1][NUM_MAX+1] = {0};
-        int num = get_int();
+        //int num = get_int();
+        int num = 79; //replace get_int with a fixed value for testing
         if(!num) break;
         int ws[NUM_MAX+1];
-        fget_array(ws, num);
+        //fget_array(ws, num);
+        for (int j=0; j<num; ++j) ws[j] = j; //replace fget_array with a fixed array for testing
+
         int size, start, end;
         // for size=2
         for(i = 0; i < num-1; i++) {
@@ -87,8 +91,8 @@ int main(void) {
         }
         ans[idx++] = dp[num][0];
     }
-    for(i = 0; i < idx; i++) {
-        printf("%d\n", ans[i]);
-    }
+    //for(i = 0; i < idx; i++) {
+    //    printf("%d\n", ans[i]);
+    //}
     return 0;
 }

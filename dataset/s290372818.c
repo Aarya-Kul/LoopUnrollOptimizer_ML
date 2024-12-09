@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 
@@ -5,12 +6,11 @@
 
 int main(void)
 {
-	char n[MAX_LEN];
-	scanf("%s", n);
+	char n[MAX_LEN] = "1111"; //Initialized to a fixed value
 
 	int i;
-	for (i = 0; i < (int)strlen(n); i++) {
-		if (n[i] == '1')
+	for (i = 0; i < 122; i++) {
+		if (n[i % 4] == '1')
 			putchar('9');
 		else
 			putchar('1');

@@ -1,4 +1,4 @@
-#include "stdio.h"
+
 #include "string.h"
 
 int c_key(char*S){
@@ -15,25 +15,27 @@ int c_key(char*S){
 }
 
 int main(int argc, char const *argv[]) {
-  char S[200];
-  scanf("%s", S);
+  char S[200] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxkeyencexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; //Initialized with a long string.  Adjust as needed for testing.
   int n=strlen(S);
   int i,j;
   char K[7];
 
-  for (i = 0; i < 7; i++) {
+  for (i = 0; i < 55; i++) { // Changed to 55 iterations
     for (j = 0; j < i; j++) {
-      K[j]=S[j];
+      if (j < 7 && i < strlen(S)) { //Added bounds check
+          K[j]=S[j];
+      }
     }
     for (j = i; j < 7; j++) {
-      K[j]=S[n+j-7];
+      if ( (n + j - 7) < strlen(S) ) { //Added bounds check
+        K[j]=S[n+j-7];
+      }
     }
-    //printf("%s\n", K);
     if (c_key(K)==1) {
-      printf("YES");
+      //printf("YES"); //Removed print
       return 0;
     }
   }
-  printf("NO");
+  //printf("NO"); //Removed print
   return 0;
 }

@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include <stdlib.h>
 
 int max(int a,int b){
@@ -42,11 +42,12 @@ void _mode2(int a, int b, int max, int *A, int mode, int *count){
 }
 
 int main(){
-  int n;
+  int n = 139; //Fixed n to 139
   int *v;
-  scanf("%d",&n);
   v=(int*)malloc(n*sizeof(int));
-  for(int i=0;i<n;i++) scanf("%d",&v[i]);
+  //Initialize v with some values for testing.  Replace with your actual initialization if needed.
+  for(int i=0; i<n; ++i) v[i] = i % 10;
+
 
   int *odd;
   int *even;
@@ -60,9 +61,6 @@ int main(){
     even[i]=v[2*i+1];
     if(even[i]>even_max) even_max=even[i];
   }
-  /*for(int i=0;i<(n/2);i++){
-    printf("odd[%d]=%d\neven[%d]=%d\n",i,odd[i],i,even[i]);
-  }*/
   int mode_odd=-1;
   int mode_even=-1;
   int count_odd=0;
@@ -70,15 +68,10 @@ int main(){
   _mode(0,n/2-1,odd_max,odd,&mode_odd,&count_odd);
   _mode(0,n/2-1,even_max,even,&mode_even,&count_even);
 
-  //printf("mode_odd=%d count_odd=%d\n",mode_odd,count_odd);
-  //printf("mode_even=%d count_even=%d\n",mode_even,count_even);
-
   int count_odd2=0;
   int count_even2=0;
   _mode2(0,n/2-1,odd_max,odd,mode_odd,&count_odd2);
   _mode2(0,n/2-1,even_max,even,mode_even,&count_even2);
-
-  //printf("count_odd2=%d count_even2=%d\n",count_odd2,count_even2);
 
   int times;
   if(mode_odd!=mode_even){
@@ -87,6 +80,10 @@ int main(){
     times=max(n-count_odd-count_even2,n-count_odd2-count_even);
   }
 
-  printf("%d\n",times);
+  //printf("%d\n",times); //removed print statement.  You can uncomment for testing.
+
+  free(v);
+  free(odd);
+  free(even);
   return 0;
 }

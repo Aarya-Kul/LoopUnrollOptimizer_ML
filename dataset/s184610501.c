@@ -1,18 +1,19 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 
 int main(void)
 {
-    char s[4];
+    char s[4] = "111"; // Initialize s to avoid undefined behavior
 
-    scanf("%s",s);
-
-    for (int i = 0; i < 3; i++)
-    {
-        s[i]=(s[i]=='1')? '9':'1';
+    for (int i = 0; i < 115; i++) { // Changed loop to iterate 115 times
+        for (int j = 0; j < 3; j++) {
+            s[j]=(s[j]=='1')? '9':'1';
+        }
     }
 
-    printf("%s",s);
+
+    printf("%s",s); 
 
     return 0;
 }

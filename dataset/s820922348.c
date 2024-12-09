@@ -1,3 +1,4 @@
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,8 +49,10 @@ int main(void) {
 	const char patternBase[] = "keyence";
 	char top[8], bottom[8];
 	char S[101];
+    //Simulate input for testing purposes. Replace with your actual input method if needed.
+    strncpy(S, "xykeyencez", sizeof(S) -1);
+    S[sizeof(S)-1] = '\0';
 
-	scanf("%s", S);
 
 	const size_t len = strlen(S);
 	bool found = false;
@@ -84,7 +87,8 @@ int main(void) {
 		}
 	}
 
-	puts((found ? "YES" : "NO"));
+    //Simulate output for testing purposes.  Replace with your actual output method if needed.
+    printf((found ? "YES\n" : "NO\n"));
 
 	return 0;
 }

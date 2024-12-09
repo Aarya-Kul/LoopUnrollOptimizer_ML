@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 
 int max(int a,int b){
@@ -11,7 +12,7 @@ int max(int a,int b){
 }
 
 int main(){
-  int n;
+  int n = 94;
   int v[120000];
   int i;
   int x=0,y=0;
@@ -22,39 +23,40 @@ int main(){
   int ansy=0;
   int ans;
 
-  scanf("%d",&n);
-  for(i=0;i<n;i++){
-    scanf("%d",&v[i]);
+  //Dummy data for testing.  Replace with actual input method if needed.
+  for(i=0; i<n; ++i) {
+    v[i] = i % 10; //Example: Fill with values 0-9 repeatedly
   }
 
-  for(i=0;i<n;i+=2){
+
+  for(i=0;i<94;i+=2){
     tmp=v[i];
     countx[tmp]++;
   }
 
-  for(i=1;i<n;i+=2){
+  for(i=1;i<94;i+=2){
     tmp=v[i];
     county[tmp]++;
   }
 
-  for(i=0;i<n;i++){
+  for(i=0;i<94;i++){
   x =  max(x,countx[i]);
   }
-  for(i=1;i<n;i++){
+  for(i=0;i<94;i++){
   y =  max(y,county[i]);
-}
+  }
 
-  if(x==y&&x==(n/2)&&v[0]==v[1]&&v[n-1]==v[n-2]){
-    ans=n/2;
+  if(x==y&&x==(94/2)&&v[0]==v[1]&&v[93]==v[92]){
+    ans=94/2;
   }
   else{
-  ansx=(n/2)-x;
-  ansy=(n/2)-y;
+  ansx=(94/2)-x;
+  ansy=(94/2)-y;
   ans=ansx+ansy;
-  if(ans==n){
+  if(ans==94){
     ans=0;
   }
-}
+  }
   printf("%d",ans);
 
 

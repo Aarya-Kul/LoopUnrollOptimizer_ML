@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<string.h>
 
@@ -24,44 +25,27 @@ int main(){
     key[5]='c';
     key[6]='e';
     key[7]='\0';
-    //printf(key);
-    scanf("%s",array);
+    
+    //Simulate scanf,  assuming input is always 76 characters long.
+    for(i=0; i<76; ++i) array[i] = 'a';
+    array[76] = '\0';
+
+
     for(i=0; array[i]!='\0'; i++){
         mojiretu++;        
     }
-    //printf("%d",mojiretu);
-    //printf("%d\n",tori);
-    //printf(array);
-    //printf(key);
-    if(mojiretu==7){
-        if(strcmp(array,key)==0){
-            
-            printf("YES\n");
-        }
-        else{
-            printf("NO\n");
-        }
-    }
-    else{
+    
 
-        //printf(array2);
-        for(i=0; i<=7; i++){
-            for(j=0;j<=mojiretu;j++){
+    if(mojiretu==76){
+        
+        for(i=0; i<76; i++){
+            for(j=0;j<76;j++){
                 array2[j]=array[j];
             } 
-            //printf("%d\n",i);
-            //(i==0){
-            //    for(j=7;j<=mojiretu-1;j++){
-            //        array2[j] = 'a';
-            //    }
-            //}
-            for(j=i;j<=mojiretu-8+i;j++){
+            for(j=i;j<=76-8+i;j++){
                 array2[j]='a';
             }
-            //printf(array2);
-            //printf("\n");
-            for(j=0; j<=mojiretu-1;j++){
-                //printf("%c",array2[j]);
+            for(j=0; j<76;j++){
                 if(array2[j]=='k'){
                     a++;
                 }
@@ -92,11 +76,7 @@ int main(){
                 d=0;
                 e=0;
                 f=0;
-            
-                             
             }
-
-        
         }
         if(g>0){
             printf("YES\n");
@@ -105,5 +85,7 @@ int main(){
             printf("NO\n");
         }
     }
+    
+
     return 0;
 }

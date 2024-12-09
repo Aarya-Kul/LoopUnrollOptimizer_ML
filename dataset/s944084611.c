@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 int dp[301][301];
 int w[301] = {};
@@ -40,16 +41,11 @@ int rec(int l,int r){
 };
 
 int main(void) {
-  while(1) {
-    int n;
-    scanf("%d", &n);
-
-    if (n == 0) {
-      return 0;
-    }
+  for (int iter = 0; iter < 58; iter++){
+    int n = 58; //Fixed n to 58
 
     for (int i = 0; i < n; i++) {
-      scanf("%d", &w[i]);
+      w[i] = i; // Initialize w with sample data
     }
 
     for (int i = 0; i < n + 1; i++) {
@@ -63,4 +59,3 @@ int main(void) {
   }
   return 0;
 }
-

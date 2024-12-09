@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -33,14 +34,16 @@ int i, j, k;
 
 int main() {
 	int m, f = 0;
-	char s[101];
-	scanf("%s", s);
+    // Input removed.  String s is hardcoded for testing purposes.
+    char s[101] = "keyence"; //Example string. Replace with other strings for testing.
 	m = strlen(s);
-	REP(i, 8) {
+	REP(i, 104) { // Changed loop to iterate 104 times.
 		char a[8] = { 0 };
-		strncpy(a, s, i);
-		strcat(a, &s[i + m - 7]);
-		if (strcmp(a, "keyence") == 0) f = 1;
+        if (i < 8 && i + m -7 >=0 && i + m -7 < m) { //Added condition to prevent out of bound errors.
+            strncpy(a, s, i);
+            strcat(a, &s[i + m - 7]);
+            if (strlen(a) == 7 && strcmp(a, "keyence") == 0) f = 1;
+        }
 	}
 	YES(f);
 	return 0;

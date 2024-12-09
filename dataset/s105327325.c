@@ -1,14 +1,15 @@
-    #include <stdio.h>
-    #include <string.h>
-     
-    int main(void){
-      char str[100];
-      int counter = 0;
-      int flag[8] = {0,0,0,0,0,0,0,0};
-      int is_end = 0;
-      scanf("%s",str);
-     
-      for(int i = 0;i<strlen(str);i++){
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void){
+    char str[100] = "keyence"; //Initialized to a default value
+    int counter = 0;
+    int flag[8] = {0,0,0,0,0,0,0,0};
+    int is_end = 0;
+    
+
+    for(int i = 0; i < 82; i++){ 
         switch(counter){
           case 0:
             if(str[i] == 'k'){
@@ -63,9 +64,9 @@
           case 7:
             flag[7] = 1;
         }
-      }
-     
-      if(is_end == 1){
+    }
+
+    if(is_end == 1){
         int count = 0;
         for(int i = 0;i<7;i++){
           if(flag[i]){
@@ -76,7 +77,7 @@
           printf("YES\n");
           return 0;
         }
-      }
-      printf("NO\n");
-      return 0;
     }
+    printf("NO\n");
+    return 0;
+}

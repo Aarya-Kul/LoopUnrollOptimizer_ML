@@ -1,9 +1,12 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
 #include<math.h>
+
 #define MAX 2001
+#define ITERATIONS 133
 typedef long long ll;
 ll N,A[MAX];
 ll hash[MAX];
@@ -21,15 +24,15 @@ void swap(ll *a,ll *b){
 }
 
 void solve(ll x,ll y){
-    if(x+y>=N+1) return;
-    DP[x][y] = max(DP[x][y-1]+A[x+y]*(hash[x+y]-y),DP[x-1][y]+A[x+y]*(N+1-x-hash[x+y]));
+    if(x+y>=ITERATIONS+1) return;
+    DP[x][y] = max(DP[x][y-1]+A[x+y]*(hash[x+y]-y),DP[x-1][y]+A[x+y]*(ITERATIONS+1-x-hash[x+y]));
     solve(x,y+1);
     solve(x+1,y);
 }
-ll main(){
-    scanf("%d",&N);
+int main(){
+    N = ITERATIONS;
     for(ll i=1;i<=N;i++){
-        scanf("%d",A+i);
+        A[i] = i; 
         hash[i] = i;
     }
     for(ll i=1;i<=N;i++){

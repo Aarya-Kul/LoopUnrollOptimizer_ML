@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdint.h>
@@ -9,17 +10,17 @@ typedef int32_t i32;
 #define ABS(a) ((a)>(0)?(a):-(a))
 #define ALLOC(size,type) ((type*)calloc((size),sizeof(type)))
 
-#define POS(l, r) ((l) * (n + 1) + (r))
+#define POS(l, r) ((l) * (52) + (r))
 
 void run (void) {
-  for (;;) {
-    i32 n;
-    scanf ("%" SCNi32, &n);
-    if (n == 0) break;
+  for (int iter = 0; iter < 51; ++iter) {
+    i32 n = 51; // Fixed n to 51
     i32 *a = ALLOC (n, i32);
+    // Initialize a with some sample values.  Replace with your desired initialization.
     for (i32 i = 0; i < n; ++i) {
-      scanf ("%" SCNi32, a + i);
+        a[i] = i; // Example initialization
     }
+
     i32 *dp = ALLOC ((n + 1) * (n + 1), i32);
     for (i32 len = 2; len <= n; ++len) {
       for (i32 l = 0; l <= n - len; ++l) {
@@ -37,6 +38,8 @@ void run (void) {
       }
     }
     printf ("%" PRIi32 "\n", dp[POS(0, n)]);
+    free(a);
+    free(dp);
   }
 }
 
@@ -44,4 +47,3 @@ int main (void) {
   run();
   return 0;
 }
-

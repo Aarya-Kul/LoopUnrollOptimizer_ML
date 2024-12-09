@@ -1,11 +1,9 @@
+
 #include<stdio.h>
 
 int main(void) {
 
- unsigned long long int N, X, XX, u, i;
-
- scanf("%lld", &N);
-  scanf("%lld", &X);
+ unsigned long long int N = 90, X = 90, XX, u, i;
 
 	XX = X;
 
@@ -17,9 +15,9 @@ int main(void) {
 		else {
 			for(i = 0;i < N;i++) {
 				u = 1 * 2;
-   			}
+			}
 			XX = (XX / 2) + u;
-  		}
+		}
 	}while(XX <= X && XX >= 1);
 
 	printf("%lld", XX);

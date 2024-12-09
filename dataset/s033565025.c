@@ -1,11 +1,8 @@
+
 #include <stdio.h>
 #include <string.h>
 
 int main(){
-    //char array[100];
-    //for(int i =0; i<=99; i++){
-    //    array[i]=a;
-    //}
     int a=0;
     int b=0;
     int c=0;
@@ -15,16 +12,13 @@ int main(){
     int g=0;
     int h=0;
     int suiso=0;
-    char array[100];
+    char array[122];
     int j=0;
-    for(j=0;j<=99;j++){
-        array[j]=='a';
+    for(j=0;j<122;j++){
+        array[j] = 'a'; //Initialized to avoid undefined behavior
     }
-    scanf("%s",array);
-    for(int j=0;j<=99;j++){
-        //printf("%c",array[j]);
-    }    
-    for(j=0;j<=99;j++){
+    
+    for(int j=0;j<122;j++){
         if(array[j]=='k'&& a==0){
             a++;
             suiso=1;
@@ -33,7 +27,7 @@ int main(){
             b++;
             suiso=1;
         }
-    
+
         else if(array[j]=='y' && c==0 && b==1){
             c++;
             suiso=1;
@@ -60,7 +54,6 @@ int main(){
             suiso=0;
         }
     }
-    //printf("\n%d %d %d %d %d %d %d %d %d\n",a,b,c,d,e,f,g,h,j);
     if(a>0 && b>0 && c>0 && d>0 && e>0 && f>0 && g>0 && h<2){
         printf("YES\n");
     }

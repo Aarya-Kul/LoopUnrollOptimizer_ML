@@ -1,13 +1,16 @@
+
 #include <stdio.h>
 #include<stdlib.h>
 
 int main(void)
 {
-	int N,i,j,memo=0,akachan[2000],l_mae=0,l_ushiro=0,max=1,memo1,count;
+	int  i,j,memo=0,akachan[2000],l_mae=0,l_ushiro=0,max=1,memo1,count;
 	long long total=0;
-	scanf("%d",&N);
+    int N = 126; //Fixed N to 126
+
 	for(i=0;i<N;i++){
-		scanf("%d",&akachan[i]);
+		akachan[i] = i + 1; //Example values.  Replace with your desired initialization.
+
 	}
 	for(count=0;count<N;count++){
 		max=0;

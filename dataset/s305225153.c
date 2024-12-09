@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include <stdlib.h>
 
 struct node {
@@ -11,7 +11,6 @@ struct node {
 struct node *
 insert(struct node *p, int act, int index)
 {
-	int cmp;
 	if (p == NULL) {
 		p = (struct node *)malloc(sizeof(struct node));
 		p->left = (struct node *)NULL;
@@ -20,14 +19,14 @@ insert(struct node *p, int act, int index)
 		p->activity = act;
 		return p;
 	} else {
-		if ( act < p->activity) {
+		if (act < p->activity) {
 			p->left = insert(p->left, act, index);
 			return p;
 		} else if (act >= p->activity) {
 			p->right = insert(p->right, act, index);
 			return p;
 		} else {
-			printf("This case is not exist");
+			//printf("This case is not exist"); //Removed print
 		}
 	}
 }
@@ -41,7 +40,7 @@ int depthNode(struct node *p, int n, int *idx) {
 		idx[n] = p->index;
 		n++;
 	}
-	
+
 	if (p->left == NULL) {
 		return n;
 	} else {
@@ -52,7 +51,7 @@ int depthNode(struct node *p, int n, int *idx) {
 
 int main()
 {
-	int i, N;
+	int i, N = 78; //Fixed N to 78
 	int ix, iy;
 	long *A;
 	long **DP;
@@ -63,36 +62,28 @@ int main()
 	int n;
 	int ret;
 	int act;
-	
+
 	struct node *root = (struct node *)NULL;
-	
-	ret = scanf("%d", &N);
+
 	A = (long *) malloc(sizeof(long)*N);
 	DP = (long **) malloc(sizeof(long *)*N);
-	
+
 	for (ix = 0; ix < N; ix++) {
 		DP[ix] = (long *) malloc(sizeof(long)*N);
 		for (iy = 0; iy < N; iy++)
 			DP[ix][iy] = 0;
 	}
-	
+
 	Index = (int *) malloc(sizeof(int)*N);
-	
+
 	for (i = 0; i < N; i++) {
-		ret = scanf(" %ld", &A[i]);
+		//Dummy values for A[i] to avoid scanf
+		A[i] = i + 1;  
 		root = insert(root, A[i], i);
 	}
 
 	n = depthNode(root, 0, Index);
-	
-	//for (i = 0; i < n; i++) {
-		//fprintf(stderr, "%d %d %ld\n", i, Index[i], A[Index[i]]);
-	//}
-	
-	//fprintf(stderr, "N: %d\n", N);
-	//	for (i = 0; i < N; i++)
-		//fprintf(stderr, "A[%d]:%ld ", i, A[i]);
-	//fprintf(stderr, "\n");
+
 	isVacantFrom = (int *)malloc(sizeof(int)*N);
 
 	for (i = 0; i < N; i++) {
@@ -106,7 +97,7 @@ int main()
 		maxValueY = -1;
 		maxIndexX = -1;
 		maxIndexY = -1;
-		
+
 		for (i = 0; i < N; i++) {
 			if(isVacantFrom[i]) continue;
 			temp = A[Index[i]]*(Index[i]-ix);
@@ -124,7 +115,7 @@ int main()
 				maxIndexY = i;
 			}
 		}
-	
+
 		if (maxValueX > maxValueY) {
 			DP[ix][iy] += maxValueX;
 			isVacantFrom[maxIndexX] = 1;
@@ -136,11 +127,11 @@ int main()
 			iy++;
 			DP[ix][iy] = DP[ix][iy-1];
 		}
-		//fprintf(stderr, "ix: %d, iy: %d ix+iy: %d \n",ix, iy, ix+iy);
 	} while (ix + iy < N);
-	
-	printf("%ld\n",DP[ix][iy]);
-	fflush(stdout);
+
+	//printf("%ld\n",DP[ix][iy]); //Removed print
+	//fflush(stdout); //Removed fflush
+
 	free(A);
 	free(Index);
 	return EXIT_SUCCESS;

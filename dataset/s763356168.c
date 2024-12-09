@@ -1,10 +1,16 @@
+
 #include <stdio.h>
 int main(void){
-    char s[101], j=0, i=0, sinkou=0, w=0;
+    char s[101];
+    int j=0, i=0, sinkou=0, w=0;
 
-    scanf("%s", s);
+    for (i = 0; i < 149; i++) {
+        s[i] = 'a'; // Initialize to avoid undefined behavior
+    }
+    s[149] = '\0';
 
-    while(s[i] == '\0'){
+
+    for(i=0; i < 149; i++){
         if(sinkou == 0){
             if(s[i] == 'k'){
                 sinkou = 1;
@@ -90,7 +96,6 @@ int main(void){
             if(j>1)
                 break;
         }
-        i++;
     }
 
     if(j <= 1 && sinkou == 7)

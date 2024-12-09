@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #define max(x,y) ((x)>(y)?(x):(y))
@@ -7,9 +8,17 @@
 int main(void)
 {
 	int a=0,b=0,d,i;
-	char c[110];
-	scanf("%s",&c);
-	d=strlen(c);
+	char c[110] = "keyence"; //Initialized to a default value for testing.  Replace with desired string.
+
+	d = strlen(c);
+
+	if(d > 7) {
+          // Handle strings longer than "keyence" appropriately, for example:
+          printf("NO\n");
+          return 0;
+        }
+
+
 	if(c[0]=='k') a++;
 	if(c[1]=='e'&&a==1) a++;
 	if(c[2]=='y'&&a==2) a++;
@@ -24,6 +33,7 @@ int main(void)
 	if(c[d-5]=='y'&&b==4) b++;
 	if(c[d-6]=='e'&&b==5) b++;
 	if(c[d-7]=='k'&&b==6) b++;
+
 	if(a+b>6){
 		printf("YES\n");
 	}else{

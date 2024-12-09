@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,16 +16,19 @@ int qsort_comp(const void* x,const void* y) {
 
 int main(void) {
 	int W,H;
-	int N;
+	int N = 60; //Fixed N to 60
 	int i;
 	long long nowkyori;
 	long long kyorisum;
 	long long longest;
 	int center_x,center_y;
-	scanf("%d %d",&W,&H);
-	scanf("%d",&N);
+
+	//Input removed
+
 	for(i=0;i<N;i++) {
-		scanf("%d %d",&house_x[i],&house_y[i]);
+		//Input removed.  Assume some default values.
+		house_x[i] = i * 10;
+		house_y[i] = i * 20;
 	}
 	for(i=0;i<N;i++) {
 		house_sort[i]=house_x[i];

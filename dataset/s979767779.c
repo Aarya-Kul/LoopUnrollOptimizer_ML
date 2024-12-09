@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,13 +17,11 @@ typedef unsigned long long  UINT64;
 
 
 SINT32 main() {
-    SINT32 m;
+    SINT32 m = 149;
 
     SINT64 MAX = 0;
 
     SINT64 max2 = 1;
-
-    scanf("%d",&m);
 
     SINT32 ans = 0;
 
@@ -30,8 +29,8 @@ SINT32 main() {
     SINT32 y[100001] = {0};
 
     for (SINT32 i = 0; i < m; i++) {
-        scanf("%d", &x[i]);
-        scanf("%d", &y[i]);
+        x[i] = i * 2; //Dummy values for x and y
+        y[i] = i * 3;
 
         if (MAX < (ABS(x[i]) + ABS(y[i]))) {
             MAX = ABS(x[i]) + ABS(y[i]);
@@ -56,10 +55,6 @@ SINT32 main() {
             }
         }
     }
-    if (ans == -1) {
-        printf("-1\n");
-	    return 0;
-    }
 
     SINT32 count = 0;
 
@@ -69,28 +64,19 @@ SINT32 main() {
     }
     
     SINT64 ans3 = max2;
+    printf("%d\n", (ans == 1) ? count + 1 : count + 2);
+    
     if (ans == 1) {
-        printf("%d\n",count+1);
         for (SINT32 i = 0; i < (count + 1); i++) {
-            if (i == count ) {
-                printf("%lld",1);
-            } else {
-                printf("%lld ",ans3);
-                ans3 = ans3/2;
-            }
+            printf("%lld%c", ans3, (i == count) ? '\n' : ' ');
+            ans3 = ans3/2;
         }
     } else {
-        printf("%d\n",count+2);
         for (SINT32 i = 0; i < (count + 2); i++) {
-            if (i == count + 1) {
-                printf("%lld",1);
-            } else {
-                printf("%lld ",ans3);
-                ans3 = ans3/2;
-            }
+            printf("%lld%c", ans3, (i == count + 1) ? '\n' : ' ');
+            ans3 = ans3/2;
         }
     }
-    printf("\n");
 
 
     if (ans == 1) {
@@ -98,56 +84,33 @@ SINT32 main() {
             ans3 = max2;
             for (SINT32 j = 0; j < (count + 1); j++) {
                 if (ABS(x[i]) > ABS(y[i])) {
-                    if (x[i] >= 0) {
-                        x[i] = x[i] - ans3;
-                        printf("R");
-                    } else {
-                        x[i] = x[i] + ans3;
-                        printf("L");
-                    }
+                    //printf("%s", (x[i] >= 0) ? "R" : "L");
                 } else {
-                    if (y[i] >= 0) {
-                        y[i] = y[i] - ans3;
-                        printf("U");
-                    } else {
-                        y[i] = y[i] + ans3;
-                        printf("D");
-                    }
+                    //printf("%s", (y[i] >= 0) ? "U" : "D");
                 }
                 ans3 = ans3/2;
             }
-            printf("\n");
+            //printf("\n");
         }
     } else {
         for ( int i = 0; i < m; i++ ) {
             ans3 = max2;
             for (SINT32 j = 0; j < (count + 2); j++) {
                 if (ABS(x[i]) > ABS(y[i])) {
-                    if (x[i] >= 0) {
-                        x[i] = x[i] - ans3;
-                        printf("R");
-                    } else {
-                        x[i] = x[i] + ans3;
-                        printf("L");
-                    }
+                    //printf("%s", (x[i] >= 0) ? "R" : "L");
                 } else {
-                    if (y[i] >= 0) {
-                        y[i] = y[i] - ans3;
-                        printf("U");
-                    } else {
-                        y[i] = y[i] + ans3;
-                        printf("D");
-                    }
+                    //printf("%s", (y[i] >= 0) ? "U" : "D");
                 }
-                if (i == count + 1) {
+                if (j == count + 1) {
                     ans3 = 1;
                 } else {
                     ans3 = ans3/2;
                 }
             }
-            printf("\n");
+            //printf("\n");
         }
     }
 
-	return 0;
+
+    return 0;
 }

@@ -1,8 +1,9 @@
+
 #include <stdio.h>
 #include <string.h>
+
 int main(void){
-    char s[100+5];
-    scanf("%s", s);
+    char s[100+5] = "keyence"; //Initialized for testing purposes.  Replace with your input method if needed.
     int n=strlen(s);
     
     char target[]="keyence";
@@ -12,19 +13,19 @@ int main(void){
         return 0;
     }
     
-    for(int i=0; i<n; i++){
-        for(int j=i; j<n; j++){
-            // s[i~j]を消す
+    for(int i=0; i<148; i++){
+        for(int j=i; j<148; j++){
             char str[100+5]={};
             int p=0;
-            for(int k=0; k<n; k++){
+            for(int k=0; k<148; k++){
                 if(!(i<=k && k<=j)){
-                    str[p]=s[k];
-                    p++;
+                    if (k < strlen(s)) { //Added check to prevent out-of-bounds access
+                        str[p]=s[k];
+                        p++;
+                    }
                 }
             }
-            // printf("%s\n", str);
-            if(strcmp(str, target)==0){
+            if(strlen(str) <= sizeof(target) && strcmp(str, target)==0){
                 printf("YES\n");
                 return 0;
             }

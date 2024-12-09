@@ -1,9 +1,11 @@
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main()
 {
-	int i, j, N;
+	int i, j, N = 98;
 	long *A;
 	int *toIndex;
 	int *isFullFrom;
@@ -13,14 +15,14 @@ int main()
 	int orgIndex;
 	int count = 0;
 	long sum = 0;
-	int ret;
 	int isHitRight;
 	int isHitLeft;
 	
-	ret = scanf("%d", &N);
+
 	A = (long *) malloc(sizeof(long)*N);
-	for (i = 0; i < N; i++)
-		ret = scanf(" %ld", &A[i]);
+    for (i = 0; i < N; i++) {
+        A[i] = i + 1; //Example values, replace with your desired initialization
+    }
 
 	toIndex = (int *)malloc(sizeof(int)*N);
 	isFullFrom = (int *)malloc(sizeof(int)*N);
@@ -40,6 +42,7 @@ int main()
 			isHitRight = 0;
 			if(isFullFrom[i]) continue;
 			
+
 			for (j = 0; j <= i; j++) {
 				if (isFullTo[j]) continue;
 				tempMaxValue = A[i]*abs(i-j);
@@ -76,11 +79,15 @@ int main()
 		}
 	} while (count < N);
 	
+
 	for (i = 0;i < N; i++) {
 		sum += A[i]*abs(i - toIndex[i]);
 	}
 	printf("%ld\n",sum);
-	fflush(stdout);
+
 	free(A);
+	free(toIndex);
+	free(isFullFrom);
+	free(isFullTo);
 	return EXIT_SUCCESS;
 }

@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #define ll long long
@@ -22,15 +23,15 @@ ll search(ll p,ll q){
     return dp[p][q]; 
 }
 int main(){
-    scanf("%lld",&n);
+    n = 108; //Fixed n to 108
     for(i = 0; i < n; i++){
-        scanf("%lld",&a[i].A);
+        a[i].A = i; //Dummy values for A
         a[i].r = i + 1;
     }
     for(i = 0; i < 2048; i++)
         for(j = 0; j <2048; j++)
             dp[i][j] = -1;
     qsort(a,n,sizeof(a[0]),cmp);
-    printf("%lld\n",search(1, n));
+    printf("%lld\n",search(1, n)); 
     return 0;
 }

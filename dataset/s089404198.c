@@ -1,39 +1,25 @@
-/*N人の幼児が左右一列に並んでおり、左から 
-i番目の幼児の活発度は Aiです。
-あなたは一回だけ、幼児たちを好きな順番に並び替えさせることができます。
-はじめ左から x番目に並んでいた幼児が左から y番目に移動するとき、
-うれしさが Ax×|x-y| だけ生じます。
-幼児のうれしさの合計が最大でいくつになるか求めてください。*/
 
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int **dmatrix(int x,int y);	//x行y列の配列を確保する.
 void free_dmatrix(int **a,int x);//x行の配列を解放する
- 
+
 int main(void){
-	int N,*A,max_score;
+	int N=113,*A,max_score;
 	int *max_num;//数字Anの大きい順に配列の場所が収納される
 	int **DP,x,y;    //DP[x][y]は右に移動がx左に移動がy個での最大スコア
 	int i,j,k;
-	char str[10000000];
- 
-	fgets(str, sizeof(str), stdin);
-	N=atoi(strtok(str," "));
-	
+
 	A = (int*)calloc(N,sizeof(int));
 	max_num = (int*)calloc(N,sizeof(int));
 	DP=dmatrix(N+1,N+1);//x,yの範囲は0～N
-	
+
 	/*順番などを収納*/
-	fgets(str, sizeof(str), stdin);	
-	A[0]=atoi(strtok(str," "));
-	for(i=1;i<N;i++){		//大きい順にmax_numに値が入ってない要修正
-		A[i]=atoi(strtok(NULL," "));
+	for(i=0;i<N;i++){		//大きい順にmax_numに値が入ってない要修正
+		A[i] = i + 1; // Replace with actual A[i] values if available.  This assumes values 1 to 113 for testing
 		for(j=0;j<i;j++){
-			 if(A[max_num[j]] < A[i]) break; 
+			if(A[max_num[j]] < A[i]) break; 
 		}
 		for(k=i;k>j;k--){
 			max_num[k]=max_num[k-1];
@@ -68,14 +54,6 @@ int main(void){
 	printf("%d\n",max_score);
 	/*最大スコアの計算*/
 
-	/*マップの出力*/
-	/*for(i=0;i<=N;i++){
-		for(j=0;j<=N;j++){
-			printf("%2d ",DP[i][j]);
-		}
-		putchar('\n');
-	}*/
-	/*マップの出力*/
 
 	free(A);
 	free(max_num);
@@ -89,7 +67,6 @@ int **dmatrix(int x,int y)			//x行y列の配列を確保する.
 	int i;
 	int **a;
 	if ( ( a = (int**)calloc(x,sizeof(int*)) ) == NULL){
-		//printf("メモリの確保に失敗しました.\nプログラムを終了します.");
 		exit(1);
 	}
 	for(i=0;i<x;i++) a[i]=(int*)calloc(y,sizeof(int));

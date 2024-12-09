@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,22 +17,21 @@ typedef unsigned long long  UINT64;
 
 
 SINT32 main() {
-    SINT32 m;
+    SINT32 m = 50;
 
     SINT64 MAX = 0;
 
     SINT64 max2 = 1;
 
-    scanf("%d",&m);
-
     SINT32 ans = 0;
 
-    SINT32 x[100001] = {0};
-    SINT32 y[100001] = {0};
+    SINT32 x[50] = {0};
+    SINT32 y[50] = {0};
 
     for (SINT32 i = 0; i < m; i++) {
-        scanf("%d", &x[i]);
-        scanf("%d", &y[i]);
+        x[i] = i*2; // Replace with your desired values
+        y[i] = i*3; // Replace with your desired values
+
 
         if (MAX < (ABS(x[i]) + ABS(y[i]))) {
             MAX = ABS(x[i]) + ABS(y[i]);
@@ -56,11 +56,7 @@ SINT32 main() {
             }
         }
     }
-    if (ans == -1) {
-        printf("-1");
-	    return 0;
-    }
-
+    
     SINT32 count = 0;
 
     while (max2 <= MAX) {
@@ -69,85 +65,47 @@ SINT32 main() {
     }
     
     SINT64 ans3 = max2;
-    if (ans == 1) {
-        printf("%d\n",count+1);
-        for (SINT32 i = 0; i < (count + 1); i++) {
-            if (i == count ) {
-                printf("%lld",1);
-            } else {
-                printf("%lld ",ans3);
-                ans3 = ans3/2;
-            }
-        }
-    } else {
-        printf("%d\n",count+2);
-        for (SINT32 i = 0; i < (count + 2); i++) {
-            if (i == count + 1) {
-                printf("%lld",1);
-            } else {
-                printf("%lld ",ans3);
-                ans3 = ans3/2;
-            }
+    printf("%d\n",count+(ans==1?1:2));
+    for (SINT32 i = 0; i < (count + (ans==1?1:2)); i++) {
+        if (i == (count + (ans==1?0:1))) {
+            printf("%lld",1);
+        } else {
+            printf("%lld ",ans3);
+            ans3 = ans3/2;
         }
     }
     printf("\n");
 
-
-    if (ans == 1) {
-        for ( int i = 0; i < m; i++ ) {
-            ans3 = max2;
-            for (SINT32 j = 0; j < (count + 1); j++) {
-                if (ABS(x[i]) > ABS(y[i])) {
-                    if (x[i] >= 0) {
-                        x[i] = x[i] - ans3;
-                        printf("R");
-                    } else {
-                        x[i] = x[i] + ans3;
-                        printf("L");
-                    }
+    
+    for ( int i = 0; i < m; i++ ) {
+        ans3 = max2;
+        for (SINT32 j = 0; j < (count + (ans==1?1:2)); j++) {
+            if (ABS(x[i]) > ABS(y[i])) {
+                
+                if (x[i] >= 0) {
+                    x[i] = x[i] - ans3;
+                    printf("R");
                 } else {
-                    if (y[i] >= 0) {
-                        y[i] = y[i] - ans3;
-                        printf("U");
-                    } else {
-                        y[i] = y[i] + ans3;
-                        printf("D");
-                    }
+                    x[i] = x[i] + ans3;
+                    printf("L");
                 }
+            } else {
+                if (y[i] >= 0) {
+                    y[i] = y[i] - ans3;
+                    printf("U");
+                } else {
+                    y[i] = y[i] + ans3;
+                    printf("D");
+                }
+            }
+            if (j == count + (ans==1?0:1)) {
+                ans3 = 1;
+            } else {
                 ans3 = ans3/2;
             }
-            printf("\n");
         }
-    } else {
-        for ( int i = 0; i < m; i++ ) {
-            ans3 = max2;
-            for (SINT32 j = 0; j < (count + 2); j++) {
-                if (ABS(x[i]) > ABS(y[i])) {
-                    if (x[i] >= 0) {
-                        x[i] = x[i] - ans3;
-                        printf("R");
-                    } else {
-                        x[i] = x[i] + ans3;
-                        printf("L");
-                    }
-                } else {
-                    if (y[i] >= 0) {
-                        y[i] = y[i] - ans3;
-                        printf("U");
-                    } else {
-                        y[i] = y[i] + ans3;
-                        printf("D");
-                    }
-                }
-                if (i == count + 1) {
-                    ans3 = 1;
-                } else {
-                    ans3 = ans3/2;
-                }
-            }
-            printf("\n");
-        }
+        printf("\n");
     }
 
-	return 0;
+    return 0;
 }

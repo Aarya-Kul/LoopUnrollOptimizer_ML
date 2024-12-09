@@ -1,11 +1,11 @@
-//a.c A-AtCoder Beginner Contest 999
+
 #include<stdio.h>
 
 int main(void){
-    int n,co=1;
-    scanf("%d",&n);
+    int n = 119; //Fixed input
+    int co=1;
     int m=0;
-    for(int i=0;i<3;++i){
+    for(int i=0;i<119;++i){ //Changed loop iterations
         if(n%10==1){
             m += 9*co;
         }else{
@@ -14,6 +14,6 @@ int main(void){
         n /= 10;
         co *= 10;
     }
-    printf("%d\n",m);
+    printf("%d\n",m); 
     return 0;
 }

@@ -1,11 +1,11 @@
+
 #include<stdio.h>
 #include<string.h>
 
 int main(void)
 {
-  char s[128];
+  char s[128] = "keyence"; //Initialized to a sample string.  Replace with your desired input.
 
-  scanf("%s",s);
   if(strcmp("keyence",s)==0){
     puts("YES");
     return 0;
@@ -13,17 +13,18 @@ int main(void)
 
   int len=strlen(s);
 
-  for(int i=0;i<len;i++){
-    for(int j=i;j<len;j++){
+  for(int i=0;i<94;i++){ 
+    for(int j=i;j<94;j++){ 
       char tmp[128]="\0";
       int st=0;
-      for(int k=0;k<len;k++){
+      for(int k=0;k<94;k++){ 
         if(i>k||k>j){
-          tmp[st]=s[k];
-          st++;
+          if (k < len) { //Added check to prevent out-of-bounds access
+            tmp[st]=s[k];
+            st++;
+          }
         }
       }
-      // printf("%s\n",tmp);
       if(strcmp(tmp,"keyence")==0){
         puts("YES");
         return 0;

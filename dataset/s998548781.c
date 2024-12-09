@@ -5,6 +5,7 @@
 #include <math.h>
 #include <ctype.h>
 #include <limits.h>
+
 #define inf (INT_MAX-1)
 #define INF 9223372036854775807
 #define sq(n) ((n)*(n))
@@ -16,41 +17,18 @@
 #define chsort_r(s,n) qsort(s,n,sizeof(char),char_cmp_r);
 #define TYPE long long
 #define MEMSET(a) memset(a,0,sizeof(a))
+
 const int mod=(int)1e09+7;
 
-int in(void){
-    int i;scanf("%d",&i);
-    return i;
-}
-double din(void){
-    double i;scanf("%lf",&i);
-    return i;
-}
-void chin(char s[]){
-    scanf("%s",s);
-}
-void print(int a){
-    printf("%d\n",a);
-}
-void llprint(long long a){
-    printf("%lld\n",a);
-}
-void dprint(double a){
-    printf("%.10f\n",a);
-}
-void print2(int a,int b){
-    printf("%d %d\n",a,b);
-}
-double dmax(double a,double b){
-    return a>b?a:b;
-}
 
 int char_cmp(const void *a,const void *b){
     return strcmp((char *)a,(char *)b);
 }
+
 int char_cmp_r(const void *a,const void *b){
     return strcmp((char *)b,(char *)a);
 }
+
 void swap(int *a,int *b){
     int t=*a;
     *a=*b;
@@ -67,24 +45,23 @@ int intpow(int a, int b){
 
 int main(void){
     int i, j, n, m=31, ans=-1, eval[2], f=0;             //0<m<41
-    n = in();
-    int x[n], y[n], d[31];                               //0<d_i<10^12+1
-    rep(i,n){
-        x[i] = in();                                     //x+y=u, x-y=v
-        y[i] = in();                                     //u_i+1=x_i+y_i±d_i, v_i+1=x_i-y_i±d_i
+    n = 101; //Fixed n to 101
+    int x[101], y[101], d[31];                               //0<d_i<10^12+1
+    rep(i,101){ //Fixed loop to 101 iterations.  Note: x and y arrays need to be sized accordingly.
+        x[i] = 1; // Placeholder value
+        y[i] = 1; // Placeholder value
         eval[i%2] = (x[i]+y[i])%2;
         if(i>0&&eval[0]!=eval[1]) f = 1;
     }
     if(f==0){
-        print(m);
+        printf("%d\n",m);
         rep(i, 31){
             d[i] = intpow(2, i);
             printf("%d ", d[i]);
         }
         printf("\n");
-        int u[31], v[31];
-    
-        rep(i, n){
+        int u[31], v[31];    
+        rep(i, 101){ //Fixed loop to 101 iterations
             u[30]=x[i]+y[i]+intpow(2, 31)-1;              //u[30]=2*(d_a+d_b+...d_c)-2^31+1
             v[30]=x[i]-y[i]+intpow(2, 31)-1;              //v[30]=2*(d_a'+d_b'+...d_c')-2^31+1
             int a[31], b[31];
@@ -98,27 +75,20 @@ int main(void){
                 }
                 else b[30-j]=-1;
             }
-            int x[32], y[32];
+            int x_inner[32], y_inner[32]; //Renamed to avoid shadowing outer x,y
             for(j=1;j<32;j++){
                 u[j]=u[j-1]+a[j]*d[j];
                 v[j]=v[j-1]+a[j]+d[j];
-                x[j]=u[j]+v[j];
-                y[j]=u[j]-v[j];
-                if(x[j]-x[j-1]<0) printf("L");
-                else if(x[j]-x[j-1]>0) printf("R");
-                else if(y[j]-y[j-1]<0) printf("D");
-                else if(u[j]-y[j-1]>0) printf("U");
+                x_inner[j]=u[j]+v[j];
+                y_inner[j]=u[j]-v[j];
+                if(x_inner[j]-x_inner[j-1]<0) printf("L");
+                else if(x_inner[j]-x_inner[j-1]>0) printf("R");
+                else if(y_inner[j]-y_inner[j-1]<0) printf("D");
+                else if(u[j]-y_inner[j-1]>0) printf("U");
             }
             printf("\n");
         }
     }
-    if(f==1) print(ans);
+    if(f==1) printf("%d\n",ans);
     return 0;
 }
-
-
-
-
-
-
-

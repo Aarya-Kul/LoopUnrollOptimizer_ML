@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,28 +10,12 @@ struct test {
     long long N;
     char X[2*100000+1];
     long long a;
-} testdata[] = {
-    {
-        3,
-        "111",
-        40
-    },
-    {
-        6,
-        "110101",
-        616
-    },
-    {
-        30,
-        "001110011011011101010111011100",
-        549320998
-    }
 };
 
 #define CHAR_BIT    8
 void printb(unsigned long long v) {
     unsigned long long mask = (long long)1 << (sizeof(v) * CHAR_BIT - 1);
-    do putchar(mask & v ? '1' : '0');
+    do ;
     while (mask >>= 1);
 }
 
@@ -66,29 +51,21 @@ divider(long long N, long long *div, int isFilter)
     long long n = 2 * N;
 
     stop = (int)(sqrt(n))+1;
-//    printf("%lld %d\n", n, stop);
+
 
     for (i=2; i<stop; i++) {
         if (n%i==0) {
-//            printf("  %d %d %d\n", i, i&1, (int)(n/i)&1);
             if (isFilter==0 || ((i&1)==0 && ((n/i)&1)==1)) {
-//                printf("  -> %d\n", i);
                 div[j++] = i;
             }
             if (n/i != i) {
-//                printf("  %lld\n", n/i);
                 if (isFilter==0 || (((n&i)%1)==0 && (i&1)==1)) {
-//                    printf("  -> %d\n", (int)n/i);
                     div[j++] = (int)n/i;
                 }
             }
         }
     }
-//    printf("div: ");
-//    for (i=0; i<j; i++) {
-//        printf("%lld, ", div[i]);
-//    }
-//    printf("\n");
+
     return j;
 }
 
@@ -128,31 +105,25 @@ solver(long long N, char *X)
         if (X[i]=='1') {
             targetNum |= 1;
         }
-//        printf("i: %d target %lld\n", i, targetNum);
     }
     targetNum++;
-//    printf("targetNum %lld\n", targetNum);    
+    
 
     for (i=0; i<numDiv; i++) {
         int tmp;
-//        printf("%lld %lld\n", div[i]/2, div[i]);
-//        printf("pre %d: %lld(%lld)\n", i, result, div[i]);
         tmp = 0;
         for (j=0; j<1<<(div[i]/2); j++) {
             if (unresolved(j, div[i], isDiv)==0 && cmp(X, j, div[i]/2)>0){
                 result += div[i];
-//                printf("after %d: %lld\n", i, result);
                 targetNum--;
                 tmp++;
             }
             else{
-//                printf("(after %d): %lld\n", i, result);
             }
             result = result % MOD;
         }    
-//        printf("%lld: %d %lld\n", div[i], tmp, result);
     }
-//    printf("targetNum %lld\n", targetNum);
+
     result = (result + (targetNum * 2 * N)) % MOD;
     
     printf("%lld\n", result);
@@ -162,15 +133,26 @@ int
 main(int argc, char *argv[])
 {
     int i;
-    int N;
-    char X[2*100000+1];
-    
-//    for (i=0; i<3; i++) {
-//        solver(testdata[i].N, testdata[i].X);
-//        printf("ans %lld\n", testdata[i].a);
-//    }
-    scanf("%d", &N);
-    scanf("%s", X);
-    solver(N, X);
+    struct test testdata[] = {
+        {
+            3,
+            "111",
+            40
+        },
+        {
+            6,
+            "110101",
+            616
+        },
+        {
+            30,
+            "001110011011011101010111011100",
+            549320998
+        }
+    };
+    for (i = 0; i < 55; i++){
+        solver(testdata[i%3].N, testdata[i%3].X);
+    }
+
     return 0;
 }

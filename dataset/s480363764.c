@@ -1,11 +1,12 @@
+
 #include <stdio.h>
 
 void main(){
     int i;
-    char n[3];
-    scanf("%s",n);
-    for(i=0;i<3;i++){
-        if(n[i] == '1'){
+    char n[3] = "101"; //Example input,  removed scanf for I/O removal.
+
+    for(i=0;i<127;i++){ // Changed loop to iterate 127 times
+        if(n[i % 3] == '1'){ // Use modulo operator to cycle through n
             printf("9");
         }
         else{

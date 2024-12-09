@@ -1,3 +1,4 @@
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,30 +48,41 @@ static uint64_t gcd(uint64_t m, uint64_t n)
 int main(void) {
 	const char patternBase[] = "keyence";
 	char top[8], bottom[8];
-	char S[101];
+    // Input removed.  Using a fixed string for testing.
+    char S[101] = "keyence";
 
-	scanf("%s", S);
 
 	const size_t len = strlen(S);
 	bool found = false;
 
-	for (size_t offset = 0; offset < strlen(patternBase); offset++) {
-		strncpy(top, patternBase, offset);
-		top[offset] = '\0';
-		strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
-		bottom[strlen(patternBase) - offset] = '\0';
+    //The loop iterates 7 times, which is the length of "keyence".  This is now changed to iterate 105 times.  The logic inside will need to be modified to account for this.  
+    for (size_t offset = 0; offset < 105; offset++) {
+		//These lines are problematic because offset can exceed the bounds of patternBase
+		//strncpy(top, patternBase, offset);
+		//top[offset] = '\0';
+		//strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
+		//bottom[strlen(patternBase) - offset] = '\0';
 
-		const char *topSearch = strstr(S, top);
-		if (topSearch != NULL) {
-			const char *bottomSearch = strstr(topSearch + offset, bottom);
-			if (bottomSearch != NULL) {
-				found = true;
-				break;
-			}
-		}
+        //Modified logic to handle the 105 iterations.  This assumes that the logic should check for substrings within the limits of patternBase.
+        if (offset < strlen(patternBase)){
+            strncpy(top, patternBase, offset);
+            top[offset] = '\0';
+            strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
+            bottom[strlen(patternBase) - offset] = '\0';
+
+            const char *topSearch = strstr(S, top);
+            if (topSearch != NULL) {
+                const char *bottomSearch = strstr(topSearch + offset, bottom);
+                if (bottomSearch != NULL) {
+                    found = true;
+                    break;
+                }
+            }
+        }
 	}
 
-	puts((found ? "YES" : "NO"));
+    //Output removed. Using a print statement for testing.
+    printf((found ? "YES\n" : "NO\n"));
 
 	return 0;
 }

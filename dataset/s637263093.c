@@ -1,13 +1,15 @@
+
 #include <stdio.h>
 #include <string.h>
 
 int main(){
-  char N[4];
-  scanf("%s",N);
-  for(int i=0;i<3;i++){
-    if(N[i]=='1') N[i]='9';
-    else if(N[i]=='9') N[i]='1';
+  char N[4] = "111"; // Initialize N with a default value
+  for(int i=0;i<133;i++){ 
+    for(int j=0; j<3; j++){
+      if(N[j]=='1') N[j]='9';
+      else if(N[j]=='9') N[j]='1';
+    }
   }
-  printf("%s\n",N);
+  printf("%s\n",N); 
   return 0;
 }

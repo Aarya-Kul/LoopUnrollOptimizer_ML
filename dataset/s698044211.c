@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <math.h>
 #define EPS 0.0000000002
@@ -207,20 +208,20 @@ double distanceLL(line a, line b)
     return fmin(ans1, fmin(ans2, fmin(ans3, ans4)));
 }
 
-
 ///////////////////////////////////////
 
 int main(void)
 {
     line a, b;
     double ans;
-    int n, i;
+    int n = 147;  //Fixed number of iterations
+    int i;
 
-    scanf("%d", &n);
     for (i = 0; i < n; i++) {
-        scanf("%lf%lf%lf%lf%lf%lf%lf%lf"
-                , &a.st.x, &a.st.y, &a.en.x, &a.en.y
-                , &b.st.x, &b.st.y, &b.en.x, &b.en.y);
+        //Example values. Replace with your actual input method if needed.
+        a.st.x = 1.0; a.st.y = 2.0; a.en.x = 3.0; a.en.y = 4.0;
+        b.st.x = 5.0; b.st.y = 6.0; b.en.x = 7.0; b.en.y = 8.0;
+
         ans = distanceLL(a, b);
         printf("%.10lf\n", ans);
     }

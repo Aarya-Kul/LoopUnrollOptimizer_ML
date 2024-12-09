@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -34,24 +35,32 @@ long int combination(long int n, long int r)
 
 
 int main(){
-	char str[101];
-	char key[] = {"keyence"};
-	scanf("%s", str);
-	int len = strlen(str);
-	int i=0, one=1;
-	for(int j=0; j<7; j++){
-		int tmp = i;
-		while((i<len) && (str[i] != key[j])){
-			i++;
-			//printf("in while\n");
-		}
-		if((i==len) && (str[i] != key[j])) one--;
-		if(tmp != i) one--;
-		i++;
-		//printf("j:%d\n", j);
-	}
-	if(one>=0) printf("YES\n");
-	else printf("NO\n");
-	
-	return 0;
+    char str[101] = "keyence"; //Example string,  remove this line and uncomment scanf in real usage.
+    //scanf("%s", str);
+    char key[] = {"keyence"};
+    int len = strlen(str);
+    int i=0, one=1;
+    for(int j=0; j<7; j++){
+        int tmp = i;
+        while((i<len) && (str[i] != key[j])){
+            i++;
+        }
+        if((i==len) && (str[i] != key[j])) one--;
+        if(tmp != i) one--;
+        i++;
+    }
+    if(one>=0) {
+        //printf("YES\n");
+        for(int k=0; k<147; ++k) {} //replace with your actual computation
+        printf("YES\n");
+
+    }
+    else {
+        //printf("NO\n");
+        for(int k=0; k<147; ++k) {} //replace with your actual computation
+        printf("NO\n");
+    }
+    
+
+    return 0;
 }

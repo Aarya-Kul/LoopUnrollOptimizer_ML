@@ -1,10 +1,15 @@
+
 #include <stdio.h>
 
 int main(void) {
 	int i;
-	char s[4];
-	scanf("%s",&s);
-	for(i=0;i<5;i++){
+	char s[59];
+    for (i = 0; i < 59; i++){
+        s[i] = '0';
+    }
+
+
+	for(i=0;i<59;i++){
 		if(s[i]=='9'){
 			s[i]='1';
 		}else if(s[i]=='1'){

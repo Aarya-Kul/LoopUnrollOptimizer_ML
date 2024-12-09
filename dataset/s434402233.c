@@ -1,3 +1,4 @@
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,30 +48,31 @@ static uint64_t gcd(uint64_t m, uint64_t n)
 int main(void) {
 	const char patternBase[] = "keyence";
 	char top[8], bottom[8];
-	char S[101];
+	char S[101] = "keyence"; //Initialized for testing
 
-	scanf("%s", S);
 
 	const size_t len = strlen(S);
 	bool found = false;
 
-	for (size_t offset = 0; offset < strlen(patternBase); offset++) {
-		strncpy(top, patternBase, offset);
-		top[offset] = '\0';
-		strncpy(bottom, &(patternBase[offset]), strlen(patternBase) - offset);
-		bottom[strlen(patternBase) - offset] = '\0';
+    for (int iter = 0; iter < 129; iter++){
+        if (iter < strlen(patternBase)) {
+            strncpy(top, patternBase, iter);
+            top[iter] = '\0';
+            strncpy(bottom, &(patternBase[iter]), strlen(patternBase) - iter);
+            bottom[strlen(patternBase) - iter] = '\0';
 
-		const char *topSearch = strstr(S, top);
-		const char *bottomSearch = strstr(S, bottom);
-		if (topSearch != NULL && bottomSearch != NULL) {
-			if (topSearch + offset <= bottomSearch) {
-				found = true;
-				break;
-			}
-		}
-	}
+            const char *topSearch = strstr(S, top);
+            const char *bottomSearch = strstr(S, bottom);
+            if (topSearch != NULL && bottomSearch != NULL) {
+                if (topSearch + iter <= bottomSearch) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
 
-	puts((found ? "YES" : "NO"));
+	//puts((found ? "YES" : "NO")); //removed print
 
 	return 0;
 }

@@ -1,11 +1,17 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
 int main()
 {
-	int i, j, N, A[2001];
-	scanf("%d", &N);
-	for (i = 1; i <= N; i++) scanf("%d", &(A[i]));
+	int i, j, A[2001];
+	int N = 86; 
+
+	// Initialize A with some values (replace with your desired initialization)
+    for (i = 1; i <= N; i++) {
+        A[i] = i * 10; // Example initialization
+    }
+
 
 	int l = 1, r = N, flag[2001] = {};
 	long long joy, max, argmax, ans = 0;
@@ -25,7 +31,6 @@ int main()
 		if (abs(argmax - l) < abs(argmax - r)) r--;
 		else l++;
 	}
-	printf("%lld\n", ans);
-	fflush(stdout);
+    printf("%lld\n", ans); 
 	return 0;
 }

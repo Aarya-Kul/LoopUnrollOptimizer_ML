@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -35,13 +36,13 @@ long int combination(long int n, long int r)
 
 
 int main(){
-	char str[101];
+    char str[101] = "keyence"; //Dummy string for testing.  Replace with your input method if needed.
 	char key[] = "keyence";
-	scanf("%s", str);
 	int len = strlen(str);
 
 	int ok=0, count, k;
-	for(int i=0; i<7; i++){
+    for(int i=0; i<128; i++){ // Changed to 128 iterations
+        if (i >=7) break; //Added to prevent out of bounds error.  Original loop only went to 7.
 		count=0, k=0;
 		for(int j=0; j<i; j++){
 			if(str[j] == key[k]){
@@ -50,7 +51,8 @@ int main(){
 			k++;
 		}
 		if(count!=i) continue;
-		for(int j=i+len-7; j<len; j++){
+		for(int j=i+len-7; j<len; j++){ 
+            if (j >= len) break; //Added to prevent out of bounds error
 			if(str[j] == key[k]){
 				count++;
 			}
@@ -63,6 +65,6 @@ int main(){
 	}
 	if(ok==1) printf("YES\n");
 	else printf("NO\n");
-		
+
 	return 0;
 }

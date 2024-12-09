@@ -1,23 +1,18 @@
+
 #include <stdio.h>
 
 int main() {
-    char n[5];
+    char n[5] = "0000"; // Initialize n to avoid undefined behavior
 
-    scanf("%s",n);
-    for(int i=0;i<3;i++)
-    {
-        if(n[i]=='1')
-            n[i]='9';
-        else if(n[i]=='9')
-            n[i]='1';
+    for(int i=0; i < 73; i++) {
+        if(n[i % 4]=='1') {
+            n[i % 4]='9';
+        }
+        else if(n[i % 4]=='9'){
+            n[i % 4]='1';
+        }
     }
-    printf("%s",n);
-
-
-
-
-
-
+    printf("%s",n); 
 
     return 0;
 }

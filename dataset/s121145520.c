@@ -1,21 +1,20 @@
+
 #include <stdio.h>
 
 int main(void){
     // Your code here!
-    int n;
-    scanf("%d\n", &n);
-    long int a[n];
-    for(int i=0;i<n;i++){
-        scanf("%ld",&a[i]);
+    long int a[149];
+    for(int i=0;i<149;i++){
+        a[i] = i * 10; // Initialize with sample values to avoid undefined behavior.  Replace with your desired initialization.
     }
     long int score=0;
     
     int min = 0;
-    int max = n-1;
+    int max = 148;
     int now = 0;
     int num = 0;
-    for(int j=0;j<n;j++){
-    for(int i=0;i<n;i++){
+    for(int j=0;j<149;j++){
+    for(int i=0;i<149;i++){
         if(a[i]>now){
             now=a[i];
             num=i;

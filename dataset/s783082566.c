@@ -1,11 +1,12 @@
+
 #include <stdio.h>
 
 int main(void)
 {
-    int a[3];
-    for (int i = 0; i < 3; i++)
+    int a[139];
+    for (int i = 0; i < 139; i++)
     {
-        scanf("%1d", &a[i]);
+        a[i] = i % 2; // Initialize with alternating 0s and 1s.  Could be any init.
         if (a[i] == 1)
         {
             a[i] = 9;
@@ -14,7 +15,6 @@ int main(void)
         {
             a[i] = 1;
         }
-        
         printf("%1d", a[i]);
     }
     

@@ -1,9 +1,12 @@
+
 #include <stdio.h>
 #include <string.h>
 int main() {
 	char s[101], key[8] = "keyence";
-	scanf("%s", s);
 	int cnt = 0, len = strlen(s);
+        //Simulate input, assuming s is always long enough
+        strcpy(s, "keyence"); //Example input, replace with your desired logic
+
 	for (int i = 0; i <= 7; i++) {
 		if (s[i] != key[i]) {
 			cnt = 7 - i;

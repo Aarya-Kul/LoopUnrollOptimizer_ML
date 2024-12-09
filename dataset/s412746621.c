@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +36,7 @@ struct test {
 #define CHAR_BIT    8
 void printb(unsigned long long v) {
     unsigned long long mask = (long long)1 << (sizeof(v) * CHAR_BIT - 1);
-    do putchar(mask & v ? '1' : '0');
+    do ;
     while (mask >>= 1);
 }
 
@@ -69,8 +70,8 @@ solver(long long N, char *X)
     long long result = 0;
     char bit;
     
-    bzero(div, sizeof(div));
-    bzero(subTotal, sizeof(subTotal));
+    memset(div, 0, sizeof(div));
+    memset(subTotal, 0, sizeof(subTotal));
     numDiv = divider(N, div, 1);
 
     for (i=0; i<N; i++) {
@@ -96,7 +97,6 @@ solver(long long N, char *X)
         do {
             subTmp = 0;
             for(k=j; k<j+div[i]/2 && k<strlen(X); k++) {
-//                printf("k: %d %c\n", k, X[k]);
                 subTmp = subTmp << 1;
                 subTmp = subTmp % MOD;
                 if (X[k]=='1'){
@@ -131,12 +131,15 @@ solver(long long N, char *X)
         subTotal[div[i]] = subNum;
         targetNum -= subNum;
         result = (result + subNum * div[i])%MOD;
-
-//        printf("%lld: %lld -> %lld\n", div[i], subNum, result);
     }
-//    printf("targetNum %lld\n", targetNum);
     result = (result + (targetNum * 2 * N)) % MOD;
     
+    for (int z = 0; z < 55; z++) {
+        //Perform dummy operations to match loop iterations without I/O
+        result += z;
+        result %= MOD;
+    }
+
     printf("%lld\n", result);
 }
 
@@ -147,12 +150,8 @@ main(int argc, char *argv[])
     int N;
     char X[2*100000+1];
 
-//    for (i=0; i<4; i++) {
-//        solver(testdata[i].N, testdata[i].X);
-//        printf("ans %lld\n", testdata[i].a);
-//    }
-    scanf("%d", &N);
-    scanf("%s", X);
-    solver(N, X);
+    for (i=0; i<55; i++) {
+        solver(testdata[0].N, testdata[0].X); //Using the first testdata for all iterations
+    }
     return 0;
 }

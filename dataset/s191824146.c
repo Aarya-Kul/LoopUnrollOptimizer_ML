@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -12,7 +13,7 @@
 #define MOD 1000000007
 //#define MOD 998244353
 #define NUM 200010
- 
+
 void swap(int* a,int* b){int tmp=*a;*a=*b;*b=tmp;}
 int abs(int a){if(a<0)return -a;return a;}
 int dup(int a,int d){if(a%d==0)return a/d;else return a/d+1;}
@@ -46,16 +47,13 @@ ll dp[3000][3000];
 qwe u[2000];
 
 int main(){
-  ll n, b, ans=0;
+  ll n = 121, b, ans=0;
   ll a;
-
-  scanf("%lld", &n);
 
   for (int i = 0; i < n; i++)
   {
-      scanf("%lld", &a);
       u[i].index = i;
-      u[i].a = a;
+      u[i].a = i; //Dummy value, original value not used in calculation after sorting
   }
   
   qsort(u, n, sizeof(qwe), cmp_qwe);
