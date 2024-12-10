@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Define the directory containing the executables and input files
-EXECUTABLE_DIR="./data_unrolled"
-INPUT_FILES_DIR="./dataset"
-OUTPUT_JSON="loop_labels7.json"
+EXECUTABLE_DIR="./poly_unrolled"
+INPUT_FILES_DIR="./polybench"
+OUTPUT_JSON="loop_labels_polu.json"
 
 # Initialize an empty JSON object
 echo "{" > $OUTPUT_JSON
@@ -27,14 +27,14 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
         # Check executables for different factors (1, 2, 4, 6, 8)
         for factor in 1 2 4 6 8; do
             executable="$EXECUTABLE_DIR/${filename%.c}_loop_${loop_count}_factor_${factor}.ll"
-
+            # echo $executable
             if [[ -x "$executable" ]]; then
                 found_loop=true
                 loop_found=true
                 total_time=0
                 NUM_RUNS=5
                 
-                # echo "running $executable"
+                # echo "found $executable"
 
                 # Run the executable 5 times and calculate the total time
                 for i in $(seq 1 $NUM_RUNS); do
@@ -43,12 +43,12 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                     
                     # Execute the program
                     # echo $executable
-                    if lli $executable < input.txt > exec_out.txt; then
-                        :
-                    else 
-                        echo "segfault, skipping..."
-                        skip_outer=true
-                    fi
+                    lli $executable < input.txt > exec_out.txt
+                    #     :
+                    # else 
+                    #     echo "segfault, skipping..."
+                    #     skip_outer=true
+                    # fi
                     # Capture the end time (in nanoseconds)
                     end_time=$(date +%s%N)
 
