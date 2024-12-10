@@ -10,6 +10,7 @@
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Transforms/Utils/UnrollLoop.h"
+#include "llvm/Support/CommandLine.h"
 #include "llvm/Support/Path.h"
 
 /* *******Header Files******* */
@@ -18,6 +19,12 @@
 
 using namespace llvm;
 int GlobalLoopCounter = 0;
+
+static llvm::cl::opt<std::string> OutputDirectory(
+    "output-dir",                       // Name of the command-line option
+    llvm::cl::desc("Specify output directory for unrolled LLVM files"), // Description
+    llvm::cl::Required                 // Mark this option as required
+);
 
 namespace {
     struct SetUnrollFactorPass : public PassInfoMixin<SetUnrollFactorPass> {
@@ -29,7 +36,7 @@ namespace {
             auto &AssumptionCacheRef = FAM.getResult<AssumptionAnalysis>(FunctionRef);
 
             // Create the "output" directory if it doesn't exist
-            std::string DirectoryName = "data_unrolled";
+            std::string DirectoryName = OutputDirectory;
             std::error_code DirectoryErrorCode = llvm::sys::fs::create_directory(DirectoryName);
             if (DirectoryErrorCode) {
                 llvm::errs() << "Error creating directory: " << DirectoryName 
