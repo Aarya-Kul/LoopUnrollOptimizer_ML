@@ -1,5 +1,5 @@
-; ModuleID = 'data_unrolled/arrayReversal.ll'
-source_filename = "dataset/arrayReversal.c"
+; ModuleID = 'data_unrolled_small/arrayReversal.ll'
+source_filename = "dataset_testing_small/arrayReversal.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -99,7 +99,7 @@ attributes #2 = { nocallback nofree nounwind willreturn memory(argmem: readwrite
 !llvm.ident = !{!9}
 
 !0 = distinct !DICompileUnit(language: DW_LANG_C11, file: !1, producer: "clang version 18.1.8 (https://github.com/llvm/llvm-project.git 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, splitDebugInlining: false, nameTableKind: None)
-!1 = !DIFile(filename: "dataset/arrayReversal.c", directory: "/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML", checksumkind: CSK_MD5, checksum: "176e152d29ae69b6f600e9e475b9d490")
+!1 = !DIFile(filename: "dataset_testing_small/arrayReversal.c", directory: "/n/eecs583a/home/akulshre/LoopUnrollOptimizer_ML", checksumkind: CSK_MD5, checksum: "176e152d29ae69b6f600e9e475b9d490")
 !2 = !{i32 7, !"Dwarf Version", i32 5}
 !3 = !{i32 2, !"Debug Info Version", i32 3}
 !4 = !{i32 1, !"wchar_size", i32 4}
