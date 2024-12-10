@@ -3,10 +3,12 @@
 # Define the directory containing the executables and input files
 EXECUTABLE_DIR="./data_unrolled"
 INPUT_FILES_DIR="./dataset"
-OUTPUT_JSON="loop_labels.json"
+OUTPUT_JSON="loop_labels7.json"
 
 # Initialize an empty JSON object
 echo "{" > $OUTPUT_JSON
+
+skip_outer=false
 
 # Loop through each `.c` file in the input directory
 for input_file in "$INPUT_FILES_DIR"/*.c; do
@@ -19,7 +21,7 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
     loop_count=0
     while true; do
         found_loop=false  # Track whether this loop has valid executables
-        min_avg_time=999999999  # Set a large initial value for the best average time
+        min_avg_time=9223372036854775807  # Set a large initial value for the best average time
         best_factor=""         # Initialize the best factor for this loop
 
         # Check executables for different factors (1, 2, 4, 6, 8)
@@ -41,8 +43,12 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                     
                     # Execute the program
                     # echo $executable
-                    lli $executable < input.txt > exec_out.txt
-                    
+                    if lli $executable < input.txt > exec_out.txt; then
+                        :
+                    else 
+                        echo "segfault, skipping..."
+                        skip_outer=true
+                    fi
                     # Capture the end time (in nanoseconds)
                     end_time=$(date +%s%N)
 
@@ -50,6 +56,7 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                     elapsed_time=$((end_time - start_time))
                     total_time=$((total_time + elapsed_time))
                 done
+                [[ $skip_outer == true ]] && break
 
                 # Calculate the average time
                 avg_time=$(echo "$total_time / $NUM_RUNS" | bc -l)
@@ -62,6 +69,7 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                 fi
             fi
         done
+        [[ $skip_outer == true ]] && break
 
         # If no executables found for this loop, break the loop
         if [[ $found_loop == false ]]; then
@@ -74,6 +82,11 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
         best_factors+=("$best_factor")
         ((loop_count++))
     done
+    
+    if [[ $skip_outer == true ]]; then
+        skip_outer=false
+        continue
+    fi
 
     # If loops were processed, add the file and its best factors to the JSON
     if [[ $loop_found == true ]]; then
