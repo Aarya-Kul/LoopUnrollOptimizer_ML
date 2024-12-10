@@ -9,3 +9,4 @@ include_directories(${LLVM_INCLUDE_DIRS})
 
 add_subdirectory(feature_extraction)
 add_subdirectory(set_unroll_factor)
+add_subdirectory(instruction_feature_extraction)
