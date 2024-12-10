@@ -53,7 +53,7 @@ namespace {
 
         // Extract features for a single loop
         void processLoop(Loop *L, std::vector<LoopFeatures>& allLoopFeatures) {
-            if (L->getSubLoops().empty()) {
+            // if (L->getSubLoops().empty()) {
                 LoopFeatures features;
 
                 // Iterate over all blocks and instructions in the loop
@@ -126,7 +126,7 @@ namespace {
 
                 // Store extracted features
                 allLoopFeatures.push_back(features);
-            }
+            // }
         }
 
         PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {

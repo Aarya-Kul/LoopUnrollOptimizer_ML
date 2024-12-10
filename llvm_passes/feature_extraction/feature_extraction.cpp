@@ -451,7 +451,7 @@ namespace {
 
         void processLoop(Loop *L, ScalarEvolution &SE, DependenceInfo &DI, TargetTransformInfo &TTI, PostDominatorTree &PDT, std::vector<LoopFeatures> &allLoopFeatures) {
             // Check if this is an innermost loop
-            if (L->getSubLoops().empty()) {
+            // if (L->getSubLoops().empty()) {
                 LoopFeatures features;
 
                 // Loop Level Features
@@ -496,7 +496,7 @@ namespace {
 
                 // Add the collected features to the vector
                 allLoopFeatures.push_back(features);
-            }
+            // }
         }
 
         PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
@@ -512,7 +512,7 @@ namespace {
             }
 
             // Save features to JSON
-            std::string jsonOutputFile = "loop_features.json";
+            std::string jsonOutputFile = "every_loop_features.json";
             std::string currentFile = F.getParent()->getSourceFileName();
             saveFeaturesToJson(jsonOutputFile, currentFile, allLoopFeatures);
 
