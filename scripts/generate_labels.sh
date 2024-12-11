@@ -8,8 +8,6 @@ OUTPUT_JSON="loop_labels.json"
 # Initialize an empty JSON object
 echo "{" > $OUTPUT_JSON
 
-skip_outer=false
-
 # Loop through each `.c` file in the input directory
 for input_file in "$INPUT_FILES_DIR"/*.c; do
     filename=$(basename "$input_file")  # Get just the file name (without path)
@@ -51,7 +49,6 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                     elapsed_time=$((end_time - start_time))
                     total_time=$((total_time + elapsed_time))
                 done
-                [[ $skip_outer == true ]] && break
 
                 # Calculate the average time
                 avg_time=$(echo "$total_time / $NUM_RUNS" | bc -l)
@@ -64,7 +61,6 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                 fi
             fi
         done
-        [[ $skip_outer == true ]] && break
 
         # If no executables found for this loop, break the loop
         if [[ $found_loop == false ]]; then
@@ -77,11 +73,6 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
         best_factors+=("$best_factor")
         ((loop_count++))
     done
-    
-    if [[ $skip_outer == true ]]; then
-        skip_outer=false
-        continue
-    fi
 
     # If loops were processed, add the file and its best factors to the JSON
     if [[ $loop_found == true ]]; then
