@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 class MLPClassifier(nn.Module):
-    def __init__(self, input_dim, hidden_layer_sizes, output_dim):
+    def __init__(self, input_dim, hidden_layer_sizes, output_dim=4):
         super(MLPClassifier, self).__init__()
         layers = []
         prev_dim = input_dim
