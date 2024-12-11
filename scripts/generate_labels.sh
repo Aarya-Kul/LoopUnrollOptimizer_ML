@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Define the directory containing the executables and input files
-EXECUTABLE_DIR="./poly_unrolled"
-INPUT_FILES_DIR="./polybench"
-OUTPUT_JSON="loop_labels_polu.json"
+EXECUTABLE_DIR="./data_unrolled"
+INPUT_FILES_DIR="./dataset"
+OUTPUT_JSON="loop_labels.json"
 
 # Initialize an empty JSON object
 echo "{" > $OUTPUT_JSON
@@ -42,13 +42,8 @@ for input_file in "$INPUT_FILES_DIR"/*.c; do
                     start_time=$(date +%s%N)
                     
                     # Execute the program
-                    # echo $executable
                     lli $executable < input.txt > exec_out.txt
-                    #     :
-                    # else 
-                    #     echo "segfault, skipping..."
-                    #     skip_outer=true
-                    # fi
+                    
                     # Capture the end time (in nanoseconds)
                     end_time=$(date +%s%N)
 
