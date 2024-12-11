@@ -1,137 +1,91 @@
-import subprocess
 import json
-import numpy as np
-from scripts.process_and_time_files import remove_includes, insert_timing, compile_and_link, run_and_aggregate_data
+import subprocess
 from models.model import load_model_and_predict
+import numpy as np
 
-def run_extract_script(file_path, script_path="scripts/extract_features.sh"):
-    """
-    Runs feature extraction script on C file.
-    
-    Parameters:
-        file_path (str): Path to C file.
-        script_path (str): Path to the feature extraction script.
-    
-    Returns:
-        str: The output of the script.
-    """
-    try:
-        # Run feature extraction
-        result = subprocess.run(
-            ["bash", script_path, file_path],
-            text=True,  # Ensures string input and output (not bytes)
-            capture_output=True,
-            check=True  # Raises CalledProcessError on non-zero exit
-        )
-        # Return the standard output from the shell script
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        # Handle script errors
-        print(f"Error: {e.stderr.strip()}")
-        return None
-    except FileNotFoundError:
-        print(f"Error: The script {script_path} was not found.")
-        return None
-
-def run_model():
+def run_model(feature_values):
     X = []
-    with open('loop_features.json', 'r') as f:
-        loop_features = json.load(f)
-    for _, features in loop_features.items():
-        for feature in features:
-                feature_values = [feature[key] for key in feature \
-                             if key != 'language' and \
-                                key != 'minMemoryLoopCarriedDep' and \
-                                key != 'maxMemoryDependencyHeight' and \
-                                key != 'maxDependenceHeight' and \
-                                key != 'avgDependenceHeight' and \
-                                key != 'maxControlDependencyHeight' and \
-                                key != 'numUniquePredicates' and \
-                                key != 'loopStartLine' \
-                              \
-                              ]
     X.append(feature_values)
-    return load_model_and_predict(np.array(X))
+    return load_model_and_predict(np.array(X))[0]
 
-def run_code_with_unroll(file_path, unroll_factor):
-    """
-    Applies LUF, compiles, and runs C file.
-    
-    Parameters:
-        file_path (str): Path to C file.
-        unroll_factor (int): Loop unroll factor (LUF).
-    
-    Returns:
-        float: The average time to run C program with this LUF.
-    """
-    
-    print(f"----- Running code with LUF = {'BASELINE' if unroll_factor == 1 else 'PROP_IDEAL'} -----")
-    # Remove include statements from file and store result in preprop.cpp
-    remove_includes(file_path)
-
-    # Insert timing code for the current LUF and get modified code
-    line2loopnum = insert_timing(file_path, unroll_factor)
-    print("Timing code inserted")
-    print("Compiling and linking...")
-    loops_unrolled_std_out = compile_and_link()  # Compile the code with the current LUF
-    print("Running...")
-    run_data = run_and_aggregate_data(10)  # Gather the run data
-
-    # Calculate the total time for the current LUF (average over all loops in the file)
-    total_time = 0
-    for loop_num, times in run_data.items():
-        if len(times) != 0:
-            avg_time = sum(times) / len(times)  # Calculate average time for this loop
-            total_time += avg_time
-        else:
-            total_time += float('inf')  # If no valid data, treat it as a high time
-    
-    print(f"Total time: {total_time}")
-    print(f"-------------------------------------{'-------' if unroll_factor == 1 else '---------'}\n")
-
-    return total_time
-    
 def main():
-    # Get input from the user
-    c_path = input("Enter path to C program: ").strip()
+    with open('poly_features.json') as file:
+        features = json.load(file)
+
+    with open('poly_gold.json') as file:
+        gold_standard = json.load(file)
+
+    accuracy = 0
+    speedup = 0
+    for filename, data in features.items():
+        print(f"----- {filename} -----")
+        model_output = []
+        print("Running model...\n")
+        for loop in data:
+            feature_vals = [loop[key] for key in loop if key != 'language']
+            model_output.append(run_model(feature_vals))
+        
+        print(f"Model yielded LUFs: {model_output}")
+
+        correct = 0
+        incorrect = 0
+        for i in range(len(model_output)):
+            if model_output[i] == gold_standard[filename][i]:
+                correct += 1
+            else:
+                incorrect += 1
+        accuracy += float(correct)/(correct + incorrect)
+        print(f"Gold Standard LUFs: {gold_standard[filename]}")
+        print(f"\nAccuracy: {round(float(correct)/(correct + incorrect) * 100, 2)}%\n")
+        
+        no_unroll = 0
+        model_unroll = 0
+        gs_unroll = 0
+        
+        print("Evaluating...")
+
+        for loop in range(len(model_output)):
+            # print(f'loop {loop}')
+            file_path = f'poly_unrolled/{filename[:-2]}_loop_{loop}_factor_1.ll'
+            no_unroll_result = subprocess.run(['bash', './scripts/eval.sh', file_path], capture_output=True, text=True)
+            # print(no_unroll_result)
+            no_unroll_output = float(no_unroll_result.stdout.strip())
+            no_unroll += no_unroll_output
+            
+            model_LUF = model_output[loop]
+            if model_LUF == 1:
+                model_unroll += no_unroll_output
+            else:
+                file_path = f'poly_unrolled/{filename[:-2]}_loop_{loop}_factor_{model_LUF}.ll'
+                model_unroll_result = subprocess.run(['bash', './scripts/eval.sh', file_path], capture_output=True, text=True)
+                model_unroll_output = float(model_unroll_result.stdout.strip())
+                model_unroll += model_unroll_output
+            
+            gs_LUF = gold_standard[filename][loop]
+            if gs_LUF == 1:
+                gs_unroll += no_unroll_output
+            else:
+                file_path = f'poly_unrolled/{filename[:-2]}_loop_{loop}_factor_{gs_LUF}.ll'
+                gs_unroll_result = subprocess.run(['bash', './scripts/eval.sh', file_path], capture_output=True, text=True)
+                gs_unroll_output = float(gs_unroll_result.stdout.strip())
+                # print(gs_unroll_output)
+                gs_unroll += gs_unroll_output
+        
+        speedup += no_unroll - model_unroll
+        print(f"No unroll:              {no_unroll} ns")
+        print(f"Model unroll:           {model_unroll} ns")
+        print(f"Gold Standard unroll:   {gs_unroll} ns\n")
+        print(f"Speedup (ns): {no_unroll - model_unroll} ns")
+        print(f"Speedup (%): {round(float(no_unroll - model_unroll)/model_unroll * 100, 5)}%\n")
+
+    print('----- Summary -----\n')
+    accuracy /= len(features)
+    print(f'Average accuracy: {round(accuracy * 100, 2)}%')
+    speedup /= len(features)
+    print(f'Average speedup compared to no unrolling: {speedup}ns')
+
+
+
+if __name__ == '__main__':
     
-    # Run the feature extraction script and get the result
-    output = run_extract_script(c_path)
-    
-    # Print the result
-    if output is not None:
-        print(f"\n----- Extracting features -----\n{output}\n-------------------------------\n")
-
-    # Run the model to estimate ideal LUF
-    ideal_LUF = run_model()[0]
-
-
-    print(f"Model proposed ideal LUF = {ideal_LUF}.\n")
-    
-    if ideal_LUF == 1:
-        print("Model determined loop should not be unrolled...\n Terminate.")
-        return
-
-    # Compile and run program with LUF = 1 as baseline (no unrolling)
-    baseline_time = run_code_with_unroll(c_path, 1)
-
-    # Compile and run program with ideal LUF
-    model_time = run_code_with_unroll(c_path, ideal_LUF)
-
-    # Analyze times
-    if model_time == float('inf') or baseline_time == float('inf'):
-        # Neither should ever be inf, indicate something when wrong
-        print("ERROR: Timing failed.")
-    elif model_time < baseline_time:
-        # Model was better than baseline
-        print("Model successfully found LUF better than baseline.")
-    else:
-        print("Model was unsuccessful.")
-
-if __name__ == "__main__":
     main()
-
-
-# matrixMult.c
-# bubbleSort.c
-# factorial.c
