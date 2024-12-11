@@ -9,3 +9,5 @@ data_unrolled/*.ll
 env
 dataset/*.cc
 data_unrolled/*.ll
+polybench/*
+poly_unrolled/*.ll
