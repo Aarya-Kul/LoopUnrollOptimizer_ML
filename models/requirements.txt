@@ -1,6 +1,7 @@
-numpy
-joblib
 scikit-learn
-pandas
-keras_tuner
+numpy
+torch
+joblib
 matplotlib
+numpy
+plotly

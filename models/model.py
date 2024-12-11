@@ -11,7 +11,7 @@ import json
 import joblib
 
 class MLPClassifier(nn.Module):
-    def __init__(self, input_dim, hidden_layer_sizes, output_dim=5):
+    def __init__(self, input_dim, hidden_layer_sizes, output_dim=4):
         super(MLPClassifier, self).__init__()
         layers = []
         prev_dim = input_dim
@@ -189,7 +189,7 @@ def main():
 
 def load_model_and_predict(input_data):
     # Load the model and scaler
-    model = MLPClassifier(input_dim=input_data.shape[1], hidden_layer_sizes=[256, 128])  # Match the architecture
+    model = MLPClassifier(input_dim=input_data.shape[1], hidden_layer_sizes=[128, 64])  # Match the architecture
     model.load_state_dict(torch.load('models/pytorch_model.pth', weights_only=True))
     model.eval()
     
