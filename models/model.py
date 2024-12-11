@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 class MLPClassifier(nn.Module):
-    def __init__(self, input_dim, hidden_layer_sizes, output_dim=4):
+    def __init__(self, input_dim, hidden_layer_sizes, output_dim):
         super(MLPClassifier, self).__init__()
         layers = []
         prev_dim = input_dim
@@ -218,109 +218,4 @@ def main():
     joblib.dump(scaler, 'scaler.pkl')
 
 if __name__ == "__main__":
-    main()  "accuracy": "Accuracy"
-        }
-    )
-    fig.show()
-
-
-def evaluate_model(model, X_test, y_test):
-    model.eval()
-    with torch.no_grad():
-        test_preds = model(torch.Tensor(X_test)).argmax(dim=1)
-        accuracy, precision, recall, f1 = compute_metrics(y_test, test_preds.numpy())
-        print(
-            f"Test Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1 Score: {f1:.4f}"
-        )
-    return accuracy, precision, recall, f1
-
-
-def load_model_and_predict(input_data):
-    model = MLPClassifier(input_dim=input_data.shape[1], hidden_layer_sizes=[128, 64])  # Match the architecture
-    model.load_state_dict(torch.load('models/pytorch_model.pth', weights_only=True))
-    model.eval()
-    
-    scaler = joblib.load('models/scaler.pkl')
-    
-    input_data_scaled = scaler.transform(input_data)
-    
-    with torch.no_grad():
-        predictions = model(torch.Tensor(input_data_scaled)).argmax(dim=1)
-    
-    class_map = {0: 1, 1: 2, 2: 4, 3: 6, 4: 8}
-    return [class_map[pred.item()] for pred in predictions]
-
-
-        accuracy, precision, recall, f1 = compute_metrics(y_test, test_preds.numpy())
-        print(
-            f"Test Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1 Score: {f1:.4f}"
-        )
-    return accuracy, precision, recall, f1
-
-
-def load_model_and_predict(input_data):
-    model = MLPClassifier(input_dim=input_data.shape[1], hidden_layer_sizes=[128, 64])  # Match the architecture
-    model.load_state_dict(torch.load('models/pytorch_model.pth', weights_only=True))
-    model.eval()
-    
-    scaler = joblib.load('models/scaler.pkl')
-    
-    input_data_scaled = scaler.transform(input_data)
-    
-    with torch.no_grad():
-        predictions = model(torch.Tensor(input_data_scaled)).argmax(dim=1)
-    
-    class_map = {0: 1, 1: 2, 2: 4, 3: 6, 4: 8}
-    return [class_map[pred.item()] for pred in predictions]
-
-
-def main():
-    X, y = load_training_data()
-
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-
-    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
-
-    results, best_params = grid_search(X_train, y_train)
-
-    results, best_params = grid_search(X_train, y_train)
-
-
-    num_classes = len(set(y_train))
-    model = MLPClassifier(
-        input_dim=X_train.shape[1],
-        hidden_layer_sizes=best_params['hidden_layer_sizes'],
-        output_dim=num_classes
-    )
-    num_classes = len(set(y_train))
-    model = MLPClassifier(
-        input_dim=X_train.shape[1],
-        hidden_layer_sizes=best_params['hidden_layer_sizes'],
-        output_dim=num_classes
-    )
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=best_params['learning_rate'])
-
-
-    train_data = TensorDataset(torch.Tensor(X_train), torch.Tensor(y_train).long())
-    train_loader = DataLoader(train_data, batch_size=best_params['batch_size'], shuffle=True)
-
-    for epoch in range(best_params['epochs']):
-        model.train()
-        for inputs, targets in train_loader:
-            optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, targets)
-            loss.backward()
-            optimizer.step()
-
-
-    evaluate_model(model, X_test, y_test)
-    parallel_coordinates_plot(results)
-    parallel_coordinates_plot(results)
-    torch.save(model.state_dict(), 'pytorch_model.pth')
-    joblib.dump(scaler, 'scaler.pkl')
-
-if __name__ == '__main__':
     main()
