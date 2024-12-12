@@ -19,7 +19,7 @@ The project is organized into the following main components:
 ### 1. Clone the Repository
 
 ```bash
-git clone [<repository-url>](https://github.com/Aarya-Kulshrestha/LoopUnrollOptimizer_ML.git)
+git clone https://github.com/Aarya-Kulshrestha/LoopUnrollOptimizer_ML.git
 cd LoopUnrollOptimizer_ML
 ```
 
