@@ -19,8 +19,8 @@ The project is organized into the following main components:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone [<repository-url>](https://github.com/Aarya-Kulshrestha/LoopUnrollOptimizer_ML.git)
+cd LoopUnrollOptimizer_ML
 ```
 
 ### 2. Dataset Preparation
@@ -101,7 +101,7 @@ This step generates the optimal unroll factor labels for each loop in the datase
 Run the following Python script to train the model using the extracted loop features and optimal labels. The model will then predict the optimal unroll factor for any new set of loop features.
 
 ```bash
-python3 model.py
+python3 models/model.py
 ```
 
 This step trains the model and makes predictions for optimal unroll factors for loops in your dataset.
