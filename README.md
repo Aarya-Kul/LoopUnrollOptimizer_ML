@@ -168,8 +168,4 @@ This step trains the model and makes predictions for optimal unroll factors for 
 
 For questions, issues, or contributions, please raise an issue on the repository.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
 We hope this README helps you understand the structure, purpose, and steps required to run the Loop Unrolling project. If you have any questions, please reach out to the contributors or open an issue in the repository.
