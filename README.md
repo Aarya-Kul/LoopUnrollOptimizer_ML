@@ -2,6 +2,8 @@
 
 This README provides an overview of the Loop Unrolling project, detailing its purpose, how to set up the environment, and how to run and use the project. The project utilizes LLVM passes to extract features from loops, apply loop unrolling with multiple factors, and use machine learning to predict optimal unrolling factors.
 
+The research paper can be found in this repo: [Link Text]https://github.com/Aarya-Kul/LoopUnrollOptimizer_ML/blob/main/OpLUn.pdf
+
 ## Project Overview
 
 Loop unrolling is a compiler optimization technique used to reduce the overhead of loop control. This project introduces a machine learning-based approach to predict the optimal unroll factor for loops in C source files. The system extracts features from loops, generates unrolled versions of loops for various unroll factors, and uses machine learning models to predict the most optimal unroll factor.
